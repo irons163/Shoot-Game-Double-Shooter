@@ -17,7 +17,7 @@ public class CopyMoveDecorator extends MovementDecorator {
 	private MovementActionInfo coreCalculationMovementActionInfo(
 			MovementActionInfo info) {
 		
-		MovementActionInfo newInfo = new MovementActionInfo(info.getTotal(), info.getDelay(), info.getDx(), info.getDy(), info.getDescription());
+		MovementActionInfo newInfo = new MovementActionInfo(info.getTotal(), info.getDelay(), info.getDx(), info.getDy(), info.getDescription(), info.getRotationController(), info.isEnableGravity());
 		if(this.getAction().getActions().size() != 0){
 			MovementAction action = new MovementActionItem(newInfo);
 			copyMovementActionList.add(action);

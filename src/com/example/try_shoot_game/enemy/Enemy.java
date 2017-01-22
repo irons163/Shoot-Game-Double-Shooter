@@ -2,6 +2,7 @@ package com.example.try_shoot_game.enemy;
 
 import com.example.try_shoot_game.BitmapUtil;
 import com.example.try_shoot_game.action.MovementAction;
+import com.example.try_shoot_game.action.MovementAtionController;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -137,4 +138,7 @@ public abstract class Enemy {
 		this.action = action;
 	}
 	
+	public MovementAtionController getC(){
+		return action.controller;
+	}
 }

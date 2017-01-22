@@ -1,5 +1,6 @@
 package com.example.try_shoot_game;
 
+import com.example.try_shoot_game.enemy.Enemy;
 import com.example.try_shoot_game.enemy.EnemyManager;
 import com.example.try_shoot_game.shooter.Crosshair;
 
@@ -46,20 +47,25 @@ public class GameModel implements IGameModel{
 		
 	}
 	
+	int count =0;
 	float x = 0;
 	float y = 0;
 	@Override
 	public void onTouchEvent(MotionEvent event) {
 		// TODO Auto-generated method stub
 //			playerManager.onTouchEvent(event);
-
 		
 		if(event.getAction() == MotionEvent.ACTION_DOWN){
 			x = event.getX();
 			y = event.getY();
-			
-			enemyManager.startMoveEnemies();
-			
+			++count;
+			if(count%2==1){
+				enemyManager.startMoveEnemies();
+			}else{
+				Enemy enemy = enemyManager.getEnemies().get(0);
+				if(enemy.getC()!=null)
+				enemy.getC().pause();
+			}
 		}else if(event.getAction() == MotionEvent.ACTION_MOVE){
 			float dx = event.getX() - x;
 			float dy = event.getY() - y;

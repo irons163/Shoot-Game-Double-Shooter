@@ -14,6 +14,10 @@ public class MovementActionItem extends MovementAction{
 	float dx;
 	float dy;
 	MovementActionInfo info;
+	long resumeTotal;
+	long resetTotal;
+	IRotationController rotationController;
+	IGravityController gravityController;
 	
 	public MovementActionItem(long millisTotal, long millisDelay, final int dx, final int dy){
 		this(millisTotal, millisDelay, dx, dy, "MovementItem");
@@ -51,9 +55,68 @@ public class MovementActionItem extends MovementAction{
 	public void start() {
 		// TODO Auto-generated method stub
 
+//		frameStart();
 		
 		countDownTimer.start();
 	}
+	
+//	long[] frameTimes;
+//	int resumeFrameIndex;
+//	
+//	private void frameStart(){
+//		
+//		for(; resumeFrameIndex < frameTimes.length; resumeFrameIndex++){
+//			doRotation();
+//			doGravity();
+//			timerOnTickListener.onTick(dx, dy);
+//		}
+//		
+//		doReset();		
+//	}
+//	
+//	public boolean isLoop;
+//	
+//	public String name;
+//	
+//	private long updateTime;
+//	
+//	public int frameIdx;
+//	
+//	public boolean isStop = false;
+//	
+//	private void irregularFrameStart(){
+//		
+//		IA
+//		
+//		for(; resumeFrameIndex < frameTimes.length; resumeFrameIndex++){
+//			if (System.currentTimeMillis() > updateTime && !isStop) {
+//				actionListener.beforeChangeFrame(frameIdx+1);
+//				frameIdx++;
+//				frameIdx %= bitmapFrames.length;
+//				
+//				if(!isLoop && frameIdx==0){
+//					isStop = true;
+//					actionListener.actionFinish();
+//				}else{
+//					bitmap = bitmapFrames[frameIdx];
+//					updateTime = System.currentTimeMillis() + frameTime[frameIdx];
+//					
+//					int w = bitmap.getWidth();
+//					int h = bitmap.getHeight();
+//					
+//					setWidth(bitmap.getWidth());
+//					setHeight(bitmap.getHeight());
+//					int periousId = frameIdx-1<0 ? bitmapFrames.length+(frameIdx-1) : frameIdx-1;
+//					actionListener.afterChangeFrame(periousId);
+//				}
+//			}
+//			doRotation();
+//			doGravity();
+//			timerOnTickListener.onTick(dx, dy);
+//		}
+//		
+//		doReset();
+//	}
 	
 	@Override
 	protected MovementAction initTimer(){
@@ -61,6 +124,10 @@ public class MovementActionItem extends MovementAction{
 		millisDelay = info.getDelay();
 		dx = info.getDx();
 		dy = info.getDy();
+		rotationController = info.getRotationController();
+		gravityController = info.getGravityController();
+		
+//		frameTimesIndex = frameTimes.length;
 		
 		countDownTimer = new CountDownTimer(millisTotal,
 				millisDelay) {
@@ -72,9 +139,13 @@ public class MovementActionItem extends MovementAction{
 				// TODO Auto-generated method stub
 				float x = dx;
 				float y = dy;
+				
+				doRotation();
+				doGravity();
 				Log.e("dx", dx+"");
 				Log.e("dy", dy+"");
 				
+				resumeTotal = millisUntilFinished;
 				timerOnTickListener.onTick(dx, dy);
 			}
 
@@ -83,10 +154,44 @@ public class MovementActionItem extends MovementAction{
 				// TODO Auto-generated method stub
 				synchronized (MovementActionItem.this) {
 					MovementActionItem.this.notifyAll();
-				}				
+				}			
+				doReset();
 			}
 		};
 		return this;
+	}
+	
+	private void doRotation(){
+//		dx = dx * 1.1f;
+		if(rotationController!=null){
+			rotationController.execute(info);
+			dx = info.getDx();
+			dy = info.getDy();
+		}
+	}
+	
+	private void doGravity(){
+//		dx = dx * 1.1f;
+		if(gravityController!=null){
+			gravityController.execute(info);
+			dx = info.getDx();
+			dy = info.getDy();
+		}
+	}
+	
+	private void doReset(){
+		if(gravityController!=null){
+			gravityController.reset(info);
+		}
+		if(rotationController!=null)
+			rotationController.reset(info);
+
+
+		millisTotal = info.getTotal();
+		millisDelay = info.getDelay();
+		dx = info.getDx();
+		dy = info.getDy();
+//		rotationController = info.getRotationController();
 	}
 	
 	@Override
@@ -131,5 +236,31 @@ public class MovementActionItem extends MovementAction{
 		List<MovementActionInfo> infos = new ArrayList<MovementActionInfo>();
 		infos.add(this.info);
 		return infos;
+	}
+	
+	@Override
+	public void cancelMove(){
+//		for(MovementAction action : this.getAction().actions){
+//			action.cancelMove();
+//		}
+		countDownTimer.cancel();
+	}
+	
+	@Override
+	void pause(){
+		countDownTimer.cancel();
+		
+		try {
+			Thread.sleep(400);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		resetTotal = millisTotal;
+		millisTotal =resumeTotal;
+		info.setTotal(millisTotal);
+		initTimer();
+		start();
 	}
 }

@@ -28,6 +28,15 @@ public class MovementActionSet extends MovementAction {
 		}
 	}
 
+	private void frameStart(){
+		for(MovementAction action : actions){
+			cancelAction = action;
+			
+			action.start();
+			
+		}
+	}
+	
 	@Override
 	public void start() {
 		// TODO Auto-generated method stub
@@ -42,6 +51,7 @@ public class MovementActionSet extends MovementAction {
 					// TODO Auto-generated method stub
 					List<MovementAction> actionss = actions;
 					for(MovementAction action : actions){
+						cancelAction = action;
 //					while (actions.size() != 0) {
 //						MovementAction action = actions.get(0).getAction();
 //						actions.remove(0);

@@ -131,4 +131,14 @@ public class DoubleDecorator extends MovementDecorator {
 			movementItem.initTimer();
 		}
 	}
+	
+	@Override
+	public void cancelMove(){
+		action.getAction().cancelMove();
+	}
+	
+	@Override
+	void pause(){
+		action.getAction().pause();
+	}
 }

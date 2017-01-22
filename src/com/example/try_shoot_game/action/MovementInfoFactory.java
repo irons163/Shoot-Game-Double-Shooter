@@ -24,4 +24,19 @@ public class MovementInfoFactory {
 		MovementActionInfo right = new MovementActionInfo(1000, 200, 10, 0, "R");
 		return right;
 	}
+	
+	public static MovementActionInfo createCurveSingleRMovementInfo(){
+		MovementActionInfo right = new MovementActionInfo(1000, 200, 10, 0, "R", new RotationCurveController(30));
+		return right;
+	}
+	
+	public static MovementActionInfo createGravitySingleRMovementInfo(){
+		MovementActionInfo right = new MovementActionInfo(1000, 200, 10, 0, "R", true);
+		return right;
+	}
+	
+	public static MovementActionInfo createRotation45GravitySingleRMovementInfo(){
+		MovementActionInfo right = new MovementActionInfo(1000, 200, 30, 0, "R", new RotationOnceController(45), true);
+		return right;
+	}
 }

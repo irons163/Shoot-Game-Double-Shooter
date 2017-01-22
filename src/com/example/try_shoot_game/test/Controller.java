@@ -38,6 +38,19 @@ public class Controller extends AndroidTestCase{
 		
 		assertEquals(true, s.equals("Up"));
 		assertEquals(true, s1.equals("Down"));
+		
+		
+		
+//		Player upKey = new Player();
+//		UpCommand upCommand = new UpCommand(upKey);
+//		DownCommand downCommand = new DownCommand(upKey);
+//		RemoteControl remoteControl = new RemoteControl();
+//		remoteControl.setCommand(0, upCommand, downCommand);
+//		String s = remoteControl.onButtonWasPushed(0);
+//		String s1 = remoteControl.offButtonWasPushed(0);
+//		
+//		assertEquals(true, s.equals("Up"));
+//		assertEquals(true, s1.equals("Down"));
 	}
 
 }

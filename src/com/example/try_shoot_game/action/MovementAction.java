@@ -106,4 +106,46 @@ public abstract class MovementAction {
 		this.isCancelFocusAppendPart = isCancelFocusAppendPart;
 	}
 	
+	protected MovementAction cancelAction;
+	
+	void cancelAllMove(){
+		for(MovementAction action : this.getAction().actions){
+			action.cancelMove();
+		}
+	}
+	
+	void cancelMove(){
+		for(MovementAction action : cancelAction.getAction().actions){
+			action.cancelMove();
+		}
+		
+		this.thread.interrupt();
+		
+//		this.getAction().cancelMove();
+	}
+	
+	void pause(){
+//		if(cancelAction.getAction().actions.size()!=0){
+////			for(MovementAction action : cancelAction.getAction().actions){
+////				action.pause();
+////			}
+//			cancelAction.getAction().pause();
+//		}else{
+//			cancelAction.getAction().pause();
+//		}
+		
+//		if(cancelAction!=null){
+//			
+//		}else{
+//			
+//		}
+		cancelAction.getAction().pause();
+	}
+	
+	public MovementAtionController controller;
+	
+	public void setMovementActionController(MovementAtionController controller){
+		this.controller = controller;
+		this.controller.setMovementAction(this);
+	}
 }
