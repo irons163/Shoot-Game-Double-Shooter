@@ -52,8 +52,9 @@ public class HalfDecorator extends MovementDecorator{
 	}
 
 	@Override
-	public void addMovementAction(MovementAction action) {
+	public MovementAction addMovementAction(MovementAction action) {
 		getAction().addMovementAction(action);
+		return this;
 	}
 	
 	@Override

@@ -789,6 +789,7 @@ public class MovementActionTest extends AndroidTestCase{
 		}
 		
 		assertEquals(true, correctInfoList.equals(currentInfoList));
+
 		
 		
 		
@@ -831,5 +832,210 @@ public class MovementActionTest extends AndroidTestCase{
 		}
 		
 		assertEquals(true, correctInfoList.equals(currentInfoList));
+		
+		
+		
+		correctInfoList.clear();
+		correctInfoList.add(new MovementActionInfo(1000, 200, 80f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -80f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 80f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -80f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 80f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -80f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 80f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -80f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 2560, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -2560, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 80f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -80f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 80f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -80f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 80f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -80f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 80f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -80f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 2560f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -2560f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 40f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -40f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 40f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -40f, 0f));
+		
+		factory = new RLMovementActionFactory();
+		innerAction = factory.createMovementAction();
+		action = new MovementActionSet();
+		action.addMovementAction(new DoubleDecorator(innerAction));
+		actionD = new DoubleDecorator(action);
+		actionD = new DoubleDecorator(new DoubleDecorator(actionD));
+		actionDD = new DoubleDecorator(actionD);
+		newaction = new MovementActionSet();
+		newaction = new CopyMoveDecorator(new CopyMoveDecorator(new RLMovementActionFactory().createMovementAction()));
+		newaction2 = new MovementActionSet();
+		newaction2.addMovementAction(newaction);
+		newaction2.addMovementAction(actionDD);
+		newaction = new CopyMoveDecorator(new DoubleDecorator(new CopyMoveDecorator(new RLMovementActionFactory().createMovementAction())));
+		newaction2.addMovementAction(newaction);
+		newaction2 = new DoubleDecorator(new CopyMoveDecorator(newaction2));
+		
+		MovementAction newaction3 = new MovementActionSet();
+		
+		newaction3.addMovementAction(newaction2);
+		newaction3.addMovementAction(new RLMovementActionFactory().createMovementAction());
+		newaction3.addMovementAction(new MovementActionSet().addMovementAction(new MovementActionSet().addMovementAction(new MovementActionSet().addMovementAction(new RLMovementActionFactory().createMovementAction()))));
+		
+		enemy = enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{0, 1100}, newaction3);
+		action = enemy.getAction();
+		currentInfoList.clear();
+
+		for(MovementActionInfo movementActionInfo : action.getMovementInfoList()){
+			currentInfoList.add(movementActionInfo); 
+		}	
+		
+		if(correctInfoList.equals(currentInfoList)){
+			assertEquals(true, correctInfoList.equals(currentInfoList));
+		}else{
+			assertEquals(true, correctInfoList.equals(currentInfoList));
+		}
+		
+		assertEquals(true, correctInfoList.equals(currentInfoList));
+		
+		
+		correctInfoList.clear();
+		correctInfoList.add(new MovementActionInfo(1000, 200, 160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 5120f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -5120f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 320f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -320f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 320f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -320f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 320f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -320f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 320f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -320f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 5120f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -5120f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 320f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -320f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 320f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -320f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 320f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -320f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 320f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -320f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 80f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -80f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 80f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -80f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 5120f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -5120f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 320f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -320f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 320f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -320f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 320f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -320f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 320f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -320f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 5120f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -5120f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 320f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -320f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 320f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -320f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 320f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -320f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 320f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -320f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 80f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -80f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 80f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -80f, 0f));
+		
+		factory = new RLMovementActionFactory();
+		innerAction = factory.createMovementAction();
+		action = new MovementActionSet();
+		action.addMovementAction(new DoubleDecorator(innerAction));
+		actionD = new DoubleDecorator(action);
+		actionD = new DoubleDecorator(new DoubleDecorator(actionD));
+		actionDD = new DoubleDecorator(actionD);
+		newaction = new MovementActionSet();
+		newaction = new CopyMoveDecorator(new CopyMoveDecorator(new RLMovementActionFactory().createMovementAction()));
+		newaction2 = new MovementActionSet();
+		newaction2.addMovementAction(newaction);
+		newaction2.addMovementAction(actionDD);
+		newaction = new CopyMoveDecorator(new DoubleDecorator(new CopyMoveDecorator(new RLMovementActionFactory().createMovementAction())));
+		newaction2.addMovementAction(newaction);
+		newaction2 = new DoubleDecorator(new CopyMoveDecorator(newaction2));
+		
+		newaction3 = new MovementActionSet();
+		
+		newaction3.addMovementAction(newaction2);
+		newaction3.addMovementAction(new RLMovementActionFactory().createMovementAction());
+		newaction3.addMovementAction(new MovementActionSet().addMovementAction(new MovementActionSet().addMovementAction(new MovementActionSet().addMovementAction(new RLMovementActionFactory().createMovementAction()))));
+		newaction3 = new DoubleDecorator(new CopyMoveDecorator(newaction3));
+		
+		enemy = enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{0, 1100}, newaction3);
+		action = enemy.getAction();
+		currentInfoList.clear();
+
+		for(MovementActionInfo movementActionInfo : action.getMovementInfoList()){
+			currentInfoList.add(movementActionInfo); 
+		}	
+		
+		if(correctInfoList.equals(currentInfoList)){
+			assertEquals(true, correctInfoList.equals(currentInfoList));
+		}else{
+			assertEquals(true, correctInfoList.equals(currentInfoList));
+		}
+		
+		assertEquals(true, correctInfoList.equals(currentInfoList));
+
 	}
 }

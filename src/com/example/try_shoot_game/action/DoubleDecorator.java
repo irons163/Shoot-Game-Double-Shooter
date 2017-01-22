@@ -158,8 +158,9 @@ public class DoubleDecorator extends MovementDecorator {
 	}
 
 	@Override
-	public void addMovementAction(MovementAction action) {
+	public MovementAction addMovementAction(MovementAction action) {
 		getAction().addMovementAction(action);
+		return this;
 	}
 
 	@Override
@@ -220,10 +221,10 @@ public class DoubleDecorator extends MovementDecorator {
 			Log.e("dx", movementItem.getDx() + "");
 		}
 		
-		for(MovementAction movementItem : MovementAction.list){
-			movementItem.initTimer();
-			if(i==16)
-			Log.e("Dx", movementItem.getDx() + "");
-		}
+//		for(MovementAction movementItem : MovementAction.list){
+//			movementItem.initTimer();
+//			if(i==16)
+//			Log.e("Dx", movementItem.getDx() + "");
+//		}
 	}
 }

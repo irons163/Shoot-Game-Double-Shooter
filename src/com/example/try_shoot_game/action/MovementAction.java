@@ -19,7 +19,7 @@ public abstract class MovementAction {
 	
 	public static List<MovementAction> list = new ArrayList<MovementAction>();
 	
-	public void addMovementAction(MovementAction action) {
+	public MovementAction addMovementAction(MovementAction action) {
 		throw new UnsupportedOperationException();
 	}
 	

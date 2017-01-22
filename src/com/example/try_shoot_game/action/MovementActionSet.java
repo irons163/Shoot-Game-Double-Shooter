@@ -14,7 +14,7 @@ public class MovementActionSet extends MovementAction {
 	private MovementActionInfo lastestInfo;
 	
 	@Override
-	public void addMovementAction(MovementAction action) {
+	public MovementAction addMovementAction(MovementAction action) {
 		// TODO Auto-generated method stub
 		actions.add(action);
 //		description = "Set[";
@@ -25,6 +25,8 @@ public class MovementActionSet extends MovementAction {
 		
 		getCurrentActionList();
 		getCurrentInfoList();
+		
+		return this;
 	}
 
 	@Override
@@ -186,10 +188,17 @@ public class MovementActionSet extends MovementAction {
 	public List<MovementAction> getCurrentActionList() {
 		// TODO Auto-generated method stub
 		
-
-		for(MovementAction actionItem : lastestAction.getCurrentActionList()){
-			movementItemList.add(actionItem);
+		movementItemList.clear();
+		for(MovementAction action : actions){
+			for(MovementAction actionItem : action.getCurrentActionList()){
+				movementItemList.add(actionItem);
+			}
 		}
+		
+		
+//		for(MovementAction actionItem : lastestAction.getCurrentActionList()){
+//			movementItemList.add(actionItem);
+//		}
 
 		
 //		for(MovementAction action : actions){
