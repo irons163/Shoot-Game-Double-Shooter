@@ -48,7 +48,6 @@ public abstract class MovementActionFactory {
 	
 	public MovementAction createMovementActionByMerge(MovementAction beginnerAction, MovementAction endAction){
 		action = new MovementActionSet();
-//		action.addMovementAction(new RLMovementActionFactory().createMovementAction());
 		action.addMovementAction(beginnerAction);
 		action.addMovementAction(endAction);
 		

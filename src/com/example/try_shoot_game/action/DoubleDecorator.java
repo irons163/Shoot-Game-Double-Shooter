@@ -3,8 +3,6 @@ package com.example.try_shoot_game.action;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.util.Log;
-
 public class DoubleDecorator extends MovementDecorator{
 	private MovementAction action;
 	
@@ -47,8 +45,6 @@ public class DoubleDecorator extends MovementDecorator{
 
 	@Override
 	public MovementAction initTimer() {
-//		currentInfoList = getCurrentInfoList();
-		
 		if(this.getAction().getActions().size() == 0){
 			
 		for(MovementAction action : this.getAction().getActions()){
@@ -80,21 +76,13 @@ public class DoubleDecorator extends MovementDecorator{
 //					MovementActionInfo info = this.action.getInfo();
 //					action.getAction().setInfo(info);
 //					infos.add(info);
-					
-//					for(MovementActionInfo info : action.getAction().currentInfoList){
-//						currentInfos.add(info);
-//					}
-					
-					
-//					for(MovementActionInfo info : action.getAction().currentInfoList){
-//						currentInfos.add(info);
-//					}
-					
+					for(MovementActionInfo info : action.getAction().currentInfoList){
+						currentInfos.add(info);
+					}
 					action.initTimer();
 				}else{
 					this.getAction().setInfo(action.getInfo());
-//					MovementActionInfo info = this.action.getInfo();
-					MovementActionInfo info = this.getAction().getInfo();
+					MovementActionInfo info = this.action.getInfo();
 					action.getAction().setInfo(info);
 					infos.add(info);
 					action.getAction().initTimer();
@@ -121,18 +109,18 @@ public class DoubleDecorator extends MovementDecorator{
 					action.getAction().setInfo(coreCalculationMovementActionInfo(newInfo));
 					action.getAction().initTimer();
 				}else if(infoSize==this.getAction().getActions().size()){
-//					MovementActionInfo info = infos.get(i);
-//					action.getAction().setInfo(coreCalculationMovementActionInfo(info));
-//					action.getAction().initTimer();
+					MovementActionInfo info = infos.get(i);
+					action.getAction().setInfo(coreCalculationMovementActionInfo(info));
+					action.getAction().initTimer();
 				}else{
-//					for(MovementActionInfo info : currentInfos){
-//						this.getAction().setInfo(info);
-//						coreCalculationMovementActionInfo(this.action.getInfo());
-//					}
-//					
-//					for(MovementAction movementItem : this.getAction().movementItemList){
-//						movementItem.initTimer();
-//					}
+					for(MovementActionInfo info : currentInfos){
+						this.getAction().setInfo(info);
+						coreCalculationMovementActionInfo(this.action.getInfo());
+					}
+					
+					for(MovementAction movementItem : this.getAction().movementItemList){
+						movementItem.initTimer();
+					}
 					
 //					action.getAction().setInfo(coreCalculationMovementActionInfo(this.action.getInfo()));
 					
@@ -145,24 +133,6 @@ public class DoubleDecorator extends MovementDecorator{
 					
 				}
 				
-			}
-			
-//			for(MovementActionInfo info : currentInfos){
-//				this.getAction().setInfo(info);
-//				coreCalculationMovementActionInfo(this.action.getInfo());
-//			}
-			
-//			this.getAction().getCurrentInfoList();
-			int i =0;
-			for(MovementActionInfo info : this.getAction().currentInfoList){
-				Log.e("count", ++i + "");
-				Log.e("info", info.getDx() + "");
-				this.getAction().setInfo(info);
-				coreCalculationMovementActionInfo(this.action.getInfo());
-			}
-			
-			for(MovementAction movementItem : this.getAction().movementItemList){
-				movementItem.initTimer();
 			}
 			
 //			for(MovementAction action : this.getAction().getActions()){
@@ -200,11 +170,5 @@ public class DoubleDecorator extends MovementDecorator{
 	public List<MovementAction> getCurrentActionList() {
 		// TODO Auto-generated method stub
 		return action.getCurrentActionList();
-	}
-	
-	@Override
-	public List<MovementActionInfo> getCurrentInfoList() {
-		// TODO Auto-generated method stub
-		return action.getCurrentInfoList();
 	}
 }

@@ -156,10 +156,4 @@ public class CopyMoveDecorator extends MovementDecorator{
 		// TODO Auto-generated method stub
 		return action.getCurrentActionList();
 	}
-
-	@Override
-	public List<MovementActionInfo> getCurrentInfoList() {
-		// TODO Auto-generated method stub
-		return action.getCurrentInfoList();
-	}
 }

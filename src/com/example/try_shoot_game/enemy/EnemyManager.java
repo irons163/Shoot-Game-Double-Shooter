@@ -3,7 +3,6 @@ package com.example.try_shoot_game.enemy;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.try_shoot_game.action.CopyMoveDecorator;
 import com.example.try_shoot_game.action.DoubleDecorator;
 import com.example.try_shoot_game.action.LRMovementActionFactory;
 import com.example.try_shoot_game.action.MovementAction;
@@ -29,7 +28,7 @@ public class EnemyManager {
 	public void createLevel1Enemy(){
 		EnemyFactory enemyFactory = new EnemyFactory();
 //		enemies.add(enemyFactory.createSpecialEnemy(RedEnemy.class, RLMovementActionFactory.class, new int[]{0, 0}));
-		enemies.add(enemyFactory.createSpecialEnemy4(RedEnemy.class, RLMovementActionFactory.class, new int[]{0, 0}, MovementActionDecoratorFactory.createCopyMovementDecorator()));
+//		enemies.add(enemyFactory.createSpecialEnemy4(RedEnemy.class, RLMovementActionFactory.class, new int[]{0, 0}, MovementActionDecoratorFactory.createCopyMovementDecorator()));
 //		enemies.add(enemyFactory.createRLRedEnemy(new int[]{50, 50}));
 //		enemies.add(enemyFactory.createRLBlueEnemy(new int[]{100, 100}));
 //		enemies.add(enemyFactory.createSpecialEnemy(BlueEnemy.class, RLMovementActionFactory.class, new int[]{150, 150}));
@@ -44,22 +43,19 @@ public class EnemyManager {
 		
 		RLMovementActionFactory factory = new RLMovementActionFactory();
 		MovementAction innerAction = factory.createMovementAction();
-		MovementAction action = new DoubleDecorator(innerAction);
-//		MovementAction action = new MovementActionSet();
-//		action.addMovementAction(new DoubleDecorator(innerAction));
-////		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{0, 1050}, action));
-//		MovementAction actionD = new DoubleDecorator(action);
-//		actionD = new DoubleDecorator(new DoubleDecorator(actionD));
-//		MovementAction newaction = new MovementActionSet();
-//		newaction.addMovementAction(new DoubleDecorator(actionD));
-////		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{0, 1100}, actionD));
-//		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{0, 1100}, newaction));
+//		MovementAction action = new DoubleDecorator(innerAction);
+		MovementAction action = new MovementActionSet();
+		action.addMovementAction(new DoubleDecorator(innerAction));
+//		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{0, 1050}, action));
+		MovementAction actionD = new DoubleDecorator(action);
+		actionD = new DoubleDecorator(new DoubleDecorator(actionD));
+		MovementAction newaction = new MovementActionSet();
+		newaction.addMovementAction(new DoubleDecorator(actionD));
+//		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{0, 1100}, actionD));
+		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{0, 1100}, newaction));
 		
-		SpecialMovementActionFactory actionFactory = new SpecialMovementActionFactory();
-		MovementAction RLDRL = actionFactory.createMovementActionByMerge(new RLMovementActionFactory().createMovementAction(), action);
-		RLDRL = actionFactory.createMovementActionByMerge(new RLMovementActionFactory().createMovementAction(), RLDRL);
-		RLDRL = new DoubleDecorator(RLDRL);
-//		RLDRL.doInfo();
+//		SpecialMovementActionFactory actionFactory = new SpecialMovementActionFactory();
+//		MovementAction RLDRL = actionFactory.createMovementActionByMerge(new RLMovementActionFactory().createMovementAction(), action);
 //		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{0, 1150}, RLDRL));
 	
 	}
