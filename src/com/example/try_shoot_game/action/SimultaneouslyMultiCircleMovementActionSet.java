@@ -3,13 +3,17 @@ package com.example.try_shoot_game.action;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SimultaneouslyTwoCircleMovementActionSet extends MovementAction {
+import android.graphics.PointF;
+
+public class SimultaneouslyMultiCircleMovementActionSet extends MovementAction {
 	private boolean isActionFinish = true;
 	private MovementActionInfo info;
 	
 	public Object SimultaneouslyLock = new Object();
 	
 	private List<MovementAction> cancelActions = new ArrayList<MovementAction>();
+	List<MovementActionInfo> infos;
+	Mediator mediator;
 	
 	@Override
 	public MovementAction addMovementAction(MovementAction action) {
@@ -17,19 +21,27 @@ public class SimultaneouslyTwoCircleMovementActionSet extends MovementAction {
 		actions.add(action);
 		
 		getCurrentActionList();
-		List<MovementActionInfo> infos = getCurrentInfoList();
+		infos = getCurrentInfoList();
 		
-		Circle2Controller mainController = null;
-		for(MovementActionInfo info : infos){
-			Circle2Controller subController = (Circle2Controller) info.getRotationController();
-			if(mainController!=null){	
-				mainController.setCircleController(subController);
-			}
-			mainController = subController;	
-		}
+//		Circle2Controller mainController = null;
+//		for(MovementActionInfo info : infos){
+//			Circle2Controller subController = (Circle2Controller) info.getRotationController();
+//			if(mainController!=null){	
+//				mainController.setCircleController(subController);
+//			}
+//			mainController = subController;	
+//		}
+		
 		
 		
 		return this;
+	}
+	
+	public void setMediator(){
+		this.mediator = new Mediator(infos);
+		for(MovementActionInfo info : infos){
+			((ICircleController)info.getRotationController()).setMediator(mediator);
+		}
 	}
 
 	@Override
@@ -74,8 +86,8 @@ public class SimultaneouslyTwoCircleMovementActionSet extends MovementAction {
 						}
 					}
 					
-					synchronized (SimultaneouslyTwoCircleMovementActionSet.this) {
-						SimultaneouslyTwoCircleMovementActionSet.this.notifyAll();
+					synchronized (SimultaneouslyMultiCircleMovementActionSet.this) {
+						SimultaneouslyMultiCircleMovementActionSet.this.notifyAll();
 					}
 					isActionFinish = true;
 				}
@@ -197,4 +209,35 @@ public class SimultaneouslyTwoCircleMovementActionSet extends MovementAction {
 	}
 	
 	
+}
+
+class Mediator{
+	List<MovementActionInfo> infos;
+	
+	public Mediator(List<MovementActionInfo> infos) {
+		this.infos = infos;
+	}
+	
+	public PointF getLastPointF(ICircleController circle3Controller){
+		MovementActionInfo info = infos.get(infos.size()-1);
+		return new PointF(((ICircleController)info.getRotationController()).getmX(), ((ICircleController)info.getRotationController()).getmY());		
+	}
+	
+	public PointF noty(ICircleController circle3Controller, float mx, float my, float angle){
+//		if(infos.indexOf(circle3Controller)){
+//			
+//		}
+		PointF pointF = null;
+		boolean isAction = false;
+		for(MovementActionInfo info : infos){
+			if(isAction){
+				pointF = ((ICircleController)info.getRotationController()).action(mx, my, angle);
+			}else{
+				if(info.getRotationController().equals(circle3Controller)){
+					isAction = true;
+				}
+			}
+		}
+		return pointF;
+	}
 }

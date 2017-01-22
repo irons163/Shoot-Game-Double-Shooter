@@ -28,6 +28,7 @@ import com.example.try_shoot_game.action.RLMovementActionFactory;
 import com.example.try_shoot_game.action.InverseMovementInfoDecorator;
 import com.example.try_shoot_game.action.ReturnBackDecorator;
 import com.example.try_shoot_game.action.SimultaneouslyMovementActionSet;
+import com.example.try_shoot_game.action.SimultaneouslyMultiCircleMovementActionSet;
 import com.example.try_shoot_game.action.SimultaneouslyTwoCircleMovementActionSet;
 import com.example.try_shoot_game.action.SpecialMovementActionFactory;
 
@@ -226,9 +227,10 @@ public class EnemyManager {
 //		newaction4.setMovementActionController(new MovementAtionController());
 //		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{500, 800}, newaction4));
 		
-		MovementAction newaction4 = new SimultaneouslyTwoCircleMovementActionSet();
-		newaction4.addMovementAction(new MovementActionItem(MovementInfoFactory.create2CircleMovementInfo()));
-		newaction4.addMovementAction(new MovementActionItem(MovementInfoFactory.create2SubCircleMovementInfo()));
+		MovementAction newaction4 = new SimultaneouslyMultiCircleMovementActionSet();
+		newaction4.addMovementAction(new MovementActionItem(MovementInfoFactory.create3CircleMovementInfo()));
+		newaction4.addMovementAction(new MovementActionItem(MovementInfoFactory.create3SubCircleMovementInfo()));
+		((SimultaneouslyMultiCircleMovementActionSet)newaction4).setMediator();
 		newaction4.setMovementActionController(new MovementAtionController());
 		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{500, 800}, newaction4));
 	}

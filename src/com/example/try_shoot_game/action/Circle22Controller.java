@@ -85,7 +85,7 @@ public class Circle22Controller implements IRotationController{
 				mathUtil.genAngle();
 		//		float f = mathUtil.getAngle();
 		//		mathUtil.setAngle(f+10);
-				mathUtil.genSpeedByRotate(rotation);
+				mathUtil.genSpeedByRotate(-10);
 				float speedx = mathUtil.getSpeedX();
 				float speedy = mathUtil.getSpeedY();
 				float newMx = x+speedx;
@@ -103,7 +103,7 @@ public class Circle22Controller implements IRotationController{
 //				info.setDx(speedx);
 //				info.setDy(speedy);	
 				
-				angle = rotation;
+				angle = -10;
 				
 						rotationController.setX(mx);
 						rotationController.setY(my);
@@ -126,7 +126,7 @@ public class Circle22Controller implements IRotationController{
 			mathUtil.genAngle();
 	//		float f = mathUtil.getAngle();
 	//		mathUtil.setAngle(f+10);
-			mathUtil.genSpeedByRotate(rotation);
+			mathUtil.genSpeedByRotate(0);
 			float speedx = mathUtil.getSpeedX();
 			float speedy = mathUtil.getSpeedY();
 			float newMx = x+speedx;
