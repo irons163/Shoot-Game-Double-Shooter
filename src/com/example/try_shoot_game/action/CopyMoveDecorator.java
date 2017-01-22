@@ -144,4 +144,22 @@ public class CopyMoveDecorator extends MovementDecorator{
 	public MovementActionInfo getInfo() {
 		return coreCalculationMovementActionInfo(action.getInfo());
 	}
+	
+	@Override
+	public MovementActionInfo getCurrentInfo() {
+		// TODO Auto-generated method stub
+		return action.getCurrentInfo();
+	}
+
+	@Override
+	public List<MovementAction> getCurrentActionList() {
+		// TODO Auto-generated method stub
+		return action.getCurrentActionList();
+	}
+
+	@Override
+	public List<MovementActionInfo> getCurrentInfoList() {
+		// TODO Auto-generated method stub
+		return action.getCurrentInfoList();
+	}
 }

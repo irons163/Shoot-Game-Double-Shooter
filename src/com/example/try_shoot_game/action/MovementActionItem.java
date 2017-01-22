@@ -1,5 +1,6 @@
 package com.example.try_shoot_game.action;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.os.CountDownTimer;
@@ -120,5 +121,26 @@ public class MovementActionItem extends MovementAction{
 		// TODO Auto-generated method stub
 		this.info = info;
 	}
+
+	@Override
+	public MovementActionInfo getCurrentInfo() {
+		// TODO Auto-generated method stub
+		return info;
+	}
 	
+	@Override
+	public List<MovementAction> getCurrentActionList() {
+		// TODO Auto-generated method stub
+		List<MovementAction> actions = new ArrayList<MovementAction>();
+		actions.add(this);
+		return actions;
+	}
+	
+	@Override
+	public List<MovementActionInfo> getCurrentInfoList() {
+		// TODO Auto-generated method stub
+		List<MovementActionInfo> infos = new ArrayList<MovementActionInfo>();
+		infos.add(this.info);
+		return infos;
+	}
 }

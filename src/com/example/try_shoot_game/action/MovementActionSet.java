@@ -1,17 +1,30 @@
 package com.example.try_shoot_game.action;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import com.example.try_shoot_game.action.MovementAction.TimerOnTickListener;
+import com.rits.cloning.Cloner;
 
 public class MovementActionSet extends MovementAction {
 	private boolean isActionFinish = true;
 //	private int dx;
 	private MovementActionInfo info;
+	private MovementAction lastestAction;
+	private MovementActionInfo lastestInfo;
 	
 	@Override
 	public void addMovementAction(MovementAction action) {
 		// TODO Auto-generated method stub
 		actions.add(action);
 //		description = "Set[";
+		lastestAction = action;
+		
+//		lastestInfo = action.getCurrentInfo();
+//		addList(lastestInfo);
+		
+		getCurrentActionList();
+		getCurrentInfoList();
 	}
 
 	@Override
@@ -46,6 +59,9 @@ public class MovementActionSet extends MovementAction {
 							}
 						}
 
+					}
+					synchronized (MovementActionSet.this) {
+						MovementActionSet.this.notifyAll();
 					}
 					isActionFinish = true;
 				}
@@ -83,6 +99,8 @@ public class MovementActionSet extends MovementAction {
 //		Cloner cloner=new Cloner();
 //
 //		MovementAction actionClone = cloner.deepClone(this);
+		
+		
 		
 		for (MovementAction action : this.actions) {
 			
@@ -151,5 +169,51 @@ public class MovementActionSet extends MovementAction {
 				break;
 		}
 		return isSet;
+	}
+
+	@Override
+	public MovementActionInfo getCurrentInfo() {
+		// TODO Auto-generated method stub
+		return info;
+	}
+	
+	@Override
+	public List<MovementAction> getCurrentActionList() {
+		// TODO Auto-generated method stub
+		
+
+		for(MovementAction actionItem : lastestAction.getCurrentActionList()){
+			movementItemList.add(actionItem);
+		}
+
+		
+//		for(MovementAction action : actions){
+//			for(MovementAction actionItem : action.getCurrentActionList()){
+//				movementItemList.add(actionItem);
+//			}
+//		}
+		
+		return movementItemList;
+	}
+	
+	@Override
+	public List<MovementActionInfo> getCurrentInfoList() {
+		// TODO Auto-generated method stub
+//		if(currentInfoList.size()>0){
+//			
+//		}else{
+//			for(MovementActionInfo actionItem : lastestAction.getCurrentInfoList()){
+//				currentInfoList.add(actionItem);
+//			}
+//		}
+		
+		currentInfoList.clear();
+		for(MovementAction action : actions){
+			for(MovementActionInfo actionItem : action.getCurrentInfoList()){
+				currentInfoList.add(actionItem);
+			}
+		}
+		
+		return currentInfoList;
 	}
 }

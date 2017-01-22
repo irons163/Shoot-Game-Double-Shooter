@@ -1,5 +1,7 @@
 package com.example.try_shoot_game.action;
 
+import java.util.List;
+
 public class HalfDecorator extends MovementDecorator{
 	private MovementAction action;
 	
@@ -62,5 +64,23 @@ public class HalfDecorator extends MovementDecorator{
 	@Override
 	public MovementActionInfo getInfo() {
 		return coreCalculationMovementActionInfo(action.getInfo());
+	}
+	
+	@Override
+	public MovementActionInfo getCurrentInfo() {
+		// TODO Auto-generated method stub
+		return action.getCurrentInfo();
+	}
+	
+	@Override
+	public List<MovementAction> getCurrentActionList() {
+		// TODO Auto-generated method stub
+		return action.getCurrentActionList();
+	}
+	
+	@Override
+	public List<MovementActionInfo> getCurrentInfoList() {
+		// TODO Auto-generated method stub
+		return action.getCurrentInfoList();
 	}
 }
