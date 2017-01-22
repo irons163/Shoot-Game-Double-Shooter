@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.os.CountDownTimer;
-import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
-public class MovementActionItem extends MovementAction{
+public class MovementActionFrameItem extends MovementAction{
 	CountDownTimer countDownTimer; 
 	long millisTotal;
 	long millisDelay;
@@ -19,14 +18,13 @@ public class MovementActionItem extends MovementAction{
 	long resetTotal;
 	IRotationController rotationController;
 	IGravityController gravityController;
-	boolean isReset = true;
 	
-	public MovementActionItem(long millisTotal, long millisDelay, final int dx, final int dy){
+	public MovementActionFrameItem(long millisTotal, long millisDelay, final int dx, final int dy){
 		this(millisTotal, millisDelay, dx, dy, "MovementItem");
 //		description = "MovementItem";
 	}
 	
-	public MovementActionItem(long millisTotal, long millisDelay, final int dx, final int dy, String description){
+	public MovementActionFrameItem(long millisTotal, long millisDelay, final int dx, final int dy, String description){
 		this.millisTotal = millisTotal;
 		this.millisDelay = millisDelay;
 		this.dx = dx;
@@ -36,14 +34,24 @@ public class MovementActionItem extends MovementAction{
 		movementItemList.add(this);
 	}
 	
-	public MovementActionItem(MovementActionInfo info){
-		millisTotal = info.getTotal();
-		millisDelay = info.getDelay();
+	public MovementActionFrameItem(MovementActionFrameInfo info){
+		frameTimes = info.getFrame();
+//		millisTotal = info.getTotal();
+//		millisDelay = info.getDelay();
 		dx = info.getDx();
 		dy = info.getDy();
 		if(info.getDescription()!=null)
 			this.description = info.getDescription() + ",";
 		this.info = info;
+		movementItemList.add(this);
+	}
+	
+	public MovementActionFrameItem(long[] frameTimes, final int dx, final int dy, String description){
+		this.frameTimes = frameTimes;
+		this.dx = dx;
+		this.dy = dy;
+		info = new MovementActionInfo(millisTotal, millisDelay, dx, dy);
+		this.description = description + ",";
 		movementItemList.add(this);
 	}
 	
@@ -56,80 +64,108 @@ public class MovementActionItem extends MovementAction{
 	@Override
 	public void start() {
 		// TODO Auto-generated method stub
-		if(isActionFinish){
-			isReset = true;
-			thread = new Thread(new Runnable() {
-				
-				@Override
-				public void run() {
-					// TODO Auto-generated method stub
-					while(isReset){
-						isReset = false;
-						synchronized (MovementActionItem.this) {
-							countDownTimer.start();
-							try {
-								MovementActionItem.this.wait();
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-								isActionFinish =false;
-							}
-						}
-					
-						
-					}
-				}
-			});
-			thread.start();
-		}
-		
-		isActionFinish = false;
-		if(isFirstTime){
-			resetTotal = millisTotal;
-			isFirstTime = false;
-			
-			thread = new Thread(new Runnable() {
-				
-				@Override
-				public void run() {
-					// TODO Auto-generated method stub
-					while(isReset){
-						isReset = false;
-						synchronized (MovementActionItem.this) {
-							countDownTimer.start();
-							try {
-								MovementActionItem.this.wait();
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-								isActionFinish =false;
-							}
-						}
-					
-						
-					}
-				}
-			});
-			thread.start();
-		}
-		
-//		frameStart();
 
-
+		frameStart();
+		
+//		countDownTimer.start();
 	}
 	
 	long[] frameTimes;
 	int resumeFrameIndex;
+	int resumeFrameCount;
+	
+	public interface FrameTrigger{
+		public void trigger();
+	}
+	
+	private void nextFrameTrigger(){
+//		frameStart();
+		myTrigger.trigger();
+		nextframeTrigger.trigger();
+	}
+	
+	FrameTrigger nextframeTrigger;
+	FrameTrigger myTrigger = new FrameTrigger() {
+		
+		@Override
+		public void trigger() {
+			// TODO Auto-generated method stub
+			frameStart();
+			
+		}
+	};
+	public FrameTrigger setNextFrameTrigger(FrameTrigger nextframeTrigger){
+		
+		this.nextframeTrigger = nextframeTrigger;
+		
+		return myTrigger;
+	}
 	
 	private void frameStart(){
+		Thread thread = new Thread(new Runnable() {
+			IActionListener actionListener = null;
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				
+				for(; resumeFrameIndex < frameTimes.length; resumeFrameIndex++){
+					actionListener.beforeChangeFrame(resumeFrameIndex+1);
+//					myTrigger.trigger();
+					for(; resumeFrameCount < frameTimes[resumeFrameIndex]; resumeFrameCount++){
+						try {
+							Thread.sleep(frameTimes[resumeFrameIndex]);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					
+					doRotation();
+					doGravity();
+					timerOnTickListener.onTick(dx, dy);
+//					actionListener.afterChangeFrame(periousId);
+					resumeFrameCount = 0;
+				}
+				
+				doReset();
+				actionListener.actionFinish();
+			}
+		});
 		
-		for(; resumeFrameIndex < frameTimes.length; resumeFrameIndex++){
-			doRotation();
-			doGravity();
-			timerOnTickListener.onTick(dx, dy);
+		thread.start();
+		
+	}
+	
+	private void frameTriggerStart(){
+		IActionListener actionListener = null;
+		if (!isStop) {
+			actionListener.beforeChangeFrame(resumeFrameIndex+1);
+			if(resumeFrameIndex==0)
+				resumeFrameIndex++;
+			if(resumeFrameCount>frameTimes[resumeFrameIndex]){	
+				resumeFrameIndex++;
+				resumeFrameIndex %= frameTimes.length;
+				resumeFrameCount = 0;
+			}
+			
+			if(!isLoop && resumeFrameIndex==0){
+				isStop = true;
+				doReset();
+				actionListener.actionFinish();
+			}else if(resumeFrameCount==frameTimes[resumeFrameIndex]){
+				updateTime = System.currentTimeMillis() + frameTimes[resumeFrameIndex];	
+				doRotation();
+				doGravity();
+				timerOnTickListener.onTick(dx, dy);		
+				int periousId = resumeFrameIndex-1<0 ? frameTimes.length+(resumeFrameIndex-1) : resumeFrameIndex-1;
+				actionListener.afterChangeFrame(periousId);
+			}
+			resumeFrameCount++;
+//			if(resumeFrameCount==frameTimes[resumeFrameIndex])
+//				resumeFrameCount = 0;
 		}
 		
-		doReset();		
+		doReset();
 	}
 	
 	public boolean isLoop;
@@ -180,8 +216,6 @@ public class MovementActionItem extends MovementAction{
 		
 	}
 	
-	boolean isFirstTime = true;
-	
 	@Override
 	protected MovementAction initTimer(){
 		millisTotal = info.getTotal();
@@ -216,12 +250,10 @@ public class MovementActionItem extends MovementAction{
 			@Override
 			public void onFinish() {
 				// TODO Auto-generated method stub
-				synchronized (MovementActionItem.this) {
-					MovementActionItem.this.notifyAll();
+				synchronized (MovementActionFrameItem.this) {
+					MovementActionFrameItem.this.notifyAll();
 				}			
 				doReset();
-				isActionFinish = true;
-				Log.e("Timer", "finish");
 			}
 		};
 		return this;
@@ -252,12 +284,11 @@ public class MovementActionItem extends MovementAction{
 		if(rotationController!=null)
 			rotationController.reset(info);
 
-		
+
 		millisTotal = info.getTotal();
 		millisDelay = info.getDelay();
 		dx = info.getDx();
 		dy = info.getDy();
-		initTimer();
 //		rotationController = info.getRotationController();
 	}
 	
@@ -313,48 +344,21 @@ public class MovementActionItem extends MovementAction{
 		countDownTimer.cancel();
 	}
 	
-	Handler handler = new Handler(){
-		public void handleMessage(android.os.Message msg) {
-			initTimer();
-			info.setTotal(resetTotal);
-			isReset = true;
-			thread.interrupt();
-			start();
-		};
-	};
-	
 	@Override
 	void pause(){
-		new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				if(!isActionFinish){
-					countDownTimer.cancel();
-					
-					try {
-						Thread.sleep(800);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
-					
-					millisTotal =resumeTotal;
-					info.setTotal(millisTotal);
-					handler.sendEmptyMessage(0);
-				}
-			}
-		}).start();
+		countDownTimer.cancel();
 		
-
-	}
-	
-	private boolean isActionFinish = false;
-	
-	@Override
-	public boolean isFinish(){
-		return isActionFinish;
+		try {
+			Thread.sleep(400);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		resetTotal = millisTotal;
+		millisTotal =resumeTotal;
+		info.setTotal(millisTotal);
+		initTimer();
+		start();
 	}
 }

@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.os.CountDownTimer;
-import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
-public class MovementActionItem extends MovementAction{
+public class MovementActionIrregularFrameItem extends MovementAction{
 	CountDownTimer countDownTimer; 
 	long millisTotal;
 	long millisDelay;
@@ -19,14 +18,13 @@ public class MovementActionItem extends MovementAction{
 	long resetTotal;
 	IRotationController rotationController;
 	IGravityController gravityController;
-	boolean isReset = true;
 	
-	public MovementActionItem(long millisTotal, long millisDelay, final int dx, final int dy){
+	public MovementActionIrregularFrameItem(long millisTotal, long millisDelay, final int dx, final int dy){
 		this(millisTotal, millisDelay, dx, dy, "MovementItem");
 //		description = "MovementItem";
 	}
 	
-	public MovementActionItem(long millisTotal, long millisDelay, final int dx, final int dy, String description){
+	public MovementActionIrregularFrameItem(long millisTotal, long millisDelay, final int dx, final int dy, String description){
 		this.millisTotal = millisTotal;
 		this.millisDelay = millisDelay;
 		this.dx = dx;
@@ -36,7 +34,7 @@ public class MovementActionItem extends MovementAction{
 		movementItemList.add(this);
 	}
 	
-	public MovementActionItem(MovementActionInfo info){
+	public MovementActionIrregularFrameItem(MovementActionInfo info){
 		millisTotal = info.getTotal();
 		millisDelay = info.getDelay();
 		dx = info.getDx();
@@ -56,66 +54,12 @@ public class MovementActionItem extends MovementAction{
 	@Override
 	public void start() {
 		// TODO Auto-generated method stub
-		if(isActionFinish){
-			isReset = true;
-			thread = new Thread(new Runnable() {
-				
-				@Override
-				public void run() {
-					// TODO Auto-generated method stub
-					while(isReset){
-						isReset = false;
-						synchronized (MovementActionItem.this) {
-							countDownTimer.start();
-							try {
-								MovementActionItem.this.wait();
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-								isActionFinish =false;
-							}
-						}
-					
-						
-					}
-				}
-			});
-			thread.start();
-		}
-		
-		isActionFinish = false;
-		if(isFirstTime){
-			resetTotal = millisTotal;
-			isFirstTime = false;
-			
-			thread = new Thread(new Runnable() {
-				
-				@Override
-				public void run() {
-					// TODO Auto-generated method stub
-					while(isReset){
-						isReset = false;
-						synchronized (MovementActionItem.this) {
-							countDownTimer.start();
-							try {
-								MovementActionItem.this.wait();
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-								isActionFinish =false;
-							}
-						}
-					
-						
-					}
-				}
-			});
-			thread.start();
-		}
-		
+
 //		frameStart();
-
-
+		
+//		countDownTimer.start();
+		
+		irregularFrameStart();
 	}
 	
 	long[] frameTimes;
@@ -180,8 +124,6 @@ public class MovementActionItem extends MovementAction{
 		
 	}
 	
-	boolean isFirstTime = true;
-	
 	@Override
 	protected MovementAction initTimer(){
 		millisTotal = info.getTotal();
@@ -216,12 +158,10 @@ public class MovementActionItem extends MovementAction{
 			@Override
 			public void onFinish() {
 				// TODO Auto-generated method stub
-				synchronized (MovementActionItem.this) {
-					MovementActionItem.this.notifyAll();
+				synchronized (MovementActionIrregularFrameItem.this) {
+					MovementActionIrregularFrameItem.this.notifyAll();
 				}			
 				doReset();
-				isActionFinish = true;
-				Log.e("Timer", "finish");
 			}
 		};
 		return this;
@@ -252,12 +192,11 @@ public class MovementActionItem extends MovementAction{
 		if(rotationController!=null)
 			rotationController.reset(info);
 
-		
+
 		millisTotal = info.getTotal();
 		millisDelay = info.getDelay();
 		dx = info.getDx();
 		dy = info.getDy();
-		initTimer();
 //		rotationController = info.getRotationController();
 	}
 	
@@ -313,48 +252,21 @@ public class MovementActionItem extends MovementAction{
 		countDownTimer.cancel();
 	}
 	
-	Handler handler = new Handler(){
-		public void handleMessage(android.os.Message msg) {
-			initTimer();
-			info.setTotal(resetTotal);
-			isReset = true;
-			thread.interrupt();
-			start();
-		};
-	};
-	
 	@Override
 	void pause(){
-		new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				if(!isActionFinish){
-					countDownTimer.cancel();
-					
-					try {
-						Thread.sleep(800);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
-					
-					millisTotal =resumeTotal;
-					info.setTotal(millisTotal);
-					handler.sendEmptyMessage(0);
-				}
-			}
-		}).start();
+		countDownTimer.cancel();
 		
-
-	}
-	
-	private boolean isActionFinish = false;
-	
-	@Override
-	public boolean isFinish(){
-		return isActionFinish;
+		try {
+			Thread.sleep(400);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		resetTotal = millisTotal;
+		millisTotal =resumeTotal;
+		info.setTotal(millisTotal);
+		initTimer();
+		start();
 	}
 }

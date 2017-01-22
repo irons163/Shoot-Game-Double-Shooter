@@ -21,6 +21,8 @@ public abstract class MovementAction {
 	
 	protected boolean isCancelFocusAppendPart = false;
 	
+	public boolean isFinish = false;
+	
 	public MovementAction addMovementAction(MovementAction action) {
 		throw new UnsupportedOperationException();
 	}
@@ -147,5 +149,27 @@ public abstract class MovementAction {
 	public void setMovementActionController(MovementAtionController controller){
 		this.controller = controller;
 		this.controller.setMovementAction(this);
+	}
+	
+	public boolean isFinish(){
+		return cancelAction.getAction().isFinish();
+	}
+	
+	String name="";
+	public void setName(String name){
+		this.name = name;
+	}
+	
+	public MovementAction getPartOfMovementActionByName(String name){
+		return getMovement(this, name);
+	} 
+	
+	private MovementAction getMovement(MovementAction action, String name){
+		for(MovementAction movementAction : action.getAction().getActions()){
+			if(action.name.equals(name))
+				return action;
+			return getMovement(movementAction, name);
+		}
+		return null;
 	}
 }

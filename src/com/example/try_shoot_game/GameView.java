@@ -1,5 +1,8 @@
 package com.example.try_shoot_game;
 
+import com.example.try_shoot_game.action.Circle22Controller;
+import com.example.try_shoot_game.action.Circle2Controller;
+import com.example.try_shoot_game.action.CircleController;
 import com.example.try_shoot_game.shooter.Crosshair;
 
 import android.content.Context;
@@ -55,6 +58,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, IMo
 		gameModel.process();
 	}
 	
+	public static Circle22Controller circleController1;
+	public static Circle22Controller circleController2;
+	
 	private void draw(){
 		Canvas canvas = surfaceHolder.lockCanvas();
 
@@ -62,7 +68,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, IMo
 		
 		gameModel.drawEnemis(canvas);
 		gameModel.drawCrosshair(canvas);
-		
+		if(circleController1!=null)
+		circleController1.draw(canvas);
+		if(circleController2!=null)
+			circleController2.draw(canvas);
 //		drawChssboardLines(canvas);
 //		drawAllExistPoints(canvas);
 //		drawPlayerPocessableMovePoints(canvas);

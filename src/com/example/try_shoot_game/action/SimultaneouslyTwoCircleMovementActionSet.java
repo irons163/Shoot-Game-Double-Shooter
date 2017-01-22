@@ -3,12 +3,13 @@ package com.example.try_shoot_game.action;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.try_shoot_game.action.MovementAction.TimerOnTickListener;
-import com.rits.cloning.Cloner;
-
-public class MovementActionSet extends MovementAction {
+public class SimultaneouslyTwoCircleMovementActionSet extends MovementAction {
 	private boolean isActionFinish = true;
 	private MovementActionInfo info;
+	
+	public Object SimultaneouslyLock = new Object();
+	
+	private List<MovementAction> cancelActions = new ArrayList<MovementAction>();
 	
 	@Override
 	public MovementAction addMovementAction(MovementAction action) {
@@ -16,7 +17,17 @@ public class MovementActionSet extends MovementAction {
 		actions.add(action);
 		
 		getCurrentActionList();
-		getCurrentInfoList();
+		List<MovementActionInfo> infos = getCurrentInfoList();
+		
+		Circle22Controller mainController = null;
+		for(MovementActionInfo info : infos){
+			Circle22Controller subController = (Circle22Controller) info.getRotationController();
+			if(mainController!=null){	
+				mainController.setCircleController(subController);
+			}
+			mainController = subController;	
+		}
+		
 		
 		return this;
 	}
@@ -48,26 +59,23 @@ public class MovementActionSet extends MovementAction {
 
 				@Override
 				public void run() {
-					// TODO Auto-generated method stub
 					List<MovementAction> actionss = actions;
 					for(MovementAction action : actions){
 						cancelAction = action;
-//					while (actions.size() != 0) {
-//						MovementAction action = actions.get(0).getAction();
-//						actions.remove(0);
 						action.start();
-						synchronized (action.getAction()) {
-							try {
-								action.getAction().wait();
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-						}
-
 					}
-					synchronized (MovementActionSet.this) {
-						MovementActionSet.this.notifyAll();
+					
+					for(MovementAction action : actions){
+						try {
+							action.getAction().thread.join();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					
+					synchronized (SimultaneouslyTwoCircleMovementActionSet.this) {
+						SimultaneouslyTwoCircleMovementActionSet.this.notifyAll();
 					}
 					isActionFinish = true;
 				}
@@ -179,4 +187,14 @@ public class MovementActionSet extends MovementAction {
 	public boolean isFinish(){
 		return isActionFinish;
 	}
+
+	@Override
+	void pause() {
+		// TODO Auto-generated method stub
+		for(MovementAction action : actions){
+			action.getAction().pause();
+		}
+	}
+	
+	
 }

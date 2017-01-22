@@ -5,6 +5,7 @@ public class RotationCurveController implements IRotationController{
 	float origineDx;
 	float origineDy;
 	boolean firstExecute = true;
+	float initspeedX;
 	
 	public RotationCurveController(float rotation) {
 		this.rotation = rotation;
@@ -24,6 +25,7 @@ public class RotationCurveController implements IRotationController{
 			float tx = origineDx * x;
 			float ty = origineDy * x;
 			
+			initspeedX = (float) Math.sqrt(origineDx*origineDx + origineDy*origineDy);
 
 			firstExecute = false;
 		}
@@ -31,9 +33,10 @@ public class RotationCurveController implements IRotationController{
 		float dx = info.getDx();
 		float dy = info.getDy();
 		MathUtil mathUtil = new MathUtil(dx, dy);
+		mathUtil.setINITSPEEDX(initspeedX);
 //		mathUtil.initAngle();
 		mathUtil.genAngle();
-		mathUtil.genSpeedByRotate(30);
+		mathUtil.genSpeedByRotate(rotation);
 //		mathUtil.genSpeed();
 		dx = mathUtil.getSpeedX();
 		dy = mathUtil.getSpeedY();

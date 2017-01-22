@@ -18,7 +18,11 @@ public class MathUtil {
 		this.speedX = speedX;
 		this.speedY = speedY;
 //		BALL_INIT_SPEEDX = 10;
-//		BALL_INIT_SPEEDX;
+//		BALL_INIT_SPEEDX = speedX*2.5f;
+	}
+	
+	public void setINITSPEEDX(float initspeedX){
+		BALL_INIT_SPEEDX = initspeedX;
 	}
 	
 	public void setXY(float speedX, float speedY){
