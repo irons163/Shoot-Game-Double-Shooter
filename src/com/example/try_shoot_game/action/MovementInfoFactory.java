@@ -20,4 +20,8 @@ public class MovementInfoFactory {
 		return infos;
 	}
 	
+	public static MovementActionInfo createSingleRMovementInfo(){
+		MovementActionInfo right = new MovementActionInfo(1000, 200, 10, 0, "R");
+		return right;
+	}
 }

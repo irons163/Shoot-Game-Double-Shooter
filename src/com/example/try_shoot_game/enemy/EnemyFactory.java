@@ -30,19 +30,19 @@ public class EnemyFactory {
 	}
 	
 	public Enemy createRLRedEnemy(int[] enemyInfo){
-		return new RedEnemy(enemyInfo[0], enemyInfo[1], new RLMovementActionFactory().createMovementAction().initTimer());
+		return new RedEnemy(enemyInfo[0], enemyInfo[1], new RLMovementActionFactory().createMovementAction().initMovementAction());
 	}
 	
 	public Enemy createLRRedEnemy(int[] enemyInfo){
-		return new RedEnemy(enemyInfo[0], enemyInfo[1], new LRMovementActionFactory().createMovementAction().initTimer());
+		return new RedEnemy(enemyInfo[0], enemyInfo[1], new LRMovementActionFactory().createMovementAction().initMovementAction());
 	}
 	
 	public Enemy createRLBlueEnemy(int[] enemyInfo){
-		return new BlueEnemy(enemyInfo[0], enemyInfo[1], new RLMovementActionFactory().createMovementAction().initTimer());
+		return new BlueEnemy(enemyInfo[0], enemyInfo[1], new RLMovementActionFactory().createMovementAction().initMovementAction());
 	}
 	
 	public Enemy createLRBlueEnemy(int[] enemyInfo){
-		return new BlueEnemy(enemyInfo[0], enemyInfo[1], new LRMovementActionFactory().createMovementAction().initTimer());
+		return new BlueEnemy(enemyInfo[0], enemyInfo[1], new LRMovementActionFactory().createMovementAction().initMovementAction());
 	}
 	
 	public Enemy createSpecialEnemy(Class<? extends Enemy> enemyClass, Class<? extends MovementActionFactory> actionFactoryClass,int[] enemyInfo){
@@ -50,7 +50,7 @@ public class EnemyFactory {
 		MovementAction action = null;
 		try {
 			if(actionFactoryClass!=null)
-				action = actionFactoryClass.newInstance().createMovementAction().initTimer();
+				action = actionFactoryClass.newInstance().createMovementAction().initMovementAction();
 			enemy = enemyClass.getConstructor(int.class, int.class, MovementAction.class).newInstance(enemyInfo[0], enemyInfo[1], action);
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
@@ -76,7 +76,7 @@ public class EnemyFactory {
 		MovementAction action = null;
 		try {
 			if(actionFactoryClass!=null)
-				action = actionFactoryClass.newInstance().createMovementAction(infos).initTimer();
+				action = actionFactoryClass.newInstance().createMovementAction(infos).initMovementAction();
 			enemy = enemyClass.getConstructor(int.class, int.class, MovementAction.class).newInstance(enemyInfo[0], enemyInfo[1], action);
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
@@ -102,7 +102,7 @@ public class EnemyFactory {
 		MovementAction action = null;
 		try {
 			if(actionFactoryClass!=null)
-				action = actionFactoryClass.newInstance().createMovementAction(infos, decoratorClassList).initTimer();
+				action = actionFactoryClass.newInstance().createMovementAction(infos, decoratorClassList).initMovementAction();
 			enemy = enemyClass.getConstructor(int.class, int.class, MovementAction.class).newInstance(enemyInfo[0], enemyInfo[1], action);
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
@@ -128,7 +128,7 @@ public class EnemyFactory {
 		MovementAction action = null;
 		try {
 			if(actionFactoryClass!=null)
-				action = actionFactoryClass.newInstance().createMovementActionByDecorator(decoratorClassList).initTimer();
+				action = actionFactoryClass.newInstance().createMovementActionByDecorator(decoratorClassList).initMovementAction();
 			enemy = enemyClass.getConstructor(int.class, int.class, MovementAction.class).newInstance(enemyInfo[0], enemyInfo[1], action);
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
@@ -152,7 +152,7 @@ public class EnemyFactory {
 	public Enemy createSpecialEnemy5(Class<? extends Enemy> enemyClass, int[] enemyInfo, MovementAction action){
 		Enemy enemy = null;
 		try {
-			enemy = enemyClass.getConstructor(int.class, int.class, MovementAction.class).newInstance(enemyInfo[0], enemyInfo[1], action.initTimer());
+			enemy = enemyClass.getConstructor(int.class, int.class, MovementAction.class).newInstance(enemyInfo[0], enemyInfo[1], action.initMovementAction());
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

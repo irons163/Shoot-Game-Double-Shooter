@@ -1,26 +1,19 @@
 package com.example.try_shoot_game.action;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import com.rits.cloning.Cloner;
 
 import android.util.Log;
 
-public class DoubleDecorator extends MovementDecorator {
+public class RotationDecorator extends MovementDecorator {
 	private MovementAction action;
 
-	public DoubleDecorator(MovementAction action) {
+	public RotationDecorator(MovementAction action) {
 		this.action = action;
 		this.copyMovementActionList = action.copyMovementActionList;
 	}
 
 	private MovementActionInfo coreCalculationMovementActionInfo(
 			MovementActionInfo info) {
-		info.setTotal(info.getTotal());
-		info.setDelay(info.getDelay());
-		info.setDx(2 * info.getDx());
-		info.setDy(2 * info.getDy());
 		return info;
 	}
 
@@ -41,21 +34,6 @@ public class DoubleDecorator extends MovementDecorator {
 	
 	@Override
 	public MovementAction initMovementAction(){
-//		Cloner cloner=new Cloner();
-//
-//		MovementAction actionClone = cloner.deepClone(this);
-//		
-//		this.actions = actionClone.actions;
-//		action = actionClone.getAction();
-//		action.copyMovementActionList = actionClone.copyMovementActionList;
-		
-//		if (this.getAction().getActions().size() == 0) {
-////			this.getAction().setInfo(action.getInfo());
-//			action.getAction().setInfo(getInfo());
-//			action.getAction().initTimer();
-//
-//		}
-		
 		return initTimer();
 	}
 
@@ -63,13 +41,8 @@ public class DoubleDecorator extends MovementDecorator {
 	protected MovementAction initTimer() {
 
 		if (this.getAction().getActions().size() == 0) {
-
-//			for (MovementAction action : this.getAction().getActions()) {
-//				this.getAction().setInfo(action.getInfo());
 				action.getAction().setInfo(getInfo());
 				action.getAction().initTimer();
-//			}
-
 		} else {	
 			this.getAction().initTimer();
 			doIn();
@@ -118,17 +91,5 @@ public class DoubleDecorator extends MovementDecorator {
 	@Override
 	public void doIn(){
 		action.doIn();
-//		this.getAction().getCurrentInfoList();
-		int i = 0;
-		for (MovementActionInfo info : this.getAction().currentInfoList) {
-			Log.e("count", ++i + "");
-			Log.e("info", info.getDx() + "");
-			this.getAction().setInfo(info);
-			coreCalculationMovementActionInfo(this.getAction().getInfo());
-		}
-
-		for (MovementAction movementItem : this.getAction().movementItemList) {
-			movementItem.initTimer();
-		}
 	}
 }

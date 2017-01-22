@@ -3,15 +3,22 @@ package com.example.try_shoot_game.enemy;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.try_shoot_game.action.PartOfAppendDecorator;
 import com.example.try_shoot_game.action.CopyMoveDecorator;
 import com.example.try_shoot_game.action.DoubleDecorator;
+import com.example.try_shoot_game.action.InverseMoveOrderDecorator;
+import com.example.try_shoot_game.action.InverseMovementInfoAppendDecorator;
 import com.example.try_shoot_game.action.LRMovementActionFactory;
 import com.example.try_shoot_game.action.MovementAction;
 import com.example.try_shoot_game.action.MovementActionDecoratorFactory;
 import com.example.try_shoot_game.action.MovementActionFactory;
+import com.example.try_shoot_game.action.MovementActionItem;
 import com.example.try_shoot_game.action.MovementActionSet;
 import com.example.try_shoot_game.action.MovementInfoFactory;
+import com.example.try_shoot_game.action.PartOfOrigizalDecorator;
 import com.example.try_shoot_game.action.RLMovementActionFactory;
+import com.example.try_shoot_game.action.InverseMovementInfoDecorator;
+import com.example.try_shoot_game.action.ReturnBackDecorator;
 import com.example.try_shoot_game.action.SpecialMovementActionFactory;
 
 import android.graphics.Canvas;
@@ -88,7 +95,7 @@ public class EnemyManager {
 //		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{0, 1100}, actionDD));
 //				enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{0, 1100}, newaction));
 //				enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{0, 1100}, newaction2));
-				enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{0, 1100}, newaction3));
+//				enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{0, 1100}, newaction3));
 		
 //		SpecialMovementActionFactory actionFactory = new SpecialMovementActionFactory();
 //		MovementAction RLDRL = actionFactory.createMovementActionByMerge(new RLMovementActionFactory().createMovementAction(), action);
@@ -97,9 +104,57 @@ public class EnemyManager {
 //		RLDRL.doInfo();
 //		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{0, 1150}, RLDRL));
 	
-				for(MovementAction actionL : MovementAction.list){
-					Log.e("DX", actionL.getInfo().getDx()+"");
-				}
+//		MovementAction newaction4 = new CopyMoveDecorator(new MovementActionSet().addMovementAction(new MovementActionItem(MovementInfoFactory.createSingleRMovementInfo())));
+//		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{100, 500}, newaction4));
+		
+//		MovementAction newaction4 = new MovementActionSet();
+//		newaction4.addMovementAction(new MovementActionItem(MovementInfoFactory.createSingleRMovementInfo()));
+//		MovementAction newaction4 = new MovementActionItem(MovementInfoFactory.createSingleRMovementInfo());
+//		newaction4 = new MovementActionSet().addMovementAction(newaction4.addMovementAction(new MovementActionItem(MovementInfoFactory.createSingleRMovementInfo())));
+//		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{100, 500}, newaction4));
+//		MovementAction newaction4 = new DoubleDecorator(new MovementActionItem(MovementInfoFactory.createSingleRMovementInfo()));
+//		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{100, 500}, newaction4));
+//		MovementAction newaction4 = new ReturnBackMoveDecorator(new MovementActionItem(MovementInfoFactory.createSingleRMovementInfo()));
+//		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{100, 500}, newaction4));
+//		MovementAction newaction4 = new InverseMovementInfoDecorator(new SpecialMovementActionFactory().createMovementAction(MovementInfoFactory.createSquareMovementInfo()));
+//		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{100, 500}, newaction4));
+//		MovementAction newaction4 = new InverseMoveOrderDecorator(new MovementActionSet());
+//		newaction4.addMovementAction(new SpecialMovementActionFactory().createMovementAction(MovementInfoFactory.createSquareMovementInfo()));
+//		newaction4.addMovementAction(new MovementActionItem(MovementInfoFactory.createSingleRMovementInfo()));
+//		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{100, 500}, newaction4));
+//		MovementAction newaction4 = new ReturnBackDecorator(new SpecialMovementActionFactory().createMovementAction(MovementInfoFactory.createSquareMovementInfo()));
+//		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{100, 500}, newaction4));
+//		MovementAction newaction4 = new ReturnBackDecorator(new MovementActionSet());
+//		newaction4.addMovementAction(new SpecialMovementActionFactory().createMovementAction(MovementInfoFactory.createSquareMovementInfo()));
+//		newaction4.addMovementAction(new MovementActionItem(MovementInfoFactory.createSingleRMovementInfo()));
+//		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{100, 500}, newaction4));
+//		MovementAction newaction4 = new InverseMovementInfoAppendDecorator(new MovementActionSet());
+//		newaction4.addMovementAction(new SpecialMovementActionFactory().createMovementAction(MovementInfoFactory.createSquareMovementInfo()));
+//		newaction4.addMovementAction(new MovementActionItem(MovementInfoFactory.createSingleRMovementInfo()));
+//		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{100, 500}, newaction4));
+//		MovementAction newaction4 = new CopyMoveDecorator(new DoubleDecorator(new AffterHalfPartDecorator(new InverseMovementInfoAppendDecorator(new MovementActionSet()))));
+//		newaction4.addMovementAction(new SpecialMovementActionFactory().createMovementAction(MovementInfoFactory.createSquareMovementInfo()));
+//		newaction4.addMovementAction(new MovementActionItem(MovementInfoFactory.createSingleRMovementInfo()));
+//		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{100, 500}, newaction4));
+//		MovementAction newaction4 = new DoubleDecorator(new CopyMoveDecorator(new DoubleDecorator(new AffterHalfPartDecorator(new InverseMovementInfoAppendDecorator(new MovementActionSet())))));
+//		newaction4.addMovementAction(new SpecialMovementActionFactory().createMovementAction(MovementInfoFactory.createSquareMovementInfo()));
+//		newaction4.addMovementAction(new MovementActionItem(MovementInfoFactory.createSingleRMovementInfo()));
+//		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{300, 500}, newaction4));
+//		MovementAction newaction4 = new DoubleDecorator(new PartOfAppendDecorator(new CopyMoveDecorator(new DoubleDecorator(new PartOfAppendDecorator(new InverseMovementInfoAppendDecorator(new MovementActionSet()))))));
+//		newaction4.addMovementAction(new SpecialMovementActionFactory().createMovementAction(MovementInfoFactory.createSquareMovementInfo()));
+//		newaction4.addMovementAction(new MovementActionItem(MovementInfoFactory.createSingleRMovementInfo()));
+//		newaction4 = new DoubleDecorator(new MovementActionSet().addMovementAction(newaction4));
+//		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{300, 500}, newaction4));
+//		MovementAction newaction4 = new DoubleDecorator(new PartOfOrigizalDecorator(new CopyMoveDecorator(new CopyMoveDecorator(new DoubleDecorator(new PartOfAppendDecorator(new InverseMovementInfoAppendDecorator(new MovementActionSet())))))));
+//		newaction4.addMovementAction(new SpecialMovementActionFactory().createMovementAction(MovementInfoFactory.createSquareMovementInfo()));
+//		newaction4.addMovementAction(new MovementActionItem(MovementInfoFactory.createSingleRMovementInfo()));
+//		newaction4 = new DoubleDecorator(new MovementActionSet().addMovementAction(newaction4));
+//		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{800, 500}, newaction4));
+		MovementAction newaction4 = new DoubleDecorator(new PartOfOrigizalDecorator(new CopyMoveDecorator(new PartOfAppendDecorator(new CopyMoveDecorator(new DoubleDecorator(new PartOfAppendDecorator(new InverseMovementInfoAppendDecorator(new MovementActionSet()))))))));
+		newaction4.addMovementAction(new SpecialMovementActionFactory().createMovementAction(MovementInfoFactory.createSquareMovementInfo()));
+		newaction4.addMovementAction(new MovementActionItem(MovementInfoFactory.createSingleRMovementInfo()));
+		newaction4 = new DoubleDecorator(new MovementActionSet().addMovementAction(newaction4));
+		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{800, 500}, newaction4));
 	}
 	
 	public List<Enemy> getEnemies(){

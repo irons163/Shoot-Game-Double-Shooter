@@ -6,10 +6,10 @@ import java.util.List;
 
 import android.util.Log;
 
-public class CopyMoveDecorator extends MovementDecorator {
+public class PartOfOrigizalDecorator extends MovementDecorator {
 	private MovementAction action;
 	boolean doing = false;
-	public CopyMoveDecorator(MovementAction action) {
+	public PartOfOrigizalDecorator(MovementAction action) {
 		this.action = action;
 		this.copyMovementActionList = action.copyMovementActionList;
 	}
@@ -21,7 +21,6 @@ public class CopyMoveDecorator extends MovementDecorator {
 		if(this.getAction().getActions().size() != 0){
 			MovementAction action = new MovementActionItem(newInfo);
 			copyMovementActionList.add(action);
-			this.getAction().totalCopyMovementActionList.add(action);
 		}
 		return newInfo;
 	}
@@ -87,7 +86,17 @@ public class CopyMoveDecorator extends MovementDecorator {
 	@Override
 	public List<MovementActionInfo> getCurrentInfoList() {
 		// TODO Auto-generated method stub
-		return action.getCurrentInfoList();
+		if(this.getAction().isCancelFocusAppendPart || isCancelFocusAppendPart){
+			return action.getCurrentInfoList();
+		}else{
+			List<MovementActionInfo> infos = action.getCurrentInfoList();
+			List<MovementActionInfo> newInfos = new ArrayList<MovementActionInfo>();
+			for(int i = infos.size() - 2*copyMovementActionList.size() ; i < infos.size() - copyMovementActionList.size(); i++){
+				MovementActionInfo info = infos.get(i);
+				newInfos.add(info);
+			}
+			return newInfos;
+		}
 	}
 	
 	@Override
@@ -104,26 +113,9 @@ public class CopyMoveDecorator extends MovementDecorator {
 	public void doIn(){		
 		action.doIn();
 		doing = true;
-		copyMovementActionList.clear();
-//		this.getAction().getCurrentInfoList();
-
-		int i = 0;
-		for (MovementActionInfo info : this.getAction().currentInfoList) {
-			Log.e("count", ++i + "");
-			Log.e("info", info.getDx() + "");
-			this.getAction().setInfo(info);
-			coreCalculationMovementActionInfo(this.getAction().getInfo());
-		}
-
-		for (MovementAction action : copyMovementActionList) {
-			this.getAction().addMovementAction(action);
-			this.getAction().movementItemList.add(action);
-			action.description = "copyAppend";
-			action.initTimer();
-		}
-
-		for (MovementAction movementItem : this.getAction().movementItemList) {
-			movementItem.initTimer();
-		}
+//		copyMovementActionList.clear();
+		
+		this.getAction().currentInfoList =  this.getCurrentInfoList();
+		this.isCancelFocusAppendPart = true;
 	}
 }

@@ -1,29 +1,25 @@
 package com.example.try_shoot_game.action;
 
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Collections;
 import java.util.List;
 
 import android.util.Log;
 
-public class CopyMoveDecorator extends MovementDecorator {
+public class InverseMoveOrderDecorator extends MovementDecorator {
 	private MovementAction action;
-	boolean doing = false;
-	public CopyMoveDecorator(MovementAction action) {
+
+	public InverseMoveOrderDecorator(MovementAction action) {
 		this.action = action;
 		this.copyMovementActionList = action.copyMovementActionList;
 	}
 
 	private MovementActionInfo coreCalculationMovementActionInfo(
 			MovementActionInfo info) {
-		
-		MovementActionInfo newInfo = new MovementActionInfo(info.getTotal(), info.getDelay(), info.getDx(), info.getDy(), info.getDescription());
-		if(this.getAction().getActions().size() != 0){
-			MovementAction action = new MovementActionItem(newInfo);
-			copyMovementActionList.add(action);
-			this.getAction().totalCopyMovementActionList.add(action);
-		}
-		return newInfo;
+//		info.setTotal(info.getTotal());
+//		info.setDelay(info.getDelay());
+//		info.setDx(2 * info.getDx());
+//		info.setDy(2 * info.getDy());
+		return info;
 	}
 
 	@Override
@@ -38,7 +34,12 @@ public class CopyMoveDecorator extends MovementDecorator {
 
 	@Override
 	public String getDescription() {
-		return "Copy " + action.getDescription();
+		return "Double " + action.getDescription();
+	}
+	
+	@Override
+	public MovementAction initMovementAction(){
+		return initTimer();
 	}
 
 	@Override
@@ -48,14 +49,11 @@ public class CopyMoveDecorator extends MovementDecorator {
 
 //			for (MovementAction action : this.getAction().getActions()) {
 //				this.getAction().setInfo(action.getInfo());
-//				action.getAction().setInfo(getInfo());
-//				action.getAction().initTimer();
+				action.getAction().setInfo(getInfo());
+				action.getAction().initTimer();
 //			}
-			MovementActionInfo info = action.getInfo();
-			action.getAction().setInfo(info);
-			action.getAction().initTimer();
 
-		} else {		
+		} else {	
 			this.getAction().initTimer();
 			doIn();
 		}
@@ -101,12 +99,9 @@ public class CopyMoveDecorator extends MovementDecorator {
 	}
 	
 	@Override
-	public void doIn(){		
+	public void doIn(){
 		action.doIn();
-		doing = true;
-		copyMovementActionList.clear();
-//		this.getAction().getCurrentInfoList();
-
+		this.getAction().getCurrentInfoList();
 		int i = 0;
 		for (MovementActionInfo info : this.getAction().currentInfoList) {
 			Log.e("count", ++i + "");
@@ -114,16 +109,19 @@ public class CopyMoveDecorator extends MovementDecorator {
 			this.getAction().setInfo(info);
 			coreCalculationMovementActionInfo(this.getAction().getInfo());
 		}
-
-		for (MovementAction action : copyMovementActionList) {
-			this.getAction().addMovementAction(action);
-			this.getAction().movementItemList.add(action);
-			action.description = "copyAppend";
-			action.initTimer();
-		}
-
+		
+		inverseOrder(this);
+		
 		for (MovementAction movementItem : this.getAction().movementItemList) {
 			movementItem.initTimer();
 		}
+	}
+	
+	private void inverseOrder(MovementAction targetAction){
+		Collections.reverse(targetAction.getAction().getActions());
+		for(MovementAction action : targetAction.getAction().getActions()){
+			inverseOrder(action);
+		}
+//			inverseOrder(targetAction.get)
 	}
 }

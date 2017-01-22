@@ -17,7 +17,9 @@ public abstract class MovementAction {
 	
 	List<MovementAction> movementItemList = new ArrayList<MovementAction>();
 	
-	public static List<MovementAction> list = new ArrayList<MovementAction>();
+	List<MovementAction> totalCopyMovementActionList = new ArrayList<MovementAction>();
+	
+	protected boolean isCancelFocusAppendPart = false;
 	
 	public MovementAction addMovementAction(MovementAction action) {
 		throw new UnsupportedOperationException();
@@ -44,19 +46,17 @@ public abstract class MovementAction {
 		public void onTick(float dx, float dy);
 	}
 	
-	public MovementAction initTimer(){
+	public MovementAction initMovementAction(){
+		return initTimer();
+	}
+	
+	protected MovementAction initTimer(){
 		return this;
 		
 	}
 	
-	public abstract float getDx();
-	
 	public MovementAction getAction(){
 		return this;
-	}
-	
-	public void setDx(float dx){
-
 	}
 	
 	public List<MovementAction> getActions(){
@@ -72,16 +72,6 @@ public abstract class MovementAction {
 	public String getDescription(){
 		return description;
 	}
-	
-	public boolean isSet(){
-		return false;
-	}
-	
-//	public void addList(MovementActionInfo info){
-//		this.currentInfoList.add(info);
-//	}
-	
-	public abstract MovementActionInfo getCurrentInfo();
 	
 	public abstract List<MovementAction> getCurrentActionList();
 	
@@ -102,4 +92,18 @@ public abstract class MovementAction {
 	public void doIn(){
 		
 	}
+
+	public List<MovementActionInfo> getStartMovementInfoList() {
+		getCurrentInfoList();
+		return getMovementInfoList();
+	}
+
+	public boolean isCancelFocusAppendPart() {
+		return isCancelFocusAppendPart;
+	}
+
+	public void setCancelFocusAppendPart(boolean isCancelFocusAppendPart) {
+		this.isCancelFocusAppendPart = isCancelFocusAppendPart;
+	}
+	
 }

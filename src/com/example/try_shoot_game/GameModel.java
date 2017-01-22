@@ -58,6 +58,8 @@ public class GameModel implements IGameModel{
 			x = event.getX();
 			y = event.getY();
 			
+			enemyManager.startMoveEnemies();
+			
 		}else if(event.getAction() == MotionEvent.ACTION_MOVE){
 			float dx = event.getX() - x;
 			float dy = event.getY() - y;
@@ -212,6 +214,6 @@ public class GameModel implements IGameModel{
 	@Override
 	public void process() {
 		// TODO Auto-generated method stub
-		enemyManager.startMoveEnemies();
+		
 	}
 }

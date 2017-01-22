@@ -1,15 +1,14 @@
 package com.example.try_shoot_game.action;
 
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Collections;
 import java.util.List;
 
 import android.util.Log;
 
-public class CopyMoveDecorator extends MovementDecorator {
+public class InverseMovementInfoAppendDecorator extends MovementDecorator{
 	private MovementAction action;
-	boolean doing = false;
-	public CopyMoveDecorator(MovementAction action) {
+
+	public InverseMovementInfoAppendDecorator(MovementAction action) {
 		this.action = action;
 		this.copyMovementActionList = action.copyMovementActionList;
 	}
@@ -23,7 +22,12 @@ public class CopyMoveDecorator extends MovementDecorator {
 			copyMovementActionList.add(action);
 			this.getAction().totalCopyMovementActionList.add(action);
 		}
-		return newInfo;
+		
+		newInfo.setTotal(info.getTotal());
+		newInfo.setDelay(info.getDelay());
+		newInfo.setDx(-info.getDx());
+		newInfo.setDy(-info.getDy());
+		return info;
 	}
 
 	@Override
@@ -38,7 +42,12 @@ public class CopyMoveDecorator extends MovementDecorator {
 
 	@Override
 	public String getDescription() {
-		return "Copy " + action.getDescription();
+		return "Double " + action.getDescription();
+	}
+	
+	@Override
+	public MovementAction initMovementAction(){	
+		return initTimer();
 	}
 
 	@Override
@@ -46,16 +55,10 @@ public class CopyMoveDecorator extends MovementDecorator {
 
 		if (this.getAction().getActions().size() == 0) {
 
-//			for (MovementAction action : this.getAction().getActions()) {
-//				this.getAction().setInfo(action.getInfo());
-//				action.getAction().setInfo(getInfo());
-//				action.getAction().initTimer();
-//			}
-			MovementActionInfo info = action.getInfo();
-			action.getAction().setInfo(info);
-			action.getAction().initTimer();
+				action.getAction().setInfo(getInfo());
+				action.getAction().initTimer();
 
-		} else {		
+		} else {	
 			this.getAction().initTimer();
 			doIn();
 		}
@@ -101,29 +104,60 @@ public class CopyMoveDecorator extends MovementDecorator {
 	}
 	
 	@Override
-	public void doIn(){		
+	public void doIn(){
 		action.doIn();
-		doing = true;
 		copyMovementActionList.clear();
-//		this.getAction().getCurrentInfoList();
-
+		this.getAction().getCurrentInfoList();
 		int i = 0;
-		for (MovementActionInfo info : this.getAction().currentInfoList) {
+		
+//		for(MovementAction action : this.getAction().getActions()){
+//			
+//			MovementActionInfo newInfo = new MovementActionInfo(action.get.getTotal(), info.getDelay(), info.getDx(), info.getDy(), info.getDescription());
+//			MovementAction action = new MovementActionItem(newInfo);
+//			copyMovementActionList.add(action);
+//		}
+		
+		for (int j=0; j<this.getAction().currentInfoList.size(); j++) {
+			MovementActionInfo info = this.getAction().currentInfoList.get(j); 
 			Log.e("count", ++i + "");
 			Log.e("info", info.getDx() + "");
 			this.getAction().setInfo(info);
-			coreCalculationMovementActionInfo(this.getAction().getInfo());
+			
+//			if(j < copyMovementActionList.size()){
+//				this.getAction().getInfo();
+//			}else{
+				coreCalculationMovementActionInfo(this.getAction().getInfo());
+//			}
 		}
-
-		for (MovementAction action : copyMovementActionList) {
+		
+		for(MovementAction action : copyMovementActionList){
 			this.getAction().addMovementAction(action);
 			this.getAction().movementItemList.add(action);
-			action.description = "copyAppend";
+			action.description = "inverseAppend";
 			action.initTimer();
 		}
+		
+//		inverseOrder(this);
+		
+		
 
 		for (MovementAction movementItem : this.getAction().movementItemList) {
 			movementItem.initTimer();
+		}
+		
+	}
+	
+	private void inverseOrder(MovementAction targetAction){
+		Collections.reverse(targetAction.getAction().getActions());
+		for(MovementAction action : targetAction.getAction().getActions()){
+			inverseOrder(action);
+		}
+//			inverseOrder(targetAction.get)
+	}
+	
+	private void append(MovementAction targetAction){
+		for(MovementAction action : targetAction.getAction().getActions()){
+			this.addMovementAction(action);
 		}
 	}
 }

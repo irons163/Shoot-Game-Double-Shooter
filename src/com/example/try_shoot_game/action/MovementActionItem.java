@@ -28,7 +28,6 @@ public class MovementActionItem extends MovementAction{
 		info = new MovementActionInfo(millisTotal, millisDelay, dx, dy);
 		this.description = description + ",";
 		movementItemList.add(this);
-		MovementAction.list.add(this);
 	}
 	
 	public MovementActionItem(MovementActionInfo info){
@@ -40,7 +39,6 @@ public class MovementActionItem extends MovementAction{
 			this.description = info.getDescription() + ",";
 		this.info = info;
 		movementItemList.add(this);
-		MovementAction.list.add(this);
 	}
 	
 	@Override
@@ -56,21 +54,9 @@ public class MovementActionItem extends MovementAction{
 		
 		countDownTimer.start();
 	}
-
-	@Override
-	public float getDx() {
-		// TODO Auto-generated method stub
-		return dx;
-	}
 	
 	@Override
-	public void setDx(float dx) {
-		// TODO Auto-generated method stub
-		this.dx = dx;
-	}
-	
-	@Override
-	public MovementAction initTimer(){
+	protected MovementAction initTimer(){
 		millisTotal = info.getTotal();
 		millisDelay = info.getDelay();
 		dx = info.getDx();
@@ -123,12 +109,6 @@ public class MovementActionItem extends MovementAction{
 		// TODO Auto-generated method stub
 		this.info = info;
 	}
-
-	@Override
-	public MovementActionInfo getCurrentInfo() {
-		// TODO Auto-generated method stub
-		return info;
-	}
 	
 	@Override
 	public List<MovementAction> getCurrentActionList() {
@@ -141,6 +121,13 @@ public class MovementActionItem extends MovementAction{
 	@Override
 	public List<MovementActionInfo> getCurrentInfoList() {
 		// TODO Auto-generated method stub
+		List<MovementActionInfo> infos = new ArrayList<MovementActionInfo>();
+		infos.add(this.info);
+		return infos;
+	}
+	
+	@Override
+	public List<MovementActionInfo> getMovementInfoList() {
 		List<MovementActionInfo> infos = new ArrayList<MovementActionInfo>();
 		infos.add(this.info);
 		return infos;

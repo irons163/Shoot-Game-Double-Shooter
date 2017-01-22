@@ -8,20 +8,12 @@ import com.rits.cloning.Cloner;
 
 public class MovementActionSet extends MovementAction {
 	private boolean isActionFinish = true;
-//	private int dx;
 	private MovementActionInfo info;
-	private MovementAction lastestAction;
-	private MovementActionInfo lastestInfo;
 	
 	@Override
 	public MovementAction addMovementAction(MovementAction action) {
 		// TODO Auto-generated method stub
 		actions.add(action);
-//		description = "Set[";
-		lastestAction = action;
-		
-//		lastestInfo = action.getCurrentInfo();
-//		addList(lastestInfo);
 		
 		getCurrentActionList();
 		getCurrentInfoList();
@@ -48,13 +40,15 @@ public class MovementActionSet extends MovementAction {
 				@Override
 				public void run() {
 					// TODO Auto-generated method stub
-					while (actions.size() != 0) {
-						MovementAction action = actions.get(0).getAction();
-						actions.remove(0);
+					List<MovementAction> actionss = actions;
+					for(MovementAction action : actions){
+//					while (actions.size() != 0) {
+//						MovementAction action = actions.get(0).getAction();
+//						actions.remove(0);
 						action.start();
-						synchronized (action) {
+						synchronized (action.getAction()) {
 							try {
-								action.wait();
+								action.getAction().wait();
 							} catch (InterruptedException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -72,67 +66,44 @@ public class MovementActionSet extends MovementAction {
 			thread.start();
 		}
 	}
-
-	@Override
-	public float getDx() {
-		// TODO Auto-generated method stub
-//		return dx;
-		return 0;
-	}
-//	
-//	@Override
-//	public void setDx(int dx) {
-//		// TODO Auto-generated method stub
-//		this.dx = dx;
-//	}
-
-//	@Override
-//	public void initInfo(){
-//		for (MovementAction action : actions) {
-//			int dx = action.getDx();
-//			action.getAction().setDx(dx);		
-//		}
-//	}
 	
 	@Override
-	public MovementAction initTimer() {
-//		getAction().getDx();
-		
+	public MovementAction initMovementAction(){
 //		Cloner cloner=new Cloner();
 //
 //		MovementAction actionClone = cloner.deepClone(this);
+//		
+//		this.actions = actionClone.actions;
 		
-		
-		
+		return initTimer();
+	}
+	
+	@Override
+	protected MovementAction initTimer() {
+	
 		for (MovementAction action : this.actions) {
 			
 			if(action.getAction().getActions().size()==0){
 			
-				MovementActionInfo info = action.getInfo();
-				action.getAction().setInfo(info);
-				action.getAction().initTimer();
+//				MovementActionInfo info = action.getInfo();
+//				action.getAction().setInfo(info);
+//				action.getAction().initTimer();
+				action.initTimer();
 			}else{
 				action.initTimer();
 				
 			}
-			for(MovementAction movementAction : action.copyMovementActionList){
+//			for(MovementAction movementAction : action.copyMovementActionList){
+//				this.getAction().movementItemList.add(movementAction);
+//			}
+			for(MovementAction movementAction : action.getAction().totalCopyMovementActionList){
 				this.getAction().movementItemList.add(movementAction);
 			}
+			
+			action.getAction().setCancelFocusAppendPart(true);
 		}
 		this.getAction().getCurrentInfoList();
-		
-//		for (MovementAction action : actions) {
-//			
-//			if(action.getAction().getActions().size()==0){
-//			
-//				MovementActionInfo info = action.getInfo();
-//				action.getAction().setInfo(info);
-//				action.getAction().initTimer();
-//			}else{
-//				action.initTimer();
-//			}
-//		}
-		
+
 		return this;
 	}	
 	
@@ -168,23 +139,6 @@ public class MovementActionSet extends MovementAction {
 	}
 	
 	@Override
-	public boolean isSet(){
-		boolean isSet = false;
-		for(MovementAction action : actions){
-			isSet = action.isSet();
-			if(isSet)
-				break;
-		}
-		return isSet;
-	}
-
-	@Override
-	public MovementActionInfo getCurrentInfo() {
-		// TODO Auto-generated method stub
-		return info;
-	}
-	
-	@Override
 	public List<MovementAction> getCurrentActionList() {
 		// TODO Auto-generated method stub
 		
@@ -195,32 +149,13 @@ public class MovementActionSet extends MovementAction {
 			}
 		}
 		
-		
-//		for(MovementAction actionItem : lastestAction.getCurrentActionList()){
-//			movementItemList.add(actionItem);
-//		}
-
-		
-//		for(MovementAction action : actions){
-//			for(MovementAction actionItem : action.getCurrentActionList()){
-//				movementItemList.add(actionItem);
-//			}
-//		}
-		
 		return movementItemList;
 	}
 	
 	@Override
 	public List<MovementActionInfo> getCurrentInfoList() {
 		// TODO Auto-generated method stub
-//		if(currentInfoList.size()>0){
-//			
-//		}else{
-//			for(MovementActionInfo actionItem : lastestAction.getCurrentInfoList()){
-//				currentInfoList.add(actionItem);
-//			}
-//		}
-		
+
 		currentInfoList.clear();
 		for(MovementAction action : actions){
 			for(MovementActionInfo actionItem : action.getCurrentInfoList()){
@@ -230,9 +165,4 @@ public class MovementActionSet extends MovementAction {
 		
 		return currentInfoList;
 	}
-	
-//	@Override
-//	public void doIn(){
-//		this.initTimer();
-//	}
 }
