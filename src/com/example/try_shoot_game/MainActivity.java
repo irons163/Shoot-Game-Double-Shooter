@@ -1,5 +1,8 @@
 package com.example.try_shoot_game;
 
+import com.example.try_gameengine.framework.LayerManager;
+import com.example.try_shoot_game.scene.Scene;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.util.DisplayMetrics;
@@ -21,8 +24,12 @@ public class MainActivity extends Activity {
 		
 		BitmapUtil.initBitmap(this);
 		
-		gameModel = new GameModel(this);
-		gameController = new GameController(this, gameModel);
+		LayerManager.initLayerManager();
+		
+		Scene scene = new MyScene(this, "a", 1);
+		
+//		gameModel = new GameModel(this);
+//		gameController = new GameController(this, gameModel);
 	}
 
 	@Override

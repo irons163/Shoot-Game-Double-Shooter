@@ -22,6 +22,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, IMo
 	private SurfaceHolder surfaceHolder;
 	
 	private boolean isGameRun = true;
+	private boolean isGameStop = false;
+	private boolean isGameReallyStop = false;
+	private boolean isSurfaceCreated = false;
+	
 	private int[][] allExistPoints;
 	
 	
@@ -88,10 +92,57 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, IMo
 			while(isGameRun){
 				process();
 				draw();
+				if(isGameStop){
+					synchronized (GameView.this) {
+						try {
+							isGameReallyStop = true;
+							GameView.this.wait();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
 			}
 		}
 	});
 
+	public void stop(){
+		isGameStop = true;
+		for(int i =0; i< 10; i++){
+			if(isGameReallyStop)
+				break;
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void restart(){
+		isGameStop = false;
+		
+		
+//		for(int i =0; i< 100; i++){
+//			if(isSurfaceCreated)
+//				break;
+//			try {
+//				Thread.sleep(200);
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}	
+	}
+	
+	private void r(){
+		synchronized (GameView.this) {
+			GameView.this.notify();
+		}	
+	}
+	
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
 			int height) {
@@ -102,13 +153,21 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, IMo
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
 		// TODO Auto-generated method stub
-		gameThread.start();
+		if(!gameThread.isAlive())
+			gameThread.start();
+		isSurfaceCreated = true;
+		if(isGameReallyStop=true){
+			isGameReallyStop = false;
+			r();
+		}
+		
 	}
 
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
 		// TODO Auto-generated method stub
-		
+		isSurfaceCreated = false;
 	}
 
+	
 }

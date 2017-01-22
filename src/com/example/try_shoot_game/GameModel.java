@@ -17,7 +17,7 @@ public class GameModel implements IGameModel{
 	private EnemyManager enemyManager;
 	Crosshair crosshair;
 	
-	public GameModel(Context context) {
+	public GameModel(Context context, int level) {
 		// TODO Auto-generated constructor stub
 		this.context = context;
 		
@@ -26,7 +26,10 @@ public class GameModel implements IGameModel{
 		
 		crosshair = new Crosshair();
 		
-		enemyManager.createLevel1Enemy();
+		if(level==1)
+			enemyManager.createLevel1Enemy();
+		else if(level==2)
+			enemyManager.createLevel2Enemy();
 		
 		enemyManager.showEnemiesMovementDescriptioins();
 		

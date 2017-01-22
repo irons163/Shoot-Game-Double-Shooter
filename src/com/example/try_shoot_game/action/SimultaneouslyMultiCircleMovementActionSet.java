@@ -3,6 +3,8 @@ package com.example.try_shoot_game.action;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.try_gameengine.framework.Sprite;
+
 import android.graphics.PointF;
 
 public class SimultaneouslyMultiCircleMovementActionSet extends MovementAction {
@@ -13,7 +15,7 @@ public class SimultaneouslyMultiCircleMovementActionSet extends MovementAction {
 	
 	private List<MovementAction> cancelActions = new ArrayList<MovementAction>();
 	List<MovementActionInfo> infos;
-	Mediator mediator;
+	public Mediator mediator;
 	
 	@Override
 	public MovementAction addMovementAction(MovementAction action) {
@@ -42,6 +44,28 @@ public class SimultaneouslyMultiCircleMovementActionSet extends MovementAction {
 		for(MovementActionInfo info : infos){
 			((ICircleController)info.getRotationController()).setMediator(mediator);
 		}
+	}
+	
+	public PointF notyMediator(ICircleController circle3Controller, float mx, float my, float angle){
+		return mediator.noty(circle3Controller, mx, my, angle);
+	}
+	
+	public PointF notyMediator2(ICircleController circle3Controller, float mx, float my, float angle){
+		return mediator.noty2(circle3Controller, mx, my, angle);
+	}
+	
+	Sprite centerSprite;
+	
+	public void setCenterSprite(Sprite centerSprite){
+		this.centerSprite = centerSprite;
+	}
+	
+	public float getCenterSpriteX(){
+		return centerSprite.centerX;
+	}
+	
+	public float getCenterSpriteY(){
+		return centerSprite.centerY;
 	}
 
 	@Override
@@ -236,6 +260,25 @@ class Mediator{
 				if(info.getRotationController().equals(circle3Controller)){
 					isAction = true;
 				}
+			}
+		}
+		return pointF;
+	}
+	
+	public PointF noty2(ICircleController circle3Controller, float mx, float my, float angle){
+//		if(infos.indexOf(circle3Controller)){
+//			
+//		}
+		PointF pointF = null;
+		boolean isAction = false;
+		for(MovementActionInfo info : infos){
+			if(info.getRotationController().equals(circle3Controller)){
+				isAction = true;
+//				pointF.set(mx, my);
+				pointF = new PointF(mx, my);
+			}
+			if(isAction){
+				pointF = ((ICircleController)info.getRotationController()).action(pointF.x, pointF.y, angle);
 			}
 		}
 		return pointF;

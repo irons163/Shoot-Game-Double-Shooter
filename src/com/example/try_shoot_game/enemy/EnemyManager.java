@@ -3,6 +3,7 @@ package com.example.try_shoot_game.enemy;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.try_gameengine.framework.ALayer;
 import com.example.try_shoot_game.action.CircleDecorator;
 import com.example.try_shoot_game.action.GravityCyclePathMovementInfoAppendDecorator;
 import com.example.try_shoot_game.action.GravityInverseAngelMovementInfoAppendDecorator;
@@ -232,7 +233,29 @@ public class EnemyManager {
 		newaction4.addMovementAction(new MovementActionItem(MovementInfoFactory.create3SubCircleMovementInfo()));
 		((SimultaneouslyMultiCircleMovementActionSet)newaction4).setMediator();
 		newaction4.setMovementActionController(new MovementAtionController());
-		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{500, 800}, newaction4));
+		Enemy enemy = enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{500, 800}, newaction4);
+		enemies.add(enemy);
+		
+		MovementAction newaction5 = new SimultaneouslyMultiCircleMovementActionSet();
+		newaction5.addMovementAction(new MovementActionItem(MovementInfoFactory.create32CircleMovementInfo()));
+		newaction5.addMovementAction(new MovementActionItem(MovementInfoFactory.create3Sub2CircleMovementInfo()));
+		((SimultaneouslyMultiCircleMovementActionSet)newaction5).setMediator();
+		newaction5.setMovementActionController(new MovementAtionController());
+		Enemy layer = enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{600, 900}, newaction5);
+		enemies.add((Enemy)layer);
+		
+		enemy.registerObserver(layer);
+		
+		
+		
+	}
+	
+	public void createLevel2Enemy(){
+		EnemyFactory enemyFactory = new EnemyFactory();
+		enemies.add(enemyFactory.createRLRedEnemy(new int[]{50, 50}));
+		enemies.add(enemyFactory.createRLBlueEnemy(new int[]{100, 100}));
+		enemies.add(enemyFactory.createSpecialEnemy(BlueEnemy.class, RLMovementActionFactory.class, new int[]{150, 150}));
+		enemies.add(enemyFactory.createSpecialEnemy2(BlueEnemy.class, SpecialMovementActionFactory.class, new int[]{300, 300}, MovementInfoFactory.createSquareMovementInfo()));
 	}
 	
 	public List<Enemy> getEnemies(){
@@ -241,7 +264,8 @@ public class EnemyManager {
 	
 	public void drawEnemies(Canvas canvas){
 		for(Enemy enemy : enemies){
-			enemy.draw(canvas);
+//			enemy.draw(canvas);
+			enemy.drawSelf(canvas, null);
 		}
 	}
 	

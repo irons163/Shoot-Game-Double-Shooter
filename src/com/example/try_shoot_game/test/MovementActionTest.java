@@ -3,7 +3,10 @@ package com.example.try_shoot_game.test;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.try_shoot_game.action.PartOfAppendDecorator;
+import android.test.AndroidTestCase;
+
+import com.example.try_gameengine.framework.LayerManager;
+import com.example.try_shoot_game.BitmapUtil;
 import com.example.try_shoot_game.action.CopyMoveDecorator;
 import com.example.try_shoot_game.action.DoubleDecorator;
 import com.example.try_shoot_game.action.InverseMoveOrderDecorator;
@@ -15,6 +18,7 @@ import com.example.try_shoot_game.action.MovementActionInfo;
 import com.example.try_shoot_game.action.MovementActionItem;
 import com.example.try_shoot_game.action.MovementActionSet;
 import com.example.try_shoot_game.action.MovementInfoFactory;
+import com.example.try_shoot_game.action.PartOfAppendDecorator;
 import com.example.try_shoot_game.action.PartOfOrigizalDecorator;
 import com.example.try_shoot_game.action.RLMovementActionFactory;
 import com.example.try_shoot_game.action.SpecialMovementActionFactory;
@@ -22,8 +26,6 @@ import com.example.try_shoot_game.enemy.BlueEnemy;
 import com.example.try_shoot_game.enemy.Enemy;
 import com.example.try_shoot_game.enemy.EnemyFactory;
 import com.example.try_shoot_game.enemy.RedEnemy;
-
-import android.test.AndroidTestCase;
 
 public class MovementActionTest extends AndroidTestCase{
 
@@ -298,6 +300,8 @@ public class MovementActionTest extends AndroidTestCase{
 	}
 
 	public void testActionInfo() throws Exception{
+		LayerManager.initLayerManager();
+		BitmapUtil.initBitmap(mContext);
 		List<MovementActionInfo> correctInfoList = new ArrayList<MovementActionInfo>();
 		correctInfoList.add(new MovementActionInfo(1000, 200, 40f, 0f));
 		correctInfoList.add(new MovementActionInfo(1000, 200, -40f, 0f));

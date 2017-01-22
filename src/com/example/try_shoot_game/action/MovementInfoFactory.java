@@ -66,7 +66,8 @@ public class MovementInfoFactory {
 	}
 	
 	public static MovementActionInfo createSingleRMovementInfo(){
-		MovementActionInfo right = new MovementActionInfo(4000, 500, 3, 0, "R");
+//		MovementActionInfo right = new MovementActionInfo(4000, 500, 3, 0, "R");
+		MovementActionInfo right = new MovementActionInfo(1000, 200, 10, 0, "R");
 		return right;
 	}
 	
@@ -141,19 +142,25 @@ public class MovementInfoFactory {
 	}
 	
 	public static MovementActionInfo create3CircleMovementInfo(){
-		MovementActionInfo right = new MovementActionInfo(24000, 100, 10, 0, "R", new Circle33Controller(-10, 400, 700, 450, 750));
+		MovementActionInfo right = new MovementActionInfo(24000, 100, 10, 0, "R", new Circle33Controller(5, 400, 700, 450, 750));
 		GameView.circleController1 = (ICircleController) right.getRotationController();
 		return right;
 	}
 	
 	public static MovementActionInfo create3SubCircleMovementInfo(){
-		MovementActionInfo right = new MovementActionInfo(24000, 100, 30, 0, "R", new Circle33Controller(10, 450, 750, 500, 800));
+		MovementActionInfo right = new MovementActionInfo(24000, 50, 30, 0, "R", new Circle33Controller(5, 450, 750, 500, 800));
+		GameView.circleController2 = (ICircleController) right.getRotationController();
+		return right;
+	}
+	
+	public static MovementActionInfo create32CircleMovementInfo(){
+		MovementActionInfo right = new MovementActionInfo(24000, 100, 30, 0, "R", new Circle33Controller(5, 500, 800, 550, 850));
 		GameView.circleController2 = (ICircleController) right.getRotationController();
 		return right;
 	}
 	
 	public static MovementActionInfo create3Sub2CircleMovementInfo(){
-		MovementActionInfo right = new MovementActionInfo(24000, 100, 30, 0, "R", new Circle33Controller(-10, 450, 750, 500, 800));
+		MovementActionInfo right = new MovementActionInfo(24000, 100, 30, 0, "R", new Circle33Controller(5, 550, 800, 600, 900));
 		GameView.circleController2 = (ICircleController) right.getRotationController();
 		return right;
 	}
