@@ -1,0 +1,530 @@
+package com.example.try_shoot_game.test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.example.try_shoot_game.action.DoubleDecorator;
+import com.example.try_shoot_game.action.MovementAction;
+import com.example.try_shoot_game.action.MovementActionDecoratorFactory;
+import com.example.try_shoot_game.action.MovementActionInfo;
+import com.example.try_shoot_game.action.MovementInfoFactory;
+import com.example.try_shoot_game.action.RLMovementActionFactory;
+import com.example.try_shoot_game.action.SpecialMovementActionFactory;
+import com.example.try_shoot_game.enemy.BlueEnemy;
+import com.example.try_shoot_game.enemy.Enemy;
+import com.example.try_shoot_game.enemy.EnemyFactory;
+import com.example.try_shoot_game.enemy.RedEnemy;
+
+import android.test.AndroidTestCase;
+
+public class MovementActionTest extends AndroidTestCase{
+
+	public void testAction() throws Exception{
+//		List<MovementActionInfo> correctInfoList = new ArrayList<MovementActionInfo>();
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 40f, 0f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, -40f, 0f));
+//		
+//		List<Enemy> enemies = new ArrayList<Enemy>(); 
+//		
+//////		EnemyFactory enemyFactory = new EnemyFactory();
+//////		enemies.add(enemyFactory.createRedEnemy());
+//////		enemies.add(enemyFactory.createBlueEnemy());
+////		
+////		EnemyFactory enemyFactory = new EnemyFactory();
+//////		enemies.add();
+////		Enemy enemy = enemyFactory.createSpecialEnemy(RedEnemy.class, RLMovementActionFactory.class, new int[]{0, 0});
+////		
+//////		Enemy enemy = enemies.get(0);
+////		MovementAction action = enemy.getAction();
+////		
+////		List<MovementActionInfo> currentInfoList = new ArrayList<MovementActionInfo>();
+////		
+////		MovementActionInfo info;
+////		for(MovementAction movementAction : action.getMovementItemList()){
+////			info = movementAction.getInfo();
+//////			MovementActionInfo newInfo = new MovementActionInfo(
+//////					info.getTotal(), info.getDelay(), info.getDx(),
+//////					info.getDy());
+////			currentInfoList.add(info);
+////
+////			
+//////			assertEquals(40, info.getDx());
+//////			assertEquals(40, info.getDx());
+////		}
+////		
+//////		currentInfoList.add(new MovementActionInfo(1000, 200, 40f, 0f, "a"));
+//////		currentInfoList.add(new MovementActionInfo(1000, 200, -40f, 0f, "a"));
+////		
+////		assertEquals(true, correctInfoList.equals(currentInfoList));
+////		
+//////		if(correctInfoList.equals(currentInfoList)){
+//////			assertEquals(true, false);
+//////		}else{
+//////			assertEquals(true, false);
+//////		}
+//		
+//		EnemyFactory enemyFactory = new EnemyFactory();
+////		enemies.add();
+//		Enemy enemy ;
+//		MovementAction action;
+//		List<MovementActionInfo> currentInfoList = new ArrayList<MovementActionInfo>();
+//		MovementActionInfo info;
+//		
+//		correctInfoList.clear();
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 40f, 0f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, -40f, 0f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 40f, 0f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, -40f, 0f));
+//		
+//		enemy = enemyFactory.createSpecialEnemy4(RedEnemy.class, RLMovementActionFactory.class, new int[]{0, 0}, MovementActionDecoratorFactory.createCopyMovementDecorator());
+//		action = enemy.getAction();
+//		currentInfoList.clear();
+//
+//		for(MovementAction movementAction : action.getMovementItemList()){
+//			info = movementAction.getInfo();
+//			boolean isExist = false; 
+//			for(MovementActionInfo actionInfo : currentInfoList){
+//				if(actionInfo == info){
+//					isExist = true;
+//					break;
+//				}
+//			}
+//			if(!isExist)
+//				currentInfoList.add(info);
+//		}	
+//		assertEquals(true, correctInfoList.equals(currentInfoList));
+//		
+//		
+//		correctInfoList.clear();
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 40f, 0f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, -40f, 0f));
+//		
+//		enemy = enemyFactory.createRLRedEnemy(new int[]{50, 50});
+//		action = enemy.getAction();
+//		currentInfoList.clear();
+//
+//		for(MovementAction movementAction : action.getMovementItemList()){
+//			info = movementAction.getInfo();
+//			currentInfoList.add(info);
+//		}	
+//		assertEquals(true, correctInfoList.equals(currentInfoList));
+//		
+//		
+//		correctInfoList.clear();
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 40f, 0f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, -40f, 0f));
+//		
+//		enemy = enemyFactory.createSpecialEnemy(BlueEnemy.class, RLMovementActionFactory.class, new int[]{150, 150});
+//		action = enemy.getAction();
+//		currentInfoList.clear();
+//
+//		for(MovementAction movementAction : action.getMovementItemList()){
+//			info = movementAction.getInfo();
+//			currentInfoList.add(info);
+//		}	
+//		assertEquals(true, correctInfoList.equals(currentInfoList));
+//
+//		
+//		correctInfoList.clear();
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 10f, 0f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, 10f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, -10f, 0f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, -10f));
+//		
+//		enemy = enemyFactory.createSpecialEnemy2(BlueEnemy.class, SpecialMovementActionFactory.class, new int[]{300, 300}, MovementInfoFactory.createSquareMovementInfo());
+//		action = enemy.getAction();
+//		currentInfoList.clear();
+//
+//		for(MovementAction movementAction : action.getMovementItemList()){
+//			info = movementAction.getInfo();
+//			currentInfoList.add(info);
+//		}	
+//		assertEquals(true, correctInfoList.equals(currentInfoList));
+//
+//		
+//		correctInfoList.clear();
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 20f, 0f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, 20f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, -20f, 0f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, -20f));
+//		
+//		enemy = enemyFactory.createSpecialEnemy3(BlueEnemy.class, SpecialMovementActionFactory.class, new int[]{450, 450}, MovementInfoFactory.createSquareMovementInfo(), MovementActionDecoratorFactory.createDHDMovementDecorator());
+//		action = enemy.getAction();
+//		currentInfoList.clear();
+//
+//		for(MovementAction movementAction : action.getMovementItemList()){
+//			info = movementAction.getInfo();
+//			currentInfoList.add(info);
+//		}	
+//		assertEquals(true, correctInfoList.equals(currentInfoList));
+//
+//		
+//		correctInfoList.clear();
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 80f, 0f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, -80f, 0f));
+//		
+//		enemy = enemyFactory.createSpecialEnemy4(RedEnemy.class, RLMovementActionFactory.class, new int[]{600, 600}, MovementActionDecoratorFactory.createDHDMovementDecorator());
+//		action = enemy.getAction();
+//		currentInfoList.clear();
+//
+//		for(MovementAction movementAction : action.getMovementItemList()){
+//			info = movementAction.getInfo();
+//			currentInfoList.add(info);
+//		}	
+//		assertEquals(true, correctInfoList.equals(currentInfoList));
+//
+//		
+//		correctInfoList.clear();
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 20f, 0f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, 20f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, -20f, 0f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, -20f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 20f, 0f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, 20f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, -20f, 0f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, -20f));
+//		
+//		enemy = enemyFactory.createSpecialEnemy3(BlueEnemy.class, SpecialMovementActionFactory.class, new int[]{750, 750}, MovementInfoFactory.createSquareMovementInfo(), MovementActionDecoratorFactory.createDCMovementDecorator());
+//		action = enemy.getAction();
+//		currentInfoList.clear();
+//
+//		for(MovementAction movementAction : action.getMovementItemList()){
+//			info = movementAction.getInfo();
+//			currentInfoList.add(info);
+//		}	
+//		assertEquals(true, correctInfoList.equals(currentInfoList));
+//
+//		
+//		correctInfoList.clear();
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 10f, 0f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, 10f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, -10f, 0f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, -10f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 10f, 0f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, 10f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, -10f, 0f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, -10f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 10f, 0f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, 10f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, -10f, 0f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, -10f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 10f, 0f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, 10f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, -10f, 0f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, -10f));
+//		
+//		enemy = enemyFactory.createSpecialEnemy3(RedEnemy.class, SpecialMovementActionFactory.class, new int[]{750, 950}, MovementInfoFactory.createSquareMovementInfo(), MovementActionDecoratorFactory.createCCMovementDecorator());
+//		action = enemy.getAction();
+//		currentInfoList.clear();
+//
+//		for(MovementAction movementAction : action.getMovementItemList()){
+//			info = movementAction.getInfo();
+//			currentInfoList.add(info);
+//		}	
+//		assertEquals(true, correctInfoList.equals(currentInfoList));
+//
+//		
+//		correctInfoList.clear();
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 20f, 0f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, 20f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, -20f, 0f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, -20f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 20f, 0f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, 20f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, -20f, 0f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, -20f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 20f, 0f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, 20f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, -20f, 0f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, -20f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 20f, 0f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, 20f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, -20f, 0f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, -20f));
+//		
+//		enemy = enemyFactory.createSpecialEnemy3(RedEnemy.class, SpecialMovementActionFactory.class, new int[]{750, 1050}, MovementInfoFactory.createSquareMovementInfo(), MovementActionDecoratorFactory.createCDCMovementDecorator());
+//		action = enemy.getAction();
+//		currentInfoList.clear();
+//
+//		for(MovementAction movementAction : action.getMovementItemList()){
+//			info = movementAction.getInfo();
+//			currentInfoList.add(info);
+//		}	
+//		assertEquals(true, correctInfoList.equals(currentInfoList));
+//
+//		
+//		correctInfoList.clear();
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 80f, 0f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, -80f, 0f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 80f, 0f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, -80f, 0f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, 160f, 0f));
+//		correctInfoList.add(new MovementActionInfo(1000, 200, -160f, 0f));
+//		
+//		RLMovementActionFactory factory = new RLMovementActionFactory();
+//		MovementAction innerAction = factory.createMovementAction();
+//		MovementAction DInnerAction = new DoubleDecorator(innerAction);
+//		SpecialMovementActionFactory actionFactory = new SpecialMovementActionFactory();
+//		MovementAction RLDRL = actionFactory.createMovementActionByMerge(new RLMovementActionFactory().createMovementAction(), DInnerAction);
+//		RLDRL = actionFactory.createMovementActionByMerge(new RLMovementActionFactory().createMovementAction(), RLDRL);
+//		RLDRL = new DoubleDecorator(RLDRL);
+//		
+//		enemy = enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{0, 1150}, RLDRL);
+//		
+//		action = enemy.getAction();
+//		currentInfoList.clear();
+//
+//		for(MovementAction movementAction : action.getMovementItemList()){
+//			info = movementAction.getInfo();
+//			boolean isExist = false; 
+//			for(MovementActionInfo actionInfo : currentInfoList){
+//				if(actionInfo == info){
+//					isExist = true;
+//					break;
+//				}
+//			}
+//			if(!isExist)
+//				currentInfoList.add(info);
+//		}	
+//		assertEquals(true, correctInfoList.equals(currentInfoList));
+	}
+
+	public void testActionInfo() throws Exception{
+		List<MovementActionInfo> correctInfoList = new ArrayList<MovementActionInfo>();
+		correctInfoList.add(new MovementActionInfo(1000, 200, 40f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -40f, 0f));
+		
+		EnemyFactory enemyFactory = new EnemyFactory();
+		Enemy enemy = enemyFactory.createSpecialEnemy(RedEnemy.class, RLMovementActionFactory.class, new int[]{0, 0});
+
+		MovementAction action = enemy.getAction();
+		
+		List<MovementActionInfo> currentInfoList = new ArrayList<MovementActionInfo>();
+	
+		for(MovementActionInfo movementActionInfo : action.getMovementInfoList()){
+			currentInfoList.add(movementActionInfo); 
+		}
+		
+		assertEquals(true, correctInfoList.equals(currentInfoList));
+
+		
+		
+		correctInfoList.clear();
+		correctInfoList.add(new MovementActionInfo(1000, 200, 40f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -40f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 40f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -40f, 0f));
+		
+		enemy = enemyFactory.createSpecialEnemy4(RedEnemy.class, RLMovementActionFactory.class, new int[]{0, 0}, MovementActionDecoratorFactory.createCopyMovementDecorator());
+		action = enemy.getAction();
+		currentInfoList.clear();
+
+		for(MovementActionInfo movementActionInfo : action.getMovementInfoList()){
+			currentInfoList.add(movementActionInfo); 
+		}
+		
+		assertEquals(true, correctInfoList.equals(currentInfoList));
+		
+		
+		correctInfoList.clear();
+		correctInfoList.add(new MovementActionInfo(1000, 200, 40f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -40f, 0f));
+		
+		enemy = enemyFactory.createRLRedEnemy(new int[]{50, 50});
+		action = enemy.getAction();
+		currentInfoList.clear();
+
+		for(MovementActionInfo movementActionInfo : action.getMovementInfoList()){
+			currentInfoList.add(movementActionInfo); 
+		}	
+		assertEquals(true, correctInfoList.equals(currentInfoList));
+		
+		
+		correctInfoList.clear();
+		correctInfoList.add(new MovementActionInfo(1000, 200, 40f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -40f, 0f));
+		
+		enemy = enemyFactory.createSpecialEnemy(BlueEnemy.class, RLMovementActionFactory.class, new int[]{150, 150});
+		action = enemy.getAction();
+		currentInfoList.clear();
+
+		for(MovementActionInfo movementActionInfo : action.getMovementInfoList()){
+			currentInfoList.add(movementActionInfo); 
+		}	
+		assertEquals(true, correctInfoList.equals(currentInfoList));
+
+		
+		correctInfoList.clear();
+		correctInfoList.add(new MovementActionInfo(1000, 200, 10f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, 10f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -10f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, -10f));
+		
+		enemy = enemyFactory.createSpecialEnemy2(BlueEnemy.class, SpecialMovementActionFactory.class, new int[]{300, 300}, MovementInfoFactory.createSquareMovementInfo());
+		action = enemy.getAction();
+		currentInfoList.clear();
+
+		for(MovementActionInfo movementActionInfo : action.getMovementInfoList()){
+			currentInfoList.add(movementActionInfo); 
+		}	
+		assertEquals(true, correctInfoList.equals(currentInfoList));
+
+		
+		correctInfoList.clear();
+		correctInfoList.add(new MovementActionInfo(1000, 200, 20f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, 20f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -20f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, -20f));
+		
+		enemy = enemyFactory.createSpecialEnemy3(BlueEnemy.class, SpecialMovementActionFactory.class, new int[]{450, 450}, MovementInfoFactory.createSquareMovementInfo(), MovementActionDecoratorFactory.createDHDMovementDecorator());
+		action = enemy.getAction();
+		currentInfoList.clear();
+
+		for(MovementActionInfo movementActionInfo : action.getMovementInfoList()){
+			currentInfoList.add(movementActionInfo); 
+		}	
+		assertEquals(true, correctInfoList.equals(currentInfoList));
+
+		
+		correctInfoList.clear();
+		correctInfoList.add(new MovementActionInfo(1000, 200, 80f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -80f, 0f));
+		
+		enemy = enemyFactory.createSpecialEnemy4(RedEnemy.class, RLMovementActionFactory.class, new int[]{600, 600}, MovementActionDecoratorFactory.createDHDMovementDecorator());
+		action = enemy.getAction();
+		currentInfoList.clear();
+
+		for(MovementActionInfo movementActionInfo : action.getMovementInfoList()){
+			currentInfoList.add(movementActionInfo); 
+		}	
+		assertEquals(true, correctInfoList.equals(currentInfoList));
+
+		
+		correctInfoList.clear();
+		correctInfoList.add(new MovementActionInfo(1000, 200, 20f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, 20f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -20f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, -20f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 20f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, 20f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -20f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, -20f));
+		
+		enemy = enemyFactory.createSpecialEnemy3(BlueEnemy.class, SpecialMovementActionFactory.class, new int[]{750, 750}, MovementInfoFactory.createSquareMovementInfo(), MovementActionDecoratorFactory.createDCMovementDecorator());
+		action = enemy.getAction();
+		currentInfoList.clear();
+
+		for(MovementActionInfo movementActionInfo : action.getMovementInfoList()){
+			currentInfoList.add(movementActionInfo); 
+		}	
+		assertEquals(true, correctInfoList.equals(currentInfoList));
+
+		
+		correctInfoList.clear();
+		correctInfoList.add(new MovementActionInfo(1000, 200, 10f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, 10f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -10f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, -10f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 10f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, 10f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -10f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, -10f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 10f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, 10f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -10f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, -10f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 10f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, 10f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -10f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, -10f));
+		
+		enemy = enemyFactory.createSpecialEnemy3(RedEnemy.class, SpecialMovementActionFactory.class, new int[]{750, 950}, MovementInfoFactory.createSquareMovementInfo(), MovementActionDecoratorFactory.createCCMovementDecorator());
+		action = enemy.getAction();
+		currentInfoList.clear();
+
+		for(MovementActionInfo movementActionInfo : action.getMovementInfoList()){
+			currentInfoList.add(movementActionInfo); 
+		}	
+		assertEquals(true, correctInfoList.equals(currentInfoList));
+
+		
+		correctInfoList.clear();
+		correctInfoList.add(new MovementActionInfo(1000, 200, 20f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, 20f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -20f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, -20f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 20f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, 20f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -20f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, -20f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 20f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, 20f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -20f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, -20f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 20f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, 20f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -20f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, -20f));
+		
+		enemy = enemyFactory.createSpecialEnemy3(RedEnemy.class, SpecialMovementActionFactory.class, new int[]{750, 1050}, MovementInfoFactory.createSquareMovementInfo(), MovementActionDecoratorFactory.createCDCMovementDecorator());
+		action = enemy.getAction();
+		currentInfoList.clear();
+
+		for(MovementActionInfo movementActionInfo : action.getMovementInfoList()){
+			currentInfoList.add(movementActionInfo); 
+		}	
+		assertEquals(true, correctInfoList.equals(currentInfoList));
+
+		
+		correctInfoList.clear();
+		correctInfoList.add(new MovementActionInfo(1000, 200, 80f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -80f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 80f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -80f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 160f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -160f, 0f));
+		
+		RLMovementActionFactory factory = new RLMovementActionFactory();
+		MovementAction innerAction = factory.createMovementAction();
+		MovementAction DInnerAction = new DoubleDecorator(innerAction);
+		SpecialMovementActionFactory actionFactory = new SpecialMovementActionFactory();
+		MovementAction RLDRL = actionFactory.createMovementActionByMerge(new RLMovementActionFactory().createMovementAction(), DInnerAction);
+		RLDRL = actionFactory.createMovementActionByMerge(new RLMovementActionFactory().createMovementAction(), RLDRL);
+		RLDRL = new DoubleDecorator(RLDRL);
+		
+		enemy = enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{0, 1150}, RLDRL);
+		
+		action = enemy.getAction();
+		currentInfoList.clear();
+
+		for(MovementActionInfo movementActionInfo : action.getMovementInfoList()){
+			currentInfoList.add(movementActionInfo); 
+		}	
+		assertEquals(true, correctInfoList.equals(currentInfoList));
+		
+		
+		
+		correctInfoList.clear();
+		correctInfoList.add(new MovementActionInfo(1000, 200, 40f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, 40f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, -40f, 0f));
+		correctInfoList.add(new MovementActionInfo(1000, 200, 0f, -40f));
+
+		
+		enemy = enemyFactory.createSpecialEnemy3(BlueEnemy.class, SpecialMovementActionFactory.class, new int[]{750, 750}, MovementInfoFactory.createSquareMovementInfo(), MovementActionDecoratorFactory.createDDMovementDecorator());
+		action = enemy.getAction();
+		currentInfoList.clear();
+
+		for(MovementActionInfo movementActionInfo : action.getMovementInfoList()){
+			currentInfoList.add(movementActionInfo); 
+		}	
+		
+		if(correctInfoList.equals(currentInfoList)){
+			assertEquals(true, correctInfoList.equals(currentInfoList));
+		}else{
+			assertEquals(true, correctInfoList.equals(currentInfoList));
+		}
+		
+		assertEquals(true, correctInfoList.equals(currentInfoList));
+	}
+}

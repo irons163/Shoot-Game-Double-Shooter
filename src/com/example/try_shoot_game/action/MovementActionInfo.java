@@ -48,4 +48,12 @@ public class MovementActionInfo {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {  
+        if (obj == null) return false;  
+        if (!(obj instanceof MovementActionInfo)) return false;
+        MovementActionInfo info = (MovementActionInfo) obj;
+        return (this.total == info.getTotal() && this.delay == info.getDelay() && this.dx == info.getDx() && this.dy == info.getDy());  
+      }
 }

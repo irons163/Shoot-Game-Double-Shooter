@@ -8,21 +8,31 @@ public class RLMovementActionFactory extends MovementActionFactory{
 	public MovementAction createMovementAction() {
 		// TODO Auto-generated method stub
 //		MovementAction action = new MovementActionSet();
+		MovementAction newAction;
 		
-		if(action==null)
-			action = new DoubleDecorator(new MovementActionSet());
-		else
-			action = new DoubleDecorator(action);
+		if(action==null){
+			newAction = new DoubleDecorator(new MovementActionSet());
+		}else
+			newAction = new DoubleDecorator(new MovementActionSet());
+			
+			
+//			action.addMovementAction(new DoubleDecorator(new MovementActionSet()));
+		
+		
 //		if(action==null)
 //			action = new MovementActionSet();
 		
 //		action.addMovementAction(new MovementActionItem(1000, 200, 10, 0));
 //		action.addMovementAction(new CopyMoveDecorator(new DoubleDecorator(new MovementActionItem(1000, 200, 10, 0, "R")) ));
-		action.addMovementAction(new DoubleDecorator(new MovementActionItem(1000, 200, 10, 0, "R")) );
+			newAction.addMovementAction(new DoubleDecorator(new MovementActionItem(1000, 200, 10, 0, "R")) );
 //		action.addMovementAction(new MovementActionItem(1000, 200, -10, 0));
-		action.addMovementAction(new DoubleDecorator(new MovementActionItem(1000, 200, -10, 0, "L")) );
+			newAction.addMovementAction(new DoubleDecorator(new MovementActionItem(1000, 200, -10, 0, "L")) );
 		
-		
+			if(action!=null){
+				action.addMovementAction(newAction);
+				newAction =	action;
+			}
+			
 //		MovementAction action = new MovementActionSet();
 //		MovementAction innerAction = new MovementActionSet();
 //		innerAction.addMovementAction(new MovementActionItem(1000, 200, 10, 0));
@@ -32,9 +42,9 @@ public class RLMovementActionFactory extends MovementActionFactory{
 		
 //		action.initTimer();
 		
-		Log.i("MovementDescription", action.getDescription());
+		Log.i("MovementDescription", newAction.getDescription());
 		
-		return action;
+		return newAction;
 	}
 
 }

@@ -18,7 +18,7 @@ public abstract class MovementAction {
 	List<MovementAction> movementItemList = new ArrayList<MovementAction>();
 	
 	public void addMovementAction(MovementAction action) {
-
+		throw new UnsupportedOperationException();
 	}
 	
 	public void setTimerOnTickListener(TimerOnTickListener timerOnTickListener) {
@@ -88,4 +88,13 @@ public abstract class MovementAction {
 	public void doInfo(){
 		getCurrentInfoList();
 	}
+
+	public List<MovementAction> getMovementItemList() {
+		return movementItemList;
+	}
+	
+	public List<MovementActionInfo> getMovementInfoList() {
+		return currentInfoList;
+	}
+
 }

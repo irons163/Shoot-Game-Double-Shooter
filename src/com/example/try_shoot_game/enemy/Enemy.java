@@ -128,4 +128,13 @@ public abstract class Enemy {
 	public String getMovementActionDescriptions(){
 		return action.getDescription();
 	}
+
+	public MovementAction getAction() {
+		return action;
+	}
+
+	public void setAction(MovementAction action) {
+		this.action = action;
+	}
+	
 }

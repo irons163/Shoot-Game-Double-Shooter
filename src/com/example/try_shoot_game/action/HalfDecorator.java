@@ -83,4 +83,15 @@ public class HalfDecorator extends MovementDecorator{
 		// TODO Auto-generated method stub
 		return action.getCurrentInfoList();
 	}
+	
+	
+	@Override
+	public List<MovementAction> getMovementItemList() {
+		return action.getMovementItemList();
+	}
+	
+	@Override
+	public List<MovementActionInfo> getMovementInfoList() {
+		return action.getMovementInfoList();
+	}
 }

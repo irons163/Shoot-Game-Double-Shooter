@@ -8,13 +8,13 @@ public class MovementInfoFactory {
 	
 	public static List<MovementActionInfo> createSquareMovementInfo(){
 		infos.clear();
-		MovementActionInfo right = new MovementActionInfo(1000, 100, 10, 0, "R");
+		MovementActionInfo right = new MovementActionInfo(1000, 200, 10, 0, "R");
 		infos.add(right);
-		MovementActionInfo down = new MovementActionInfo(1000, 100, 0, 10, "D");
+		MovementActionInfo down = new MovementActionInfo(1000, 200, 0, 10, "D");
 		infos.add(down);
-		MovementActionInfo left = new MovementActionInfo(1000, 100, -10, 0, "L");
+		MovementActionInfo left = new MovementActionInfo(1000, 200, -10, 0, "L");
 		infos.add(left);
-		MovementActionInfo up = new MovementActionInfo(1000, 100, 0, -10, "U");
+		MovementActionInfo up = new MovementActionInfo(1000, 200, 0, -10, "U");
 		infos.add(up);
 		
 		return infos;
