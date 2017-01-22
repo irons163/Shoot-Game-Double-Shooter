@@ -1,22 +1,22 @@
 package com.example.try_shoot_game.action;
 
-import com.example.try_shoot_game.action.MovementAction.TimerOnTickListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DoubleDecorator extends MovementDecorator{
 	private MovementAction action;
 	
 	public DoubleDecorator(MovementAction action){
 		this.action = action;
+		this.copyMovementActionList = action.copyMovementActionList;
 	}
 	
 	@Override
-	public int getDx() {
-		// TODO Auto-generated method stub
+	public float getDx() {
 		return coreCalculationDx(action.getDx());
-//		return 50;
 	}
 	
-	private int coreCalculationDx(int dx){
+	private float coreCalculationDx(float dx){
 		return 2 * dx;
 	}
 	
@@ -32,11 +32,6 @@ public class DoubleDecorator extends MovementDecorator{
 	public void start(){
 		action.getAction().start();
 	}
-//
-//	@Override
-//	public void setTimerOnTickListener(TimerOnTickListener timerOnTickListener) {
-//		action.setTimerOnTickListener(timerOnTickListener);
-//	}
 
 	@Override
 	public MovementAction getAction(){
@@ -45,28 +40,95 @@ public class DoubleDecorator extends MovementDecorator{
 	
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
 		return "Double " + action.getDescription();
 	}
 
 	@Override
-	public void initTimer() {
-		// TODO Auto-generated method stub
-//		action.getAction().setDx(getDx());
-
-//		action.getAction().initTimer();
-//		action.getAction().initInfo();
+	public MovementAction initTimer() {
+		if(this.getAction().getActions().size() == 0){
+			
 		for(MovementAction action : this.getAction().getActions()){
-//			action.getAction().setDx(coreCalculationDx(action.getDx()));
-			action.getAction().setInfo(coreCalculationMovementActionInfo(action.getInfo()));
+			this.getAction().setInfo(action.getInfo());
+			action.getAction().setInfo(getInfo());
 			action.getAction().initTimer();
 		}
+//		for(MovementAction action : copyMovementActionList){
+//			this.getAction().addMovementAction(action);
+//			action.initTimer();
+//		}
+		
+		}else
+		{
+			
+			for(MovementAction action : this.getAction().getActions()){
+				action.initTimer();
+			}
+			
+			List<MovementActionInfo> infos = new ArrayList<MovementActionInfo>();
+			for(MovementAction action : this.getAction().getActions()){
+				
+				if(action.getAction().getActions().size()!=0){
+//					action.initTimer();
+//					MovementActionInfo info = action.getAction().getInfo();
+//					this.getAction().setInfo(info);
+//					MovementActionInfo info = this.action.getInfo();
+//					action.getAction().setInfo(info);
+//					infos.add(info);
+				}else{
+					this.getAction().setInfo(action.getInfo());
+					MovementActionInfo info = this.action.getInfo();
+					action.getAction().setInfo(info);
+					infos.add(info);
+	//				action.getAction().initTimer();
+				}
+			}
+			
+			int infoSize = infos.size();
+			
+			for(MovementAction action : copyMovementActionList){
+				this.getAction().addMovementAction(action);
+//				action.initTimer();
+			}
+			
+			copyMovementActionList.clear();
+			
+			for(int i=0; i < this.getAction().getActions().size(); i++){
+				MovementAction action = this.getAction().getActions().get(i);
+				
+				if(this.getAction().getActions().size()>infoSize && infoSize>0){
+					int j = i % infoSize;
+					MovementActionInfo info = infos.get(j);
+					MovementActionInfo newInfo = new MovementActionInfo(info.getTotal(), info.getDelay(), info.getDx(), info.getDy(), info.getDescription());
+					action.getAction().setInfo(coreCalculationMovementActionInfo(newInfo));
+					action.getAction().initTimer();
+				}else if(infoSize==this.getAction().getActions().size()){
+					MovementActionInfo info = infos.get(i);
+					action.getAction().setInfo(coreCalculationMovementActionInfo(info));
+					action.getAction().initTimer();
+				}else{
+					action.getAction().setInfo(coreCalculationMovementActionInfo(this.action.getInfo()));
+//					MovementAction movementAction = action.getAction();
+//					while(movementAction.isSet()){
+//						movementAction = movementAction.getAction().isSet();
+//					}
+//					action.getAction().initTimer();
+//					movementAction.initTimer();
+				}
+				
+			}
+			
+//			for(MovementAction action : this.getAction().getActions()){
+//				this.getAction().setInfo(action.getInfo());
+//				action.getAction().setInfo(getInfo());
+//				action.getAction().initTimer();
+//			}
+
+		}
+		return this;
 	}
 
 	@Override
 	public void addMovementAction(MovementAction action) {
-		// TODO Auto-generated method stub
-//		getAction().getActions().add(action);
 		getAction().addMovementAction(action);
 	}
 	
@@ -77,7 +139,6 @@ public class DoubleDecorator extends MovementDecorator{
 
 	@Override
 	public MovementActionInfo getInfo() {
-		// TODO Auto-generated method stub
 		return coreCalculationMovementActionInfo(action.getInfo());
 	}
 }

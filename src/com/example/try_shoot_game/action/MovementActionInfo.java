@@ -3,14 +3,14 @@ package com.example.try_shoot_game.action;
 public class MovementActionInfo {
 	private long total;
 	private long delay;
-	private int dx, dy;
+	private float dx, dy;
 	private String description;
 	
-	public MovementActionInfo(long total, long delay, int dx, int dy){
+	public MovementActionInfo(long total, long delay, float dx, float dy){
 		this(total, delay, dx, dy, null);
 	}
 	
-	public MovementActionInfo(long total, long delay, int dx, int dy, String description){
+	public MovementActionInfo(long total, long delay, float dx, float dy, String description){
 		this.total = total;
 		this.delay = delay;
 		this.dx = dx;
@@ -30,16 +30,16 @@ public class MovementActionInfo {
 	public void setDelay(long delay) {
 		this.delay = delay;
 	}
-	public int getDx() {
+	public float getDx() {
 		return dx;
 	}
-	public void setDx(int dx) {
+	public void setDx(float dx) {
 		this.dx = dx;
 	}
-	public int getDy() {
+	public float getDy() {
 		return dy;
 	}
-	public void setDy(int dy) {
+	public void setDy(float dy) {
 		this.dy = dy;
 	}
 	public String getDescription() {

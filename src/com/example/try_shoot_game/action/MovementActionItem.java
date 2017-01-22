@@ -10,8 +10,8 @@ public class MovementActionItem extends MovementAction{
 	CountDownTimer countDownTimer; 
 	long millisTotal;
 	long millisDelay;
-	int dx;
-	int dy;
+	float dx;
+	float dy;
 	MovementActionInfo info;
 	
 	public MovementActionItem(long millisTotal, long millisDelay, final int dx, final int dy){
@@ -26,6 +26,7 @@ public class MovementActionItem extends MovementAction{
 		this.dy = dy;
 		info = new MovementActionInfo(millisTotal, millisDelay, dx, dy);
 		this.description = description + ",";
+		movementItemList.add(this);
 	}
 	
 	public MovementActionItem(MovementActionInfo info){
@@ -36,6 +37,7 @@ public class MovementActionItem extends MovementAction{
 		if(info.getDescription()!=null)
 			this.description = info.getDescription() + ",";
 		this.info = info;
+		movementItemList.add(this);
 	}
 	
 	@Override
@@ -53,19 +55,19 @@ public class MovementActionItem extends MovementAction{
 	}
 
 	@Override
-	public int getDx() {
+	public float getDx() {
 		// TODO Auto-generated method stub
 		return dx;
 	}
 	
 	@Override
-	public void setDx(int dx) {
+	public void setDx(float dx) {
 		// TODO Auto-generated method stub
 		this.dx = dx;
 	}
 	
 	@Override
-	public void initTimer(){
+	public MovementAction initTimer(){
 		millisTotal = info.getTotal();
 		millisDelay = info.getDelay();
 		dx = info.getDx();
@@ -79,8 +81,8 @@ public class MovementActionItem extends MovementAction{
 				Log.e("t", millisUntilFinished+"");
 				Log.e("t", millisUntilFinished/1000+"");
 				// TODO Auto-generated method stub
-				int x = dx;
-				int y = dy;
+				float x = dx;
+				float y = dy;
 				Log.e("dx", dx+"");
 				Log.e("dy", dy+"");
 				
@@ -95,7 +97,7 @@ public class MovementActionItem extends MovementAction{
 				}				
 			}
 		};
-		
+		return this;
 	}
 	
 	@Override

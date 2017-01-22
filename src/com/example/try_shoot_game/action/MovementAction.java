@@ -12,6 +12,10 @@ public abstract class MovementAction {
 	protected Thread thread;
 	protected TimerOnTickListener timerOnTickListener;
 	protected String description = "Unknown Movement";
+	List<MovementAction> copyMovementActionList = new ArrayList<MovementAction>();
+	List<MovementActionInfo> currentInfoList = new ArrayList<MovementActionInfo>();
+	
+	List<MovementAction> movementItemList = new ArrayList<MovementAction>();
 	
 	public void addMovementAction(MovementAction action) {
 
@@ -35,20 +39,21 @@ public abstract class MovementAction {
 	}
 	
 	public interface TimerOnTickListener{
-		public void onTick(int dx, int dy);
+		public void onTick(float dx, float dy);
 	}
 	
-	public void initTimer(){
+	public MovementAction initTimer(){
+		return this;
 		
 	}
 	
-	public abstract int getDx();
+	public abstract float getDx();
 	
 	public MovementAction getAction(){
 		return this;
 	}
 	
-	public void setDx(int dx){
+	public void setDx(float dx){
 
 	}
 	
@@ -64,5 +69,9 @@ public abstract class MovementAction {
 	
 	public String getDescription(){
 		return description;
+	}
+	
+	public boolean isSet(){
+		return false;
 	}
 }

@@ -1,13 +1,11 @@
 package com.example.try_shoot_game.action;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import com.example.try_shoot_game.action.MovementAction.TimerOnTickListener;
 
 public class MovementActionSet extends MovementAction {
 	private boolean isActionFinish = true;
 //	private int dx;
+	private MovementActionInfo info;
 	
 	@Override
 	public void addMovementAction(MovementAction action) {
@@ -58,7 +56,7 @@ public class MovementActionSet extends MovementAction {
 	}
 
 	@Override
-	public int getDx() {
+	public float getDx() {
 		// TODO Auto-generated method stub
 //		return dx;
 		return 0;
@@ -79,16 +77,38 @@ public class MovementActionSet extends MovementAction {
 //	}
 	
 	@Override
-	public void initTimer() {
+	public MovementAction initTimer() {
 //		getAction().getDx();
 		
-		for (MovementAction action : actions) {
-//			int dx = action.getDx();
-//			action.getAction().setDx(dx);
-			MovementActionInfo info = action.getInfo();
-			action.getAction().setInfo(info);
-			action.getAction().initTimer();
+//		Cloner cloner=new Cloner();
+//
+//		MovementAction actionClone = cloner.deepClone(this);
+		
+		for (MovementAction action : this.actions) {
+			
+			if(action.getAction().getActions().size()==0){
+			
+				MovementActionInfo info = action.getInfo();
+				action.getAction().setInfo(info);
+				action.getAction().initTimer();
+			}else{
+				action.initTimer();
+			}
 		}
+		
+//		for (MovementAction action : actions) {
+//			
+//			if(action.getAction().getActions().size()==0){
+//			
+//				MovementActionInfo info = action.getInfo();
+//				action.getAction().setInfo(info);
+//				action.getAction().initTimer();
+//			}else{
+//				action.initTimer();
+//			}
+//		}
+		
+		return this;
 	}	
 	
 	@Override
@@ -103,7 +123,12 @@ public class MovementActionSet extends MovementAction {
 	@Override
 	public MovementActionInfo getInfo() {
 		// TODO Auto-generated method stub
-		return null;
+		return info;
+	}
+	
+	@Override
+	public void setInfo(MovementActionInfo info){
+		this.info = info;
 	}
 
 	@Override
@@ -115,5 +140,16 @@ public class MovementActionSet extends MovementAction {
 		}
 		description += "]";
 		return description;
+	}
+	
+	@Override
+	public boolean isSet(){
+		boolean isSet = false;
+		for(MovementAction action : actions){
+			isSet = action.isSet();
+			if(isSet)
+				break;
+		}
+		return isSet;
 	}
 }

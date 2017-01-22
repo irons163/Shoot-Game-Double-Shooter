@@ -9,11 +9,11 @@ import android.graphics.Canvas;
 import android.os.CountDownTimer;
 
 public abstract class Enemy {
-	private int x, y;
+	private float x, y;
 	protected Bitmap bitmap;
 	protected MovementAction action;
 	
-	public Enemy(int x, int y) {
+	public Enemy(float x, float y) {
 		// TODO Auto-generated constructor stub
 		this.x = x;
 		this.y = y;
@@ -21,7 +21,7 @@ public abstract class Enemy {
 		initBitmap();
 	}
 	
-	public Enemy(int x, int y, MovementAction action) {
+	public Enemy(float x, float y, MovementAction action) {
 		this.x = x;
 		this.y = y;
 //		this.bitmap = BitmapUtil.redPoint;
@@ -42,7 +42,7 @@ public abstract class Enemy {
 			action.setTimerOnTickListener(new MovementAction.TimerOnTickListener() {
 				
 				@Override
-				public void onTick(int dx, int dy) {
+				public void onTick(float dx, float dy) {
 					// TODO Auto-generated method stub
 					move(dx, dy);
 				}
@@ -53,16 +53,16 @@ public abstract class Enemy {
 		canvas.drawBitmap(bitmap, x, y, null);
 	}
 	
-	public void move(int dx, int dy){
+	public void move(float dx, float dy){
 		x += dx;
 		y += dy;
 	}
 	
-	public void moveLeftAndRight(int dx){
+	public void moveLeftAndRight(float dx){
 		x += dx;
 	}
 	
-	public void moveUpAndDown(int dy){
+	public void moveUpAndDown(float dy){
 		y += dy;
 	}
 	
@@ -89,7 +89,7 @@ public abstract class Enemy {
 		countDownTimer.start();
 	}
 	
-	public void startMoveLeft(int s, int delay, int dx){
+	public void startMoveLeft(int s, int delay, float dx){
 		CountDownTimer countDownTimer = new CountDownTimer(s*1000, delay*1000) {
 			
 			@Override
@@ -107,7 +107,7 @@ public abstract class Enemy {
 		countDownTimer.start();
 	}
 	
-	public void startMoveLeftAndRight(int s, int delay, int dx){
+	public void startMoveLeftAndRight(int s, int delay, float dx){
 		CountDownTimer countDownTimer = new CountDownTimer(s*1000, delay*1000) {
 			
 			@Override
