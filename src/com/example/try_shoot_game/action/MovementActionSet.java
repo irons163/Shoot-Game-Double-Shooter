@@ -11,6 +11,7 @@ public class MovementActionSet extends MovementAction {
 //	private int dx;
 	private MovementActionInfo info;
 	private MovementAction lastestAction;
+	private MovementActionInfo lastestInfo;
 	
 	@Override
 	public void addMovementAction(MovementAction action) {
@@ -18,8 +19,12 @@ public class MovementActionSet extends MovementAction {
 		actions.add(action);
 //		description = "Set[";
 		lastestAction = action;
-		addList(action.getCurrentInfo());
+		
+//		lastestInfo = action.getCurrentInfo();
+//		addList(lastestInfo);
+		
 		getCurrentActionList();
+		getCurrentInfoList();
 	}
 
 	@Override
@@ -54,6 +59,9 @@ public class MovementActionSet extends MovementAction {
 							}
 						}
 
+					}
+					synchronized (MovementActionSet.this) {
+						MovementActionSet.this.notifyAll();
 					}
 					isActionFinish = true;
 				}
@@ -91,6 +99,8 @@ public class MovementActionSet extends MovementAction {
 //		Cloner cloner=new Cloner();
 //
 //		MovementAction actionClone = cloner.deepClone(this);
+		
+		
 		
 		for (MovementAction action : this.actions) {
 			
@@ -184,5 +194,26 @@ public class MovementActionSet extends MovementAction {
 //		}
 		
 		return movementItemList;
+	}
+	
+	@Override
+	public List<MovementActionInfo> getCurrentInfoList() {
+		// TODO Auto-generated method stub
+//		if(currentInfoList.size()>0){
+//			
+//		}else{
+//			for(MovementActionInfo actionItem : lastestAction.getCurrentInfoList()){
+//				currentInfoList.add(actionItem);
+//			}
+//		}
+		
+		currentInfoList.clear();
+		for(MovementAction action : actions){
+			for(MovementActionInfo actionItem : action.getCurrentInfoList()){
+				currentInfoList.add(actionItem);
+			}
+		}
+		
+		return currentInfoList;
 	}
 }

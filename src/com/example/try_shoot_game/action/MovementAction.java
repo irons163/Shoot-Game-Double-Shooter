@@ -75,11 +75,17 @@ public abstract class MovementAction {
 		return false;
 	}
 	
-	public void addList(MovementActionInfo info){
-		this.currentInfoList.add(info);
-	}
+//	public void addList(MovementActionInfo info){
+//		this.currentInfoList.add(info);
+//	}
 	
 	public abstract MovementActionInfo getCurrentInfo();
 	
 	public abstract List<MovementAction> getCurrentActionList();
+	
+	public abstract List<MovementActionInfo> getCurrentInfoList();
+	
+	public void doInfo(){
+		getCurrentInfoList();
+	}
 }

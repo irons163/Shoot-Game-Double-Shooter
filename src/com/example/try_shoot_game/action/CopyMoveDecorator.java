@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import android.util.Log;
+
 public class CopyMoveDecorator extends MovementDecorator{
 	private MovementAction action;
 	
@@ -22,9 +24,10 @@ public class CopyMoveDecorator extends MovementDecorator{
 	}
 	
 	private MovementActionInfo coreCalculationMovementActionInfo(MovementActionInfo info){
-		MovementActionInfo newInfo = new MovementActionInfo(info.getTotal(), info.getDelay(), info.getDx(), info.getDy(), info.getDescription());
+//		MovementActionInfo newInfo = new MovementActionInfo(info.getTotal(), info.getDelay(), info.getDx(), info.getDy(), info.getDescription());
 		if(this.getAction().getActions().size() != 0){
-			copyMovementActionList.add(new MovementActionItem(newInfo));
+//			copyMovementActionList.add(new MovementActionItem(newInfo));
+			copyMovementActionList.add(new MovementActionItem(info));
 		}
 		return info;
 	}
@@ -92,10 +95,37 @@ public class CopyMoveDecorator extends MovementDecorator{
 		{
 			List<MovementActionInfo> infos = new ArrayList<MovementActionInfo>();
 			for(MovementAction action : this.getAction().getActions()){
-				this.getAction().setInfo(action.getInfo());
-				MovementActionInfo info = this.action.getInfo();
-				action.getAction().setInfo(info);
-				infos.add(info);
+//				this.getAction().setInfo(action.getInfo());
+//				MovementActionInfo info = this.action.getInfo();
+//				action.getAction().setInfo(info);
+//				infos.add(info);
+				
+				if(action.getAction().getActions().size()!=0){
+//					action.initTimer();
+//					MovementActionInfo info = action.getAction().getInfo();
+//					this.getAction().setInfo(info);
+//					MovementActionInfo info = this.action.getInfo();
+//					action.getAction().setInfo(info);
+//					infos.add(info);
+					
+//					for(MovementActionInfo info : action.getAction().currentInfoList){
+//						currentInfos.add(info);
+//					}
+					
+					
+//					for(MovementActionInfo info : action.getAction().currentInfoList){
+//						currentInfos.add(info);
+//					}
+					
+					action.initTimer();
+				}else{
+					this.getAction().setInfo(action.getInfo());
+					MovementActionInfo info = this.action.getInfo();
+//					MovementActionInfo info = this.getAction().getInfo();
+					action.getAction().setInfo(info);
+					infos.add(info);
+					action.getAction().initTimer();
+				}
 			}
 			
 			int infoSize = infos.size();
@@ -112,20 +142,38 @@ public class CopyMoveDecorator extends MovementDecorator{
 				if(this.getAction().getActions().size()>infoSize  && infoSize>0 ){
 					int j = i % infoSize;
 					MovementActionInfo info = infos.get(j);
-					MovementActionInfo newInfo = new MovementActionInfo(info.getTotal(), info.getDelay(), info.getDx(), info.getDy(), info.getDescription());
-					action.getAction().setInfo(coreCalculationMovementActionInfo(newInfo));
+//					MovementActionInfo newInfo = new MovementActionInfo(info.getTotal(), info.getDelay(), info.getDx(), info.getDy(), info.getDescription());
+//					action.getAction().setInfo(coreCalculationMovementActionInfo(newInfo));
+//					action.getAction().setInfo(newInfo);
+					action.getAction().setInfo(info);
+//					this.getAction().currentInfoList.add(newInfo);
 				}else{
-					MovementActionInfo info = infos.get(i);
-					action.getAction().setInfo(coreCalculationMovementActionInfo(info));
+//					MovementActionInfo info = infos.get(i);
+//					action.getAction().setInfo(coreCalculationMovementActionInfo(info));
 				}
 				
 				action.getAction().initTimer();
+			}
+			
+			int i =0;
+			for(MovementActionInfo info : this.getAction().currentInfoList){
+				Log.e("count", ++i + "");
+				Log.e("info", info.getDx() + "");
+				this.getAction().setInfo(info);
+				coreCalculationMovementActionInfo(this.getAction().getInfo());
 			}
 			
 			for(MovementAction action : copyMovementActionList){
 				this.getAction().addMovementAction(action);
 				action.initTimer();
 			}
+			
+//			copyMovementActionList.clear();
+			
+			for(MovementAction movementItem : this.getAction().movementItemList){
+				movementItem.initTimer();
+			}
+			
 		}
 		return this;
 	}
@@ -155,5 +203,11 @@ public class CopyMoveDecorator extends MovementDecorator{
 	public List<MovementAction> getCurrentActionList() {
 		// TODO Auto-generated method stub
 		return action.getCurrentActionList();
+	}
+
+	@Override
+	public List<MovementActionInfo> getCurrentInfoList() {
+		// TODO Auto-generated method stub
+		return action.getCurrentInfoList();
 	}
 }

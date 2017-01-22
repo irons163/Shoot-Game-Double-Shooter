@@ -135,4 +135,12 @@ public class MovementActionItem extends MovementAction{
 		actions.add(this);
 		return actions;
 	}
+	
+	@Override
+	public List<MovementActionInfo> getCurrentInfoList() {
+		// TODO Auto-generated method stub
+		List<MovementActionInfo> infos = new ArrayList<MovementActionInfo>();
+		infos.add(this.info);
+		return infos;
+	}
 }
