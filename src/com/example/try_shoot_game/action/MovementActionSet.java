@@ -111,8 +111,13 @@ public class MovementActionSet extends MovementAction {
 				action.getAction().initTimer();
 			}else{
 				action.initTimer();
+				
+			}
+			for(MovementAction movementAction : action.copyMovementActionList){
+				this.getAction().movementItemList.add(movementAction);
 			}
 		}
+		this.getAction().getCurrentInfoList();
 		
 //		for (MovementAction action : actions) {
 //			
@@ -216,4 +221,9 @@ public class MovementActionSet extends MovementAction {
 		
 		return currentInfoList;
 	}
+	
+//	@Override
+//	public void doIn(){
+//		this.initTimer();
+//	}
 }

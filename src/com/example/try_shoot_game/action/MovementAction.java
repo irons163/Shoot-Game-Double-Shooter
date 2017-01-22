@@ -17,6 +17,8 @@ public abstract class MovementAction {
 	
 	List<MovementAction> movementItemList = new ArrayList<MovementAction>();
 	
+	public static List<MovementAction> list = new ArrayList<MovementAction>();
+	
 	public void addMovementAction(MovementAction action) {
 		throw new UnsupportedOperationException();
 	}
@@ -97,4 +99,7 @@ public abstract class MovementAction {
 		return currentInfoList;
 	}
 
+	public void doIn(){
+		
+	}
 }

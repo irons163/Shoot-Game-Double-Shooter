@@ -8,7 +8,7 @@ import android.util.Log;
 
 public class CopyMoveDecorator extends MovementDecorator {
 	private MovementAction action;
-
+	boolean doing = false;
 	public CopyMoveDecorator(MovementAction action) {
 		this.action = action;
 		this.copyMovementActionList = action.copyMovementActionList;
@@ -25,18 +25,20 @@ public class CopyMoveDecorator extends MovementDecorator {
 
 	private MovementActionInfo coreCalculationMovementActionInfo(
 			MovementActionInfo info) {
-		if (this.getAction().getActions().size() != 0) {
-			copyMovementActionList.add(new MovementActionItem(info));
-//			this.getAction().getCurrentInfoList();
-		}
-		return info;
-		
-//		MovementActionInfo newInfo = new MovementActionInfo(info.getTotal(), info.getDelay(), info.getDx(), info.getDy(), info.getDescription());
-//		if(this.getAction().getActions().size() != 0){
-//			copyMovementActionList.add(new MovementActionItem(newInfo));
-////			copyMovementActionList.add(new MovementActionItem(info));
+//		if (this.getAction().getActions().size() != 0 && doing) {
+//			copyMovementActionList.add(new MovementActionItem(info));
+////			this.getAction().getCurrentInfoList();
 //		}
-//		return newInfo;
+//		return info;
+		
+		MovementActionInfo newInfo = new MovementActionInfo(info.getTotal(), info.getDelay(), info.getDx(), info.getDy(), info.getDescription());
+		if(this.getAction().getActions().size() != 0){
+			MovementAction action = new MovementActionItem(newInfo);
+			copyMovementActionList.add(action);
+			MovementAction.list.add(action);
+//			copyMovementActionList.add(new MovementActionItem(info));
+		}
+		return newInfo;
 	}
 
 	@Override
@@ -68,26 +70,30 @@ public class CopyMoveDecorator extends MovementDecorator {
 		} else {
 			
 			List<MovementActionInfo> infos = new ArrayList<MovementActionInfo>();
-			for (MovementAction action : this.getAction().getActions()) {
-
-				if (action.getAction().getActions().size() != 0) {
-					action.initTimer();
-//					infos.add(action.getCurrentInfoList())
-				} else {
-					this.getAction().setInfo(action.getInfo());
-					MovementActionInfo info = this.action.getInfo();
-//					copyMovementActionList = this.action.copyMovementActionList;
-					action.getAction().setInfo(info);
-					infos.add(info);
-//					action.getAction().initTimer();
-					
-//					MovementActionInfo info = action.getInfo();
-//					this.getAction().setInfo(info);
+//			for (MovementAction action : this.getAction().getActions()) {
+//
+//				if (action.getAction().getActions().size() != 0) {
+//					action.initTimer();
+////					infos.add(action.getCurrentInfoList())
+//				} else {
+//					this.getAction().setInfo(action.getInfo());
+////					MovementActionInfo info = this.action.getInfo();
+//////					copyMovementActionList = this.action.copyMovementActionList;
+////					action.getAction().setInfo(info);
+////					infos.add(info);
 //					
-//					action.getAction().setInfo(info);
-//					infos.add(info);
-				}
-			}
+//					
+////					action.getAction().initTimer();
+//					
+////					MovementActionInfo info = action.getInfo();
+////					this.getAction().setInfo(info);
+////					
+////					action.getAction().setInfo(info);
+////					infos.add(info);
+//				}
+//			}
+			
+			this.getAction().initTimer();
 
 			int infoSize = infos.size();
 
@@ -119,33 +125,10 @@ public class CopyMoveDecorator extends MovementDecorator {
 //				action.getAction().initTimer();
 			}
 
-			this.getAction().getCurrentInfoList();
+			doIn();
+//			action.initTimer();
 			
-//			int s = this.getAction().currentInfoList.size();
-//			for (int i =0; i<s; i++) {
-//				MovementActionInfo info = this.getAction().currentInfoList.get(i);
-//				this.getAction().setInfo(info);
-//				coreCalculationMovementActionInfo(this.action.getInfo());
-//			}
-			
-			int i = 0;
-			for (MovementActionInfo info : this.getAction().currentInfoList) {
-				Log.e("count", ++i + "");
-				Log.e("info", info.getDx() + "");
-				this.getAction().setInfo(info);
-//				this.action.initTimer();
-				coreCalculationMovementActionInfo(this.getAction().getInfo());
-//				coreCalculationMovementActionInfo(this.action.getInfo());
-			}
 
-			for (MovementAction action : copyMovementActionList) {
-				this.getAction().addMovementAction(action);
-				action.initTimer();
-			}
-
-			for (MovementAction movementItem : this.getAction().movementItemList) {
-				movementItem.initTimer();
-			}
 
 		}
 		return this;
@@ -192,5 +175,51 @@ public class CopyMoveDecorator extends MovementDecorator {
 	@Override
 	public List<MovementActionInfo> getMovementInfoList() {
 		return action.getMovementInfoList();
+	}
+	
+	@Override
+	public void doIn(){
+//		action.doIn();
+//		this.getAction().getCurrentInfoList();
+//		for (MovementActionInfo info : this.getAction().currentInfoList) {
+////			Log.e("count", ++i + "");
+////			Log.e("info", info.getDx() + "");
+//			this.getAction().setInfo(info);
+////			this.action.initTimer();
+////			coreCalculationMovementActionInfo(this.getAction().getInfo());
+//			coreCalculationMovementActionInfo(this.action.getInfo());
+//		}
+		
+		action.doIn();
+		doing = true;
+		copyMovementActionList.clear();
+		this.getAction().getCurrentInfoList();
+		
+//		int s = this.getAction().currentInfoList.size();
+//		for (int i =0; i<s; i++) {
+//			MovementActionInfo info = this.getAction().currentInfoList.get(i);
+//			this.getAction().setInfo(info);
+//			coreCalculationMovementActionInfo(this.action.getInfo());
+//		}
+		
+		int i = 0;
+		for (MovementActionInfo info : this.getAction().currentInfoList) {
+			Log.e("count", ++i + "");
+			Log.e("info", info.getDx() + "");
+			this.getAction().setInfo(info);
+//			this.action.initTimer();
+//			coreCalculationMovementActionInfo(this.getAction().getInfo());
+			coreCalculationMovementActionInfo(this.getAction().getInfo());
+		}
+
+		for (MovementAction action : copyMovementActionList) {
+			this.getAction().addMovementAction(action);
+			this.getAction().movementItemList.add(action);
+			action.initTimer();
+		}
+
+		for (MovementAction movementItem : this.getAction().movementItemList) {
+			movementItem.initTimer();
+		}
 	}
 }

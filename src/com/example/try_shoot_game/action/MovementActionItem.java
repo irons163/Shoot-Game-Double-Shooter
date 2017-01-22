@@ -28,6 +28,7 @@ public class MovementActionItem extends MovementAction{
 		info = new MovementActionInfo(millisTotal, millisDelay, dx, dy);
 		this.description = description + ",";
 		movementItemList.add(this);
+		MovementAction.list.add(this);
 	}
 	
 	public MovementActionItem(MovementActionInfo info){
@@ -39,6 +40,7 @@ public class MovementActionItem extends MovementAction{
 			this.description = info.getDescription() + ",";
 		this.info = info;
 		movementItemList.add(this);
+		MovementAction.list.add(this);
 	}
 	
 	@Override
