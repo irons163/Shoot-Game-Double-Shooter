@@ -1,12 +1,13 @@
 package com.example.try_shoot_game;
 
-import com.example.try_gameengine.framework.LayerManager;
-import com.example.try_shoot_game.scene.Scene;
-
-import android.os.Bundle;
 import android.app.Activity;
+import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Menu;
+
+import com.example.try_gameengine.framework.IGameController;
+import com.example.try_gameengine.framework.IGameModel;
+import com.example.try_gameengine.framework.LayerManager;
 
 public class MainActivity extends Activity {
 	private IGameModel gameModel;
@@ -23,13 +24,16 @@ public class MainActivity extends Activity {
 		CommonUtil.screenWidth = dm.widthPixels;
 		
 		BitmapUtil.initBitmap(this);
+		BitmapUtil.initBitmap(this);
 		
-		LayerManager.initLayerManager();
+//		LayerManager.initLayerManager();
+		LayerManager.getInstance().setLayerBySenceIndex(0);
+//		Scene scene = new MyScene(this, "a", 1);
 		
-		Scene scene = new MyScene(this, "a", 1);
+		gameModel = (IGameModel) new GameModel(this, 1);
+		gameController = (IGameController) new GameController(this, gameModel);
 		
-//		gameModel = new GameModel(this);
-//		gameController = new GameController(this, gameModel);
+		gameController.start();
 	}
 
 	@Override

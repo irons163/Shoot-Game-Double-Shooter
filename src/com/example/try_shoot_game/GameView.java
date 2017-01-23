@@ -1,24 +1,25 @@
 package com.example.try_shoot_game;
 
-import com.example.try_shoot_game.action.Circle2Controller;
-import com.example.try_shoot_game.action.Circle3Controller;
-import com.example.try_shoot_game.action.CircleController;
-import com.example.try_shoot_game.action.ICircleController;
-import com.example.try_shoot_game.shooter.Crosshair;
+
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Point;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.example.try_gameengine.action.ICircleController;
+import com.example.try_gameengine.framework.IChessBoard;
+import com.example.try_gameengine.framework.IGameController;
+import com.example.try_gameengine.framework.IGameModel;
+import com.example.try_gameengine.framework.IMoveObserver;
+
+
+
 public class GameView extends SurfaceView implements SurfaceHolder.Callback, IMoveObserver{
 	private IGameController gameController;
-	private IGameModel gameModel;
+	private GameModel gameModel;
 	private SurfaceHolder surfaceHolder;
 	
 	private boolean isGameRun = true;
@@ -33,9 +34,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, IMo
 		super(context);
 		// TODO Auto-generated constructor stub
 		this.gameController = gameController;
-		this.gameModel = gameModel;
+		this.gameModel = (GameModel) gameModel;
 		gameModel.registerObserver(this);
-		allExistPoints = gameModel.getAllExistPoints();
+		allExistPoints = this.gameModel.getAllExistPoints();
 		
 		surfaceHolder = getHolder();
 		surfaceHolder.addCallback(this);
@@ -43,12 +44,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, IMo
 		
 	}
 
-	@Override
-	public void updateChess() {
-		// TODO Auto-generated method stub
-		
-	}
-	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		// TODO Auto-generated method stub
@@ -167,6 +162,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, IMo
 	public void surfaceDestroyed(SurfaceHolder holder) {
 		// TODO Auto-generated method stub
 		isSurfaceCreated = false;
+	}
+
+	@Override
+	public void updateChess(IChessBoard chessBoard) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

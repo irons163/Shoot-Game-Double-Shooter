@@ -1,20 +1,20 @@
 package com.example.try_shoot_game;
 
 import android.app.Activity;
-import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.view.MotionEvent;
+import android.view.SurfaceHolder;
+
+import com.example.try_gameengine.framework.IGameController;
+import com.example.try_gameengine.framework.IGameModel;
 
 public class GameController implements IGameController{
 	private IGameModel gameModel;
 	private Activity activity;
 	GameView gameView;
 	
-	public GameController(Activity activity, IGameModel gameModel) {
+	public GameController(Activity activity, IGameModel gameModel2) {
 		// TODO Auto-generated constructor stub
-		this.gameModel = gameModel;
+		this.gameModel = gameModel2;
 		this.activity = activity;
 		
 	}
@@ -55,6 +55,31 @@ public class GameController implements IGameController{
 	public void onTouchEvent(MotionEvent event) {
 		// TODO Auto-generated method stub
 		gameModel.onTouchEvent(event);
+	}
+
+	@Override
+	public void setSurfaceHolder(SurfaceHolder surfaceHolder) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void runStart() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void surfaceChanged(SurfaceHolder holder, int format, int width,
+			int height) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setFlag(int flag) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

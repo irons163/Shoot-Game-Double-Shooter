@@ -1,14 +1,21 @@
 package com.example.try_shoot_game;
 
-import com.example.try_shoot_game.enemy.Enemy;
-import com.example.try_shoot_game.enemy.EnemyManager;
-import com.example.try_shoot_game.shooter.Crosshair;
+
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.os.CountDownTimer;
 import android.view.MotionEvent;
+import android.view.SurfaceHolder;
+
+import com.example.try_gameengine.enemy.Enemy;
+import com.example.try_gameengine.enemy.EnemyManager;
+import com.example.try_gameengine.framework.Data;
+import com.example.try_gameengine.IGameModel;
+import com.example.try_gameengine.IMoveObserver;
+import com.example.try_shoot_game.shooter.Crosshair;
+
+
 
 public class GameModel implements IGameModel{
 	private Context context;
@@ -38,13 +45,11 @@ public class GameModel implements IGameModel{
 //		chessBoard.setPlayersBySquential(playerManager.getPlayersBySquential());
 	}
 
-	@Override
 	public void registerObserver(IMoveObserver moveObserver) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void removeObserver(IMoveObserver moveObserver) {
 		// TODO Auto-generated method stub
 		
@@ -162,7 +167,6 @@ public class GameModel implements IGameModel{
 //		}
 	}
 
-	@Override
 	public int[][] getAllExistPoints() {
 		// TODO Auto-generated method stub
 		return null;
@@ -220,9 +224,9 @@ public class GameModel implements IGameModel{
 		crosshair.draw(canvas);
 	}
 
-	@Override
 	public void process() {
 		// TODO Auto-generated method stub
 		
 	}
+
 }

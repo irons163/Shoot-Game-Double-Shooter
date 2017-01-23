@@ -1,17 +1,15 @@
 package com.example.try_shoot_game;
 
-import com.example.try_gameengine.framework.BaseActivity;
-import com.example.try_gameengine.framework.BaseInitActivity;
-import com.example.try_gameengine.framework.LayerManager;
-import com.example.try_shoot_game.scene.BaseScene;
-import com.example.try_shoot_game.scene.Scene;
-import com.example.try_shoot_game.scene.SceneManager;
-
 import android.os.Bundle;
-import android.app.Activity;
-import android.app.Application;
 import android.util.DisplayMetrics;
 import android.view.Menu;
+
+import com.example.try_gameengine.framework.BaseInitActivity;
+import com.example.try_gameengine.framework.IGameController;
+import com.example.try_gameengine.framework.IGameModel;
+import com.example.try_gameengine.framework.LayerManager;
+import com.example.try_gameengine.scene.Scene;
+import com.example.try_gameengine.scene.SceneManager;
 
 public class MainActivity2 extends BaseInitActivity {
 	private IGameModel gameModel;
@@ -27,10 +25,10 @@ public class MainActivity2 extends BaseInitActivity {
 //		CommonUtil.screenHeight = dm.heightPixels;
 //		CommonUtil.screenWidth = dm.widthPixels;
 //		
-//		BitmapUtil.initBitmap(this);
+		com.example.try_gameengine.BitmapUtil.initBitmap(this);
 //		
 //		LayerManager.initLayerManager();
-		
+//		LayerManager.setLayerBySenceIndex(0);
 		Scene scene = new MyScene(this, "a", 1);
 		Scene scene2 = new MyScene(this, "b", 2);
 		
