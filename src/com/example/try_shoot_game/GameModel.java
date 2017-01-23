@@ -9,10 +9,9 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 
 import com.example.try_gameengine.enemy.Enemy;
-import com.example.try_gameengine.enemy.EnemyManager;
 import com.example.try_gameengine.framework.Data;
-import com.example.try_gameengine.IGameModel;
-import com.example.try_gameengine.IMoveObserver;
+import com.example.try_gameengine.framework.IGameModel;
+import com.example.try_gameengine.framework.IMoveObserver;
 import com.example.try_shoot_game.shooter.Crosshair;
 
 
@@ -37,22 +36,14 @@ public class GameModel implements IGameModel{
 			enemyManager.createLevel1Enemy();
 		else if(level==2)
 			enemyManager.createLevel2Enemy();
+		else if(level==3)
+			enemyManager.createLevel3Enemy();
 		
 		enemyManager.showEnemiesMovementDescriptioins();
 		
 //		moveUP();
 //		moveLeft();
 //		chessBoard.setPlayersBySquential(playerManager.getPlayersBySquential());
-	}
-
-	public void registerObserver(IMoveObserver moveObserver) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void removeObserver(IMoveObserver moveObserver) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	int count =0;
@@ -225,6 +216,56 @@ public class GameModel implements IGameModel{
 	}
 
 	public void process() {
+		// TODO Auto-generated method stub
+		enemyManager.frameTriger();
+	}
+
+	@Override
+	public Data getData() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setData(Data data) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void registerObserver(
+			com.example.try_gameengine.framework.IMoveObserver moveObserver) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeObserver(
+			com.example.try_gameengine.framework.IMoveObserver moveObserver) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void start() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setSurfaceHolder(SurfaceHolder surfaceHolder) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void restart() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void stop() {
 		// TODO Auto-generated method stub
 		
 	}

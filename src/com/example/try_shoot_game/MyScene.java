@@ -27,7 +27,7 @@ public class MyScene extends Scene{
 	@Override
 	public void initGameController() {
 		// TODO Auto-generated method stub
-//		gameController = (IGameController) new GameController((Activity)context, gameModel);
+		gameController = (IGameController) new GameController((Activity)context, gameModel);
 	}
 
 }

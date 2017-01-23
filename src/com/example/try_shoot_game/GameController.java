@@ -1,5 +1,6 @@
 package com.example.try_shoot_game;
 
+
 import android.app.Activity;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -14,7 +15,7 @@ public class GameController implements IGameController{
 	
 	public GameController(Activity activity, IGameModel gameModel2) {
 		// TODO Auto-generated constructor stub
-		this.gameModel = gameModel2;
+		this.gameModel = (IGameModel) gameModel2;
 		this.activity = activity;
 		
 	}
@@ -72,12 +73,6 @@ public class GameController implements IGameController{
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
 			int height) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setFlag(int flag) {
 		// TODO Auto-generated method stub
 		
 	}

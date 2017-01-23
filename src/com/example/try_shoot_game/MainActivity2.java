@@ -14,6 +14,7 @@ import com.example.try_gameengine.scene.SceneManager;
 public class MainActivity2 extends BaseInitActivity {
 	private IGameModel gameModel;
 	private IGameController gameController;
+	private SceneManager sceneManager;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -31,11 +32,14 @@ public class MainActivity2 extends BaseInitActivity {
 //		LayerManager.setLayerBySenceIndex(0);
 		Scene scene = new MyScene(this, "a", 1);
 		Scene scene2 = new MyScene(this, "b", 2);
+		Scene scene3 = new MyScene(this, "c", 3);
 		
-		SceneManager.addScene(scene);
-		SceneManager.addScene(scene2);
+		sceneManager = new SceneManager();
+		sceneManager.addScene(scene);
+		sceneManager.addScene(scene2);
+		sceneManager.addScene(scene3);
 		
-		SceneManager.startScene(0);
+		sceneManager.startScene(0);
 //		SceneManager.startScene(1);
 		
 //		gameModel = new GameModel(this);
@@ -69,6 +73,6 @@ public class MainActivity2 extends BaseInitActivity {
 		// TODO Auto-generated method stub
 //		super.onBackPressed();
 //		SceneManager.next();
-		SceneManager.previous();
+		sceneManager.previous();
 	}
 }

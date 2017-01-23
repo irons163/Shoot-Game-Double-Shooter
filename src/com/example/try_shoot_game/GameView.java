@@ -36,7 +36,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, IMo
 		this.gameController = gameController;
 		this.gameModel = (GameModel) gameModel;
 		gameModel.registerObserver(this);
-		allExistPoints = this.gameModel.getAllExistPoints();
+//		allExistPoints = gameModel.getAllExistPoints();
 		
 		surfaceHolder = getHolder();
 		surfaceHolder.addCallback(this);
@@ -44,6 +44,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, IMo
 		
 	}
 
+//	@Override
+//	public void updateChess() {
+//		// TODO Auto-generated method stub
+//		
+//	}
+	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		// TODO Auto-generated method stub
