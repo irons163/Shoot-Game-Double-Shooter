@@ -8,7 +8,7 @@ import android.os.CountDownTimer;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 
-import com.example.try_gameengine.enemy.Enemy;
+import com.example.try_gameengine.Camera.Camera;
 import com.example.try_gameengine.framework.Data;
 import com.example.try_gameengine.framework.IGameModel;
 import com.example.try_gameengine.framework.IMoveObserver;
@@ -266,6 +266,30 @@ public class GameModel implements IGameModel{
 
 	@Override
 	public void stop() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getBackgroundColor() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void setBackgroundColor(int backgroundColor) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Camera getCamera() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setCamera(Camera camera) {
 		// TODO Auto-generated method stub
 		
 	}

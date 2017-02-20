@@ -23,11 +23,10 @@ public class MainActivity extends Activity {
 		CommonUtil.screenHeight = dm.heightPixels;
 		CommonUtil.screenWidth = dm.widthPixels;
 		
-		com.example.try_gameengine.BitmapUtil.initBitmap(this);
 		BitmapUtil.initBitmap(this);
 		
 //		LayerManager.initLayerManager();
-		LayerManager.setLayerBySenceIndex(0);
+		LayerManager.getInstance().setLayerBySenceIndex(0);
 //		Scene scene = new MyScene(this, "a", 1);
 		
 		gameModel = (IGameModel) new GameModel(this, 1);

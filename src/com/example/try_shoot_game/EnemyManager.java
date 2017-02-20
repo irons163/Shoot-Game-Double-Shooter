@@ -9,20 +9,12 @@ import android.util.Log;
 import com.example.try_gameengine.action.CopyMoveDecorator;
 import com.example.try_gameengine.action.DoubleDecorator;
 import com.example.try_gameengine.action.MovementAction;
-import com.example.try_gameengine.action.MovementActionFrameItem;
-import com.example.try_gameengine.action.MovementActionItem;
-import com.example.try_gameengine.action.MovementActionItemBaseFPS;
 import com.example.try_gameengine.action.MovementActionSet;
 import com.example.try_gameengine.action.MovementAtionController;
 import com.example.try_gameengine.action.MovementInfoFactory;
 import com.example.try_gameengine.action.RLMovementActionFactory;
-import com.example.try_gameengine.action.SimultaneouslyMultiCircleMovementActionSet;
 import com.example.try_gameengine.action.SpecialMovementActionFactory;
 import com.example.try_gameengine.action.listener.DefaultActionListener;
-import com.example.try_gameengine.enemy.BlueEnemy;
-import com.example.try_gameengine.enemy.Enemy;
-import com.example.try_gameengine.enemy.EnemyFactory;
-import com.example.try_gameengine.enemy.RedEnemy;
 
 public class EnemyManager {
 	private List<Enemy> enemies = new ArrayList<Enemy>(); 
@@ -249,18 +241,18 @@ public class EnemyManager {
 	public void createLevel3Enemy(){
 		EnemyFactory enemyFactory = new EnemyFactory();
 //		enemies.add(enemyFactory.createRLRedEnemy(new int[]{50, 50}));
-		MovementActionItemBaseFPS movementAction = new MovementActionItemBaseFPS(new long[]{100, 50, 100 , 50, 100, 50, 100 , 50}, 10, 0, "frame");
-		movementAction.setMovementActionController(new MovementAtionController());
-		movementAction.setActionListener(new DefaultActionListener());
-		movementAction.setNextFrameTrigger(new MovementActionItemBaseFPS.FrameTrigger() {
-			
-			@Override
-			public void trigger() {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{50, 50}, movementAction));
+//		MovementActionItemBaseFPS movementAction = new MovementActionItemBaseFPS(new long[]{100, 50, 100 , 50, 100, 50, 100 , 50}, 10, 0, "frame");
+//		movementAction.setMovementActionController(new MovementAtionController());
+//		movementAction.setActionListener(new DefaultActionListener());
+//		movementAction.setNextFrameTrigger(new MovementActionItemBaseFPS.FrameTrigger() {
+//			
+//			@Override
+//			public void trigger() {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//		});
+//		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{50, 50}, movementAction));
 	}
 	
 	public List<Enemy> getEnemies(){

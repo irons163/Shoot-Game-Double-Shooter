@@ -77,4 +77,10 @@ public class GameController implements IGameController{
 		
 	}
 
+	@Override
+	public void setFlag(int flag) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

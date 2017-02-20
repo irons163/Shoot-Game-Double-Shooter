@@ -4,14 +4,14 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 
-import com.example.try_gameengine.framework.BaseInitActivity;
 import com.example.try_gameengine.framework.IGameController;
 import com.example.try_gameengine.framework.IGameModel;
 import com.example.try_gameengine.framework.LayerManager;
 import com.example.try_gameengine.scene.Scene;
 import com.example.try_gameengine.scene.SceneManager;
+import com.example.try_gameengine.stage.Stage;
 
-public class MainActivity2 extends BaseInitActivity {
+public class MainActivity2 extends Stage {
 	private IGameModel gameModel;
 	private IGameController gameController;
 	private SceneManager sceneManager;
@@ -26,8 +26,12 @@ public class MainActivity2 extends BaseInitActivity {
 //		CommonUtil.screenHeight = dm.heightPixels;
 //		CommonUtil.screenWidth = dm.widthPixels;
 //		
-		com.example.try_gameengine.BitmapUtil.initBitmap(this);
-//		
+		DisplayMetrics dm = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(dm);
+		CommonUtil.screenHeight = dm.heightPixels;
+		CommonUtil.screenWidth = dm.widthPixels;
+		
+		BitmapUtil.initBitmap(this);
 //		LayerManager.initLayerManager();
 //		LayerManager.setLayerBySenceIndex(0);
 		Scene scene = new MyScene(this, "a", 1);
@@ -38,7 +42,7 @@ public class MainActivity2 extends BaseInitActivity {
 		sceneManager.addScene(scene);
 		sceneManager.addScene(scene2);
 		sceneManager.addScene(scene3);
-		
+	
 		sceneManager.startScene(0);
 //		SceneManager.startScene(1);
 		
@@ -54,25 +58,16 @@ public class MainActivity2 extends BaseInitActivity {
 	}
 
 	@Override
-	protected void initCommonUtil() {
-		// TODO Auto-generated method stub
-		DisplayMetrics dm = new DisplayMetrics();
-		getWindowManager().getDefaultDisplay().getMetrics(dm);
-		CommonUtil.screenHeight = dm.heightPixels;
-		CommonUtil.screenWidth = dm.widthPixels;
-	}
-
-	@Override
-	protected void initBitmapUtil() {
-		// TODO Auto-generated method stub
-		BitmapUtil.initBitmap(this);
-	}
-
-	@Override
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
 //		super.onBackPressed();
 //		SceneManager.next();
 		sceneManager.previous();
+	}
+
+	@Override
+	public SceneManager initSceneManager() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
