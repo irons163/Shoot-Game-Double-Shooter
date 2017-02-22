@@ -43,8 +43,8 @@ public class MainActivity2 extends Stage {
 		sceneManager.addScene(scene2);
 		sceneManager.addScene(scene3);
 	
-		sceneManager.startScene(0);
-//		SceneManager.startScene(1);
+//		sceneManager.startScene(0);
+		sceneManager.startScene(1);
 		
 //		gameModel = new GameModel(this);
 //		gameController = new GameController(this, gameModel);
@@ -62,7 +62,7 @@ public class MainActivity2 extends Stage {
 		// TODO Auto-generated method stub
 //		super.onBackPressed();
 //		SceneManager.next();
-		sceneManager.previous();
+		sceneManager.previousWithExistedScenes();
 	}
 
 	@Override

@@ -6,15 +6,14 @@ import java.util.List;
 import android.graphics.Canvas;
 import android.util.Log;
 
-import com.example.try_gameengine.action.CopyMoveDecorator;
-import com.example.try_gameengine.action.DoubleDecorator;
+import com.example.try_gameengine.action.GravitySlopeWavePathMovementInfoAppendDecorator;
+import com.example.try_gameengine.action.GravityWavePathMovementInfoAppendDecorator;
 import com.example.try_gameengine.action.MovementAction;
+import com.example.try_gameengine.action.MovementActionItemCountDownTimer;
 import com.example.try_gameengine.action.MovementActionSet;
-import com.example.try_gameengine.action.MovementAtionController;
 import com.example.try_gameengine.action.MovementInfoFactory;
-import com.example.try_gameengine.action.RLMovementActionFactory;
 import com.example.try_gameengine.action.SpecialMovementActionFactory;
-import com.example.try_gameengine.action.listener.DefaultActionListener;
+import com.example.try_gameengine.test.RLMovementActionFactory;
 
 public class EnemyManager {
 	private List<Enemy> enemies = new ArrayList<Enemy>(); 
@@ -27,6 +26,34 @@ public class EnemyManager {
 	
 	public void createLevel1Enemy(){
 		EnemyFactory enemyFactory = new EnemyFactory();
+		/*
+		MovementAction action = new CopyMoveDecorator(new DoubleDecorator(new CopyMoveDecorator(new RLMovementActionFactory().createMovementAction()))); //*4((80,-80)*5)
+		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{0, 600}, action));
+		
+		RLMovementActionFactory factory = new RLMovementActionFactory();
+		MovementAction innerAction = factory.createMovementAction(); //*5 40,-40
+		action = new MovementActionSet(); 
+		action.addMovementAction(new DoubleDecorator(innerAction)); //*5 80,-20
+		MovementAction actionD = new DoubleDecorator(action); //*5 160,-40
+		actionD = new DoubleDecorator(new DoubleDecorator(actionD)); //*5 640,-160
+		MovementAction actionDD = new DoubleDecorator(actionD); //*5(1280,-320)
+		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{0, 630}, actionDD));
+		*/
+//		action = new MovementActionSet();
+//		action = new CopyMoveDecorator(new CopyMoveDecorator(new RLMovementActionFactory().createMovementAction())); //*5*3 10,-10
+//		MovementAction newaction2 = new MovementActionSet();
+//		newaction2.addMovementAction(actionDD);
+//		action = new CopyMoveDecorator(new DoubleDecorator(new CopyMoveDecorator(new RLMovementActionFactory().createMovementAction()))); //*4((80,-80)*5)
+//		newaction2.addMovementAction(action);
+//		newaction2 = new DoubleDecorator(new CopyMoveDecorator(newaction2));
+//		
+//		MovementAction newaction3 = new MovementActionSet();
+//		newaction3.addMovementAction(newaction2);
+//		newaction3.addMovementAction(new RLMovementActionFactory().createMovementAction());
+//		newaction3.addMovementAction(new MovementActionSet().addMovementAction(new MovementActionSet().addMovementAction(new MovementActionSet().addMovementAction(new RLMovementActionFactory().createMovementAction()))));
+//		newaction3 = new DoubleDecorator(new CopyMoveDecorator(newaction3));
+//		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{0, 630}, actionDD));
+				
 //		enemies.add(enemyFactory.createSpecialEnemy(RedEnemy.class, RLMovementActionFactory.class, new int[]{0, 0}));
 //		enemies.add(enemyFactory.createSpecialEnemy4(RedEnemy.class, RLMovementActionFactory.class, new int[]{0, 0}, MovementActionDecoratorFactory.createCopyMovementDecorator()));
 //		enemies.add(enemyFactory.createRLRedEnemy(new int[]{50, 50}));
@@ -45,7 +72,8 @@ public class EnemyManager {
 //		enemies.add(enemyFactory.createSpecialEnemy3(BlueEnemy.class, SpecialMovementActionFactory.class, new int[]{450, 450}, MovementInfoFactory.createSquareMovementInfo(), MovementActionDecoratorFactory.createDDMovementDecorator()));
 		
 //		enemies.add(enemyFactory.createSpecialEnemy4(RedEnemy.class, RLMovementActionFactory.class, new int[]{450, 450}, MovementActionDecoratorFactory.createCCMovementDecorator()));
-		
+
+		/*
 		RLMovementActionFactory factory = new RLMovementActionFactory();
 		MovementAction innerAction = factory.createMovementAction();
 //		MovementAction action = new DoubleDecorator(new DoubleDecorator(new DoubleDecorator(innerAction)));
@@ -86,9 +114,10 @@ public class EnemyManager {
 		
 //		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{0, 1100}, actionD));
 //		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{0, 1100}, actionDD));
-				enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{0, 1100}, newaction));
+				enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{0, 500}, newaction));
 //				enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{0, 1100}, newaction2));
 //				enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{0, 1100}, newaction3));
+		*/
 		
 //		SpecialMovementActionFactory actionFactory = new SpecialMovementActionFactory();
 //		MovementAction RLDRL = actionFactory.createMovementActionByMerge(new RLMovementActionFactory().createMovementAction(), action);
@@ -184,19 +213,19 @@ public class EnemyManager {
 //		MovementAction newaction4 = new CopyMoveDecorator(new MovementActionSet());
 		
 //		MovementAction newaction4 = new GravityInverseAngelMovementInfoAppendDecorator(new MovementActionSet());
-//		newaction4.addMovementAction(new MovementActionItem(MovementInfoFactory.createRotation45GravitySingleRMovementInfo()));
+//		newaction4.addMovementAction(new MovementActionItemCountDownTimer(MovementInfoFactory.createRotation45GravitySingleRMovementInfo()));
 //		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{100, 500}, newaction4));
 //		MovementAction newaction4 = new GravityCyclePathMovementInfoAppendDecorator(new MovementActionSet());
-//		newaction4.addMovementAction(new MovementActionItem(MovementInfoFactory.createRotation45GravitySingleRMovementInfo()));
+//		newaction4.addMovementAction(new MovementActionItemCountDownTimer(MovementInfoFactory.createRotation45GravitySingleRMovementInfo()));
 //		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{100, 500}, newaction4));
 //		MovementAction newaction4 = new GravityInversePathMovementInfoAppendDecorator(new MovementActionSet());
-//		newaction4.addMovementAction(new MovementActionItem(MovementInfoFactory.createRotation45GravitySingleRMovementInfo()));
+//		newaction4.addMovementAction(new MovementActionItemCountDownTimer(MovementInfoFactory.createRotation45GravitySingleRMovementInfo()));
 //		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{100, 500}, newaction4));
-//		MovementAction newaction4 = new GravityWavePathMovementInfoAppendDecorator(new MovementActionSet());
-//		newaction4.addMovementAction(new MovementActionItem(MovementInfoFactory.createRotation45GravitySingleRMovementInfo()));
-//		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{100, 500}, newaction4));
+		MovementAction newaction4 = new GravityWavePathMovementInfoAppendDecorator(new MovementActionSet());
+		newaction4.addMovementAction(new MovementActionItemCountDownTimer(MovementInfoFactory.createRotation45GravitySingleRMovementInfo()));
+		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{100, 500}, newaction4));
 //		MovementAction newaction4 = new GravitySlopeWavePathMovementInfoAppendDecorator(new MovementActionSet());
-//		newaction4.addMovementAction(new MovementActionItem(MovementInfoFactory.createRotation45GravitySingleRMovementInfo()));
+//		newaction4.addMovementAction(new MovementActionItemCountDownTimer(MovementInfoFactory.createRotation45GravitySingleRMovementInfo()));
 //		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{100, 500}, newaction4));
 		
 //		MovementAction newaction4 = new GravitySlopeWavePathMovementInfoAppendDecorator(new MovementActionSet());
@@ -292,7 +321,7 @@ public class EnemyManager {
 	
 	public void startMoveEnemies(){
 		for(Enemy enemy : enemies){
-			enemy.action.start();
+			enemy.getMovementAction().start();
 		}
 	}
 	
