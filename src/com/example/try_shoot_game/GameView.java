@@ -9,7 +9,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.example.try_gameengine.action.ICircleController;
+import com.example.try_gameengine.action.Time;
 import com.example.try_gameengine.framework.IChessBoard;
 import com.example.try_gameengine.framework.IGameController;
 import com.example.try_gameengine.framework.IGameModel;
@@ -28,7 +28,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, IMo
 	private boolean isSurfaceCreated = false;
 	
 	private int[][] allExistPoints;
-	
+	private long startTime, endTime, previousStartTime;
 	
 	public GameView(Context context, IGameController gameController, IGameModel gameModel) {
 		super(context);
@@ -64,8 +64,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, IMo
 		gameModel.process();
 	}
 	
-	public static ICircleController circleController1;
-	public static ICircleController circleController2;
+//	public static ICircleController circleController1;
+//	public static ICircleController circleController2;
 	
 	private void draw(){
 		Canvas canvas = surfaceHolder.lockCanvas();
@@ -74,13 +74,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, IMo
 		
 		gameModel.drawEnemis(canvas);
 		gameModel.drawCrosshair(canvas);
-		if(circleController1!=null)
-		circleController1.draw(canvas);
-		if(circleController2!=null)
-			circleController2.draw(canvas);
-//		drawChssboardLines(canvas);
-//		drawAllExistPoints(canvas);
-//		drawPlayerPocessableMovePoints(canvas);
+//		if(circleController1!=null)
+//		circleController1.draw(canvas);
+//		if(circleController2!=null)
+//			circleController2.draw(canvas);
 
 		surfaceHolder.unlockCanvasAndPost(canvas);
 	}
@@ -90,7 +87,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, IMo
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
+			Time.Time = System.currentTimeMillis();
 			while(isGameRun){
+				previousStartTime = startTime;
+				startTime = System.currentTimeMillis();
+				if(previousStartTime==0)
+					previousStartTime = startTime;
+					
+				Time.DeltaTime = startTime - previousStartTime;
 				process();
 				draw();
 				if(isGameStop){
