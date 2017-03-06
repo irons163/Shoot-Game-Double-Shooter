@@ -12,6 +12,7 @@ import com.example.try_gameengine.Camera.Camera;
 import com.example.try_gameengine.framework.Data;
 import com.example.try_gameengine.framework.IGameModel;
 import com.example.try_gameengine.framework.IMoveObserver;
+import com.example.try_gameengine.framework.ProcessBlock;
 import com.example.try_shoot_game.shooter.Crosshair;
 
 
@@ -290,6 +291,12 @@ public class GameModel implements IGameModel{
 
 	@Override
 	public void setCamera(Camera camera) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addPreProcessBlock(ProcessBlock processBlock) {
 		// TODO Auto-generated method stub
 		
 	}

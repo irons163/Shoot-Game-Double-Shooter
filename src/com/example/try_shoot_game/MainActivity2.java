@@ -38,7 +38,7 @@ public class MainActivity2 extends Stage {
 		Scene scene2 = new MyScene(this, "b", 2);
 		Scene scene3 = new MyScene(this, "c", 3);
 		
-		sceneManager = new SceneManager();
+		sceneManager = SceneManager.getInstance();
 		sceneManager.addScene(scene);
 		sceneManager.addScene(scene2);
 		sceneManager.addScene(scene3);

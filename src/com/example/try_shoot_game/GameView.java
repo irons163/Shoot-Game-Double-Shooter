@@ -89,6 +89,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, IMo
 			// TODO Auto-generated method stub
 			Time.Time = System.currentTimeMillis();
 			while(isGameRun){
+				
 				previousStartTime = startTime;
 				startTime = System.currentTimeMillis();
 				if(previousStartTime==0)
@@ -148,6 +149,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, IMo
 		}	
 	}
 	
+	public void resetTime(){
+//		Time.time = 0;
+		Time.Time = System.currentTimeMillis();
+		Time.DeltaTime = 0;
+		previousStartTime = startTime = 0;
+	}
+	
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
 			int height) {
@@ -158,11 +166,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, IMo
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
 		// TODO Auto-generated method stub
-		if(!gameThread.isAlive())
+		if(!gameThread.isAlive()){
 			gameThread.start();
+			resetTime();
+		}
 		isSurfaceCreated = true;
 		if(isGameReallyStop=true){
 			isGameReallyStop = false;
+			resetTime();
 			r();
 		}
 		
