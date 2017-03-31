@@ -7,10 +7,20 @@ import android.graphics.Canvas;
 import android.util.Log;
 
 import com.example.try_gameengine.action.CircleController;
+import com.example.try_gameengine.action.CopyMoveDecorator;
+import com.example.try_gameengine.action.EaseInDecorator;
+import com.example.try_gameengine.action.GravityController;
+import com.example.try_gameengine.action.JumpController;
+import com.example.try_gameengine.action.JumpMoveLimitCondition;
 import com.example.try_gameengine.action.MovementAction;
 import com.example.try_gameengine.action.MovementActionInfo;
+import com.example.try_gameengine.action.MovementActionItem;
+import com.example.try_gameengine.action.MovementActionItemCountDownTimer;
 import com.example.try_gameengine.action.MovementActionItemMoveByCurve;
+import com.example.try_gameengine.action.MovementActionItemMoveByGravity;
+import com.example.try_gameengine.action.MovementActionSet;
 import com.example.try_gameengine.action.MovementActionSetWithOutThread;
+import com.example.try_gameengine.action.MovementActionSetWithThread;
 import com.example.try_gameengine.action.MovementAtionController;
 import com.example.try_gameengine.action.MovementInfoFactory;
 import com.example.try_gameengine.action.SimultaneouslyMovementActionSet;
@@ -209,11 +219,22 @@ public class EnemyManager {
 ////		newaction4.setMovementActionController(new MovementAtionController());
 //		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{100, 500}, newaction4));
 		
-//		MovementAction newaction4 = new CopyMoveDecorator(new MovementActionSet());
-//		newaction4.addMovementAction(new MovementActionItem(MovementInfoFactory.createRotation45GravitySingleRMovementInfo()));
+//		MovementAction newaction4 = new CopyMoveDecorator(new MovementActionSetWithThread());
+//		newaction4.addMovementAction(new MovementActionItemMoveByGravity(new MovementActionInfo(1000, 200, 30, 0, "R"), new JumpController(50, 200, 0), ""));
+//		newaction4 = new MovementActionSetWithThread().addMovementAction(newaction4);
 //		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{100, 500}, newaction4));
-//		MovementAction newaction4 = new CopyMoveDecorator(new MovementActionSet());
 		
+		
+//		MovementAction newaction4 = new MovementActionSetWithThread();
+//		newaction4.addMovementAction(new MovementActionItemMoveByGravity(new MovementActionInfo(1000, 200, 30, 0, "R"), new JumpController(50, 200, 0), ""));
+//		newaction4 = new MovementActionSetWithThread().addMovementAction(newaction4);
+//		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{100, 500}, newaction4));
+		
+		MovementAction newaction4 = new MovementActionSetWithThread();
+		newaction4.addMovementAction(new MovementActionItemMoveByGravity(new MovementActionInfo(1000, 200, 30, 0, "R"), new GravityController(-30, 100), ""));
+		newaction4 = new MovementActionSetWithThread().addMovementAction(newaction4);
+		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{100, 500}, newaction4));
+//		
 //		MovementAction newaction4 = new GravityInverseAngelMovementInfoAppendDecorator(new MovementActionSet());
 //		newaction4.addMovementAction(new MovementActionItemCountDownTimer(MovementInfoFactory.createRotation45GravitySingleRMovementInfo()));
 //		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{100, 500}, newaction4));
@@ -234,14 +255,16 @@ public class EnemyManager {
 //		newaction4.addMovementAction(new MovementActionFrameItem(MovementInfoFactory.createFrameRotation45GravitySingleRMovementInfo()));
 //		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{100, 500}, newaction4));
 		
-//		MovementAction newaction4 = new SimultaneouslyMovementActionSet();
-		MovementAction newaction4 = new MovementActionSetWithOutThread();
-//		newaction4.addMovementAction(new MovementActionItemCountDownTimer(MovementInfoFactory.createCircleMovementInfo()));
-//		newaction4.addMovementAction(new MovementActionItemCountDownTimer(new MovementActionInfo(24000, 100, 10, 0, "R", new CircleController(-10, 400, 700, 500, 800))));
-		MovementActionInfo info = new MovementActionInfo(24000, 100, 10, 0, "R");
-		newaction4.addMovementAction(new MovementActionItemMoveByCurve(info,  new CircleController(-10, 400, 700, 500, 800), ""));
-		newaction4.setMovementActionController(new MovementAtionController());
-		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{500, 800}, newaction4));
+////		MovementAction newaction4 = new SimultaneouslyMovementActionSet();
+//		MovementAction newaction4 = new MovementActionSetWithOutThread();
+////		newaction4.addMovementAction(new MovementActionItemCountDownTimer(MovementInfoFactory.createCircleMovementInfo()));
+////		newaction4.addMovementAction(new MovementActionItemCountDownTimer(new MovementActionInfo(24000, 100, 10, 0, "R", new CircleController(-10, 400, 700, 500, 800))));
+//		MovementActionInfo info = new MovementActionInfo(24000, 100, 10, 0, "R");
+//		newaction4.addMovementAction(new MovementActionItemMoveByCurve(info,  new CircleController(-2400, 400, 700, 500, 800), ""));
+////		newaction4.addMovementAction(new EaseInDecorator(new MovementActionItemMoveByCurve(info,  new CircleController(-2400, 400, 700, 500, 800), ""), 0.5f));
+//		newaction4.setMovementActionController(new MovementAtionController());
+//		newaction4 = new EaseInDecorator(newaction4, 0.5f);
+//		enemies.add(enemyFactory.createSpecialEnemy5(RedEnemy.class, new int[]{500, 800}, newaction4));
 		
 //		MovementAction newaction4 = new SimultaneouslyMultiCircleMovementActionSet();
 //		newaction4.addMovementAction(new MovementActionItemCountDownTimer(MovementInfoFactory.create3CircleMovementInfo()));
